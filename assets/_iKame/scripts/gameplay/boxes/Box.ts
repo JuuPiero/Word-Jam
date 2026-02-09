@@ -1,4 +1,4 @@
-import { _decorator, Component, MeshRenderer, Node } from 'cc';
+import { _decorator, Component, MeshRenderer, Node, SpriteRenderer } from 'cc';
 import { BoxData } from '../data/BoxData';
 import { StickerConfigs } from '../../configData/StickerConfigs';
 const { ccclass, property } = _decorator;
@@ -13,10 +13,15 @@ export class Box extends Component {
     private slotNodes: Node[] = [];
     @property(StickerConfigs)
     private stickerConfigs: StickerConfigs;
+    @property(Node) root: Node;
+
+    @property([ SpriteRenderer ]) public outLineSprites: SpriteRenderer[] = [];
+    @property([ SpriteRenderer ]) public fillSprites: SpriteRenderer[] = [];
+    @property(SpriteRenderer) public iconSprite: SpriteRenderer;
 
     public setup(): BoxData
     {
-        this._boxData = new BoxData(-1);
+        this._boxData = new BoxData(0);
         return this._boxData;
     }
 

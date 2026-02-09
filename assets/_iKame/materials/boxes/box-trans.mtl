@@ -8,7 +8,7 @@
     "__uuid__": "4c6ab628-7d7f-410e-9db5-006a944ddcd4",
     "__expectedType__": "cc.EffectAsset"
   },
-  "_techIdx": 0,
+  "_techIdx": 1,
   "_defines": [
     {
       "USE_INSTANCING": true
@@ -36,7 +36,7 @@
         "r": 121,
         "g": 202,
         "b": 255,
-        "a": 114
+        "a": 138
       },
       "smoothness": 0.8,
       "useHDRI": 1,

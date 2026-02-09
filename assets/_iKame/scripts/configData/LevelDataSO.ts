@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 export class LevelDataSO extends bh.ScriptableAsset {
     @property(Prefab) public levelPrefab: Prefab | null = null;
     @property(CCInteger) public maxBox: number = 4;
-    @property(CCInteger) public cacheSize: number = 5;
+    @property(CCInteger) public maxCache: number = 5;
 }
 
 

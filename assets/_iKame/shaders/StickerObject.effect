@@ -14,6 +14,30 @@ CCEffect %{
         clayHDRI: { value: 0.1, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
         useAdvance: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
         matCapTexture: { value: white }
+  - name: transparent
+    passes:
+    - vert: master-vs:vert
+      frag: master-fs:frag
+      depthStencilState:
+        depthTest: true
+        depthWrite: false
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendSrcAlpha: src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties:
+        mainTexture: { value: white }
+        mainColor: { value: [1, 1, 1, 1], linear: true, editor: { type: color } }
+        smoothness: { value: 0.5, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        metallic: { value: 0.0, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        useHDRI: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+        cubeMap: { value: grey, editor: { type: cubemap } }
+        clayHDRI: { value: 0.1, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        useAdvance: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+        matCapTexture: { value: white }
 }%
 
 CCProgram master-vs %{
