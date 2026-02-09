@@ -2,14 +2,12 @@ import { _decorator, CCString, Component, Node, RigidBody } from 'cc';
 import { IHoldableObject } from './IHoldableObject';
 import { ISticker } from '../stickers/ISticker';
 import { HodlablleData } from '../data/HodlablleData';
-import { ILevelController } from '../../controllers/ILevelController';
 const { ccclass, property } = _decorator;
 
 @ccclass('HoldableObject')
 export class HoldableObject extends Component implements IHoldableObject
 {
     private _data: HodlablleData;
-    private _levelController: ILevelController
     
     @property(RigidBody) private rigidBody: RigidBody;
 

@@ -1,0 +1,106 @@
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: master-vs:vert
+      frag: master-fs:frag
+      properties:
+        mainTexture: { value: white }
+        mainColor: { value: [1, 1, 1, 1], linear: true, editor: { type: color } }
+        smoothness: { value: 0.5, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        metallic: { value: 0.0, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        useHDRI: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+        cubeMap: { value: grey, editor: { type: cubemap } }
+        clayHDRI: { value: 0.1, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        useAdvance: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+        matCapTexture: { value: white }
+}%
+
+CCProgram master-vs %{
+  precision highp float;
+  #include <legacy/input>
+  #include <builtin/uniforms/cc-global>
+  #include <legacy/local-batch>
+
+  out vec2 v_uv;
+  out vec3 v_worldNorm;
+
+  vec4 vert () {
+    vec4 position;
+    CCVertInput(position);
+
+    mat4 matWorld, matWorldIT;
+    CCGetWorldMatrixFull(matWorld, matWorldIT);
+    
+    v_uv = a_texCoord;
+    v_worldNorm = (matWorldIT * vec4(a_normal, 0.0)).xyz;
+    
+    return cc_matProj * (cc_matView * matWorld) * position;
+  }
+}%
+
+CCProgram master-fs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/uniforms/cc-global>
+
+  in vec2 v_uv;
+  in vec3 v_worldNorm;
+
+  uniform sampler2D mainTexture;
+  uniform sampler2D matCapTexture;
+  uniform samplerCube cubeMap;
+
+  uniform Constant {
+    vec4 mainColor;
+    float smoothness;
+    float metallic;
+    float useHDRI;
+    float clayHDRI;
+    float useAdvance;
+  };
+
+  vec4 frag () {
+    vec4 col = texture(mainTexture, v_uv);
+    col.rgb = mix(col.rgb, col.rgb * mainColor.rgb, col.a);
+    col.a = mainColor.a;
+    
+    // Lighting
+    vec3 normal = normalize(v_worldNorm);
+    float lighting = dot(normalize(vec3(0.5, 0.8, -0.8)), normal);
+    lighting = smoothstep(-0.2, 0.8, lighting);
+    
+    // Apply lighting
+    col.rgb = mix(pow(col.rgb, vec3(2.0)) * 0.85, col.rgb, lighting);
+    
+    // Smoothness & Metallic
+    if (smoothness > 0.01 || metallic > 0.01) {
+      vec3 originCol = col.rgb;
+      vec3 viewDir = normalize(cc_matView[2].xyz);
+      
+      // Specular
+      vec3 reflectDir = reflect(normalize(vec3(-0.5, -0.8, 0.8)), normal);
+      float spec = clamp(dot(reflectDir, viewDir), 0.0, 1.0);
+      
+      // Smoothness (Fresnel + Spec)
+      float fres = pow(1.0 - clamp(dot(normal, viewDir), 0.0, 1.0), 2.0 + smoothness * 2.0) * smoothness * 2.0;
+      col.rgb = mix(col.rgb, clamp((originCol + 0.1) * 2.0, 0.0, 1.0), pow(spec, 0.5 + smoothness * 5.0) * smoothness + fres * 0.3);
+      
+      // Metallic (MatCap)
+      if (metallic > 0.01) {
+        mat3 viewMat3 = mat3(cc_matView);
+        vec2 uvCap = (viewMat3 * normal).xy * 0.5 + 0.5;
+        originCol = mix(pow(originCol, vec3(4.0)) * 0.45, originCol, texture(matCapTexture, uvCap).r);
+        col.rgb = mix(col.rgb, originCol, metallic);
+      }
+      
+      // HDRI
+      if (useHDRI > 0.5 && clayHDRI > 0.01) {
+        vec3 worldRefl = reflect(-cc_matView[2].xyz, normal);
+        col.rgb += texture(cubeMap, worldRefl).rgb * clayHDRI;
+      }
+    }
+    
+    return CCFragOutput(col);
+  }
+}%

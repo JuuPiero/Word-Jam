@@ -1,5 +1,6 @@
-import { IHoldableObject } from "../gameplay/holdableObject/IHoldableObject";
-import { ISticker } from "../gameplay/stickers/ISticker";
+import { IHoldableObject } from "../holdableObject/IHoldableObject";
+import { ISticker } from "../stickers/ISticker";
+
 
 export class StickerData
 {

@@ -1,0 +1,13 @@
+{
+  "__type__": "729987E0qtPtY23L/NU0SMi",
+  "_name": "LevelDataSO",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "levelPrefab": {
+    "__uuid__": "424d5463-99fa-467f-a84a-29f1a50348c7",
+    "__expectedType__": "cc.Prefab"
+  },
+  "maxBox": 4,
+  "cacheSize": 5
+}

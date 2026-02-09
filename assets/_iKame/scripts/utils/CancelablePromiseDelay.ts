@@ -13,10 +13,6 @@ export class CancelablePromiseDelay extends Component {
     {
         console.log('Starting delay...');
         const delay = PromiseDelay.GetCancelablePromise(4);
-        // setTimeout(() => {
-        //     delay.cancel();    
-        // }, 2000);
-        
         await delay.wait();
         
         if (delay.isCancelled()) {

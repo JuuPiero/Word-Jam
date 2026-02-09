@@ -1,5 +1,5 @@
 export interface ILevelController {
-    spawnLevel(): Promise<void>;
+    spawnLevel(): void;
     clearLevel(): void;
     doUpdate(deltaTime: number): void;
     lateUpdate(deltaTime: number): void;
