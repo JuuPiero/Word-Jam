@@ -173,10 +173,11 @@ export class LevelController extends Component implements ILevelController
             this.transferStickerToBox(sticker, targetBox);
             return;
         }
-        const cache = this.cacheController.getNextEmptyCache();
-        if (cache)
+        const pos = new Vec3();
+        const cache = this.cacheController.getNextEmptyCache(pos);
+        if (cache >= 0)
         {
-            this.transferStickerToCache(sticker, cache);
+            this.transferStickerToCache(sticker, pos, cache);
             return;
         }
     }
@@ -186,8 +187,9 @@ export class LevelController extends Component implements ILevelController
 
     }
 
-    public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3)
+    public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
     {
+        this.cacheController.setCache(cacheIndex, sticker.stickerID);
         sticker.node.setParent(this.node, true);
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         const startPos = sticker.node.getWorldPosition();
@@ -201,7 +203,7 @@ export class LevelController extends Component implements ILevelController
         const scale = new Vec3();
 
         tween(tweenMoveProgress)
-            .to(0.5, { x: 1 }, {
+            .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
                 {
@@ -216,11 +218,11 @@ export class LevelController extends Component implements ILevelController
                     Vec3.lerp(scale, scale1, STICKER.IN_CACHE_SCALE, target.x);
                     sticker.node.setScale(scale);
 
-                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 3, 0);
+                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(0.5).wait();
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION).wait();
 
     }
 

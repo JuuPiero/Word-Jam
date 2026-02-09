@@ -43,7 +43,7 @@ export class CacheController extends Component
         return this._data;
     }
 
-    public getNextEmptyCache(): Vec3
+    public getNextEmptyCache(outPosition: Vec3): number
     {
         for (let i = 0; i < this._activeCaches.length; i++)
         {
@@ -51,10 +51,16 @@ export class CacheController extends Component
             {
                 const pos = this._activeCaches[ i ].node.getWorldPosition();
                 Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].node.forward, -0.1);
-                return pos;
+                Vec3.copy(outPosition, pos);
+                return i;
             }
         }
-        return null;
+        return -1;
+    }
+
+    public setCache(index: number, id: number): void
+    {
+        this._data.setCacheAt(index, id);
     }
 }
 

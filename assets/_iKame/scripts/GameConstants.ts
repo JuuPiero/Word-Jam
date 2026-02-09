@@ -18,4 +18,6 @@ export const STICKER = {
 
     IN_BOX_SCALE: new Vec3(0.5, 0.5, 0.5),
     IN_CACHE_SCALE: new Vec3(0.4, 0.4, 0.4),
+
+    TRANSFER_DURATION: 0.5,
 }
