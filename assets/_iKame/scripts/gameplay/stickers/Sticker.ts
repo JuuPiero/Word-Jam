@@ -1,9 +1,11 @@
-import { _decorator, CCInteger, CCString, Component, Node } from 'cc';
+import { _decorator, CCInteger, CCString, Collider, Component, easing, Mesh, MeshRenderer, Node, Tween, tween, Vec3 } from 'cc';
 import { ISticker } from './ISticker';
 import { IHoldableObject } from '../holdableObject/IHoldableObject';
 import { ILevelController } from '../../controllers/ILevelController';
 import { StickerData } from '../data/StickerData';
 import { EDITOR } from 'cc/env';
+import { STICKER } from '../../GameConstants';
+import { PromiseDelay } from '../../utils/PromiseDelay';
 const { ccclass, property } = _decorator;
 
 @ccclass('Sticker')
@@ -30,6 +32,10 @@ export class Sticker extends Component implements ISticker
     private onStickerRemoved: ((sticker: ISticker) => void)[] = [];
     private _isCanUpdate: boolean = false;
 
+    private tweenPeelObj: { value: number } = { value: 0 };
+
+    private meshRenderer: MeshRenderer | null = null;
+
     public setup(levelController: ILevelController,
         blockingStickers: ISticker[],
         holdingObjects: IHoldableObject[],
@@ -37,6 +43,8 @@ export class Sticker extends Component implements ISticker
         weightLockObjects: IHoldableObject[]
     ): StickerData
     {
+        this.meshRenderer = this.getComponent(MeshRenderer);
+
         this._levelController = levelController;
         this._data = new StickerData(
             this.stickerID,
@@ -74,16 +82,23 @@ export class Sticker extends Component implements ISticker
         this.weightLockObjects = this._data.getAllWeightLockObjectNames();
     }
 
-    public tryPeelOff(): void
+    public canPeelOff(): boolean
     {
-        if (this._data.getWeightLockObjectCount() > 0 || this._data.getWeightLockStickerCount() > 0 || this._data.getBlockingStickerCount() > 0)
-        {
-            return;
-        }
-        this.peelOff();
+        return this._data.getWeightLockObjectCount() === 0 &&
+               this._data.getWeightLockStickerCount() === 0 &&
+               this._data.getBlockingStickerCount() === 0;
     }
 
-    peelOff(): void
+    public tryPeelOff(): Promise<void> | undefined
+    {
+        if (!this.canPeelOff()) {
+            return undefined;
+        }
+        console.log("Peeling off sticker: " + this.getName());
+        return this.peelOff();
+    }
+
+    peelOff(): Promise<void>
     {
         for (const holdableObject of this._data.HoldingObjects)
         {
@@ -93,7 +108,9 @@ export class Sticker extends Component implements ISticker
         for (const listener of this.onStickerRemoved) {
             listener(this);
         }
-        this.node.active = false;
+        // this.node.active = false;
+        this.node.getComponent(Collider).enabled = false;
+        return this.playPeelAnimation();
     }
     
     public getName(): string {
@@ -132,7 +149,65 @@ export class Sticker extends Component implements ISticker
 
     protected onDestroy(): void
     {
+        if (this._tweebPeel) {
+            this._tweebPeel.stop();
+            this._tweebPeel = null;
+        }
         this.onStickerRemoved = [];
+    }
+
+    private _tweebPeel : Tween<any> | null = null;
+
+    public async playPeelAnimation(): Promise<void> 
+    {
+        const offsetForward = 0.1;
+        Tween.stopAllByTarget(this.tweenPeelObj);
+        Tween.stopAllByTarget(this.node);
+        this.tweenPeelObj.value = 0;
+        const mat = this.meshRenderer.getMaterialInstance(0);
+
+        const startPos = this.node.getPosition();
+        const upVec = new Vec3();
+        upVec.set(this.node.forward);
+        Vec3.multiplyScalar(upVec, upVec, offsetForward);
+        const endPos = new Vec3();
+        Vec3.add(endPos, startPos, upVec);
+    
+        this._tweebPeel = tween(this.tweenPeelObj)
+            .to(STICKER.PEEL_DURATION, { value: STICKER.PEEL_END_PROGRESS }, {
+                easing: easing.circInOut,
+                onUpdate: (target: any, ratio: number) => {
+                    mat.setProperty('peel', target.value);
+                }
+            })
+            .start();
+        
+        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION);
+        await delay.wait();
+    }
+
+    public setNormalMesh (mesh : Mesh) : void 
+    {
+        if (this._tweebPeel) {
+            this._tweebPeel.stop();
+            this._tweebPeel = null;
+        }
+        const mat = this.meshRenderer.getMaterialInstance(0);
+        mat.setProperty('peel', 0);
+        this.meshRenderer.mesh = mesh;
+        const pos = this.node.getPosition();
+        Vec3.scaleAndAdd(pos, pos, this.node.forward, 0.1);
+        this.node.setPosition(pos);
+    }
+
+    public setPeelProgress(progress: number): void
+    {
+        if (this._tweebPeel) {
+            this._tweebPeel.stop();
+            this._tweebPeel = null;
+        }
+        const mat = this.meshRenderer.getMaterialInstance(0);
+        mat.setProperty('peel', progress);
     }
 }
 

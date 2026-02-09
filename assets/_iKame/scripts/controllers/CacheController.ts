@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, SpriteRenderer } from 'cc';
+import { _decorator, Component, Node, SpriteRenderer, Vec3 } from 'cc';
 import { CacheData } from '../gameplay/data/CacheData';
 const { ccclass, property } = _decorator;
 
@@ -41,6 +41,20 @@ export class CacheController extends Component
         }
 
         return this._data;
+    }
+
+    public getNextEmptyCache(): Vec3
+    {
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            if (!this._data.isCacheTakenAt(i))
+            {
+                const pos = this._activeCaches[ i ].node.getWorldPosition();
+                Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].node.forward, -0.1);
+                return pos;
+            }
+        }
+        return null;
     }
 }
 

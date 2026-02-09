@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, instantiate, Node, Prefab } from 'cc';
+import { _decorator, CCInteger, Component, instantiate, Node, Prefab, Quat, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -13,24 +13,30 @@ import { ISticker } from '../gameplay/stickers/ISticker';
 import { IHoldableObject } from '../gameplay/holdableObject/IHoldableObject';
 import { HodlablleData } from '../gameplay/data/HodlablleData';
 import { StickerData } from '../gameplay/data/StickerData';
-import { FreeStickerPool } from '../gameplay/pooling/FreeStickerPool';
+import { Box } from '../gameplay/boxes/Box';
+import { PromiseDelay } from '../utils/PromiseDelay';
+import { StickerConfigs } from '../configData/StickerConfigs';
+import { STICKER } from '../GameConstants';
 const { ccclass, property } = _decorator;
 
 @ccclass('LevelController')
 export class LevelController extends Component implements ILevelController
 {
+
     @property([LevelDataSO]) public levelsData: LevelDataSO[] = [];
     @property(CCInteger) public levelIndex: number = 0;
 
     @property({ type: BoxController, group: "Controllers" }) public boxController: BoxController;
     @property({ type: CacheController, group: "Controllers" }) public cacheController: CacheController;
-    @property({type : FreeStickerPool, group : "Pooling"}) public freeStickerPool : FreeStickerPool;
     @property(BlockPicker) public blockPicker: BlockPicker;
+    @property({type : StickerConfigs, group : "ConfigData"}) public stickerConfigs : StickerConfigs;
 
     private _gameData: GameData;
 
     private _stickerMap: Map<string, Sticker> = new Map<string, Sticker>();
     private _holdableMap: Map<string, HoldableObject> = new Map<string, HoldableObject>();
+
+    @property(Node) private rotationRoot: Node;
 
     protected onLoad(): void
     {
@@ -46,7 +52,7 @@ export class LevelController extends Component implements ILevelController
     {
         const levelData = this.levelsData[ this.levelIndex ];
         var levelNode = instantiate(levelData.levelPrefab);
-        levelNode.setParent(this.node);
+        levelNode.setParent(this.rotationRoot, false);
 
         const holdableObjects = levelNode.getComponentsInChildren(HoldableObject);
         for (const holdableObject of holdableObjects)
@@ -152,9 +158,75 @@ export class LevelController extends Component implements ILevelController
         const sticker = this._stickerMap.get(name);
         if (sticker)
         {
-            sticker.tryPeelOff();
+            this.tryPeelSticker(sticker);
             return;
         }
+    }
+
+    public async tryPeelSticker(sticker: Sticker): Promise<void>
+    {
+        if (!sticker.canPeelOff()) return ;
+        await sticker.peelOff();
+        const targetBox = this.boxController.findSuitableBox(sticker.stickerID);
+        if (targetBox)
+        {
+            this.transferStickerToBox(sticker, targetBox);
+            return;
+        }
+        const cache = this.cacheController.getNextEmptyCache();
+        if (cache)
+        {
+            this.transferStickerToCache(sticker, cache);
+            return;
+        }
+    }
+
+    public transferStickerToBox(sticker: Sticker, box: Box): void
+    {
+
+    }
+
+    public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3)
+    {
+        sticker.node.setParent(this.node, true);
+        sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
+        const startPos = sticker.node.getWorldPosition();
+        const tweenMoveProgress = {x : 0};
+        const newPos = new Vec3();
+        const rot1 = sticker.node.getWorldRotation();
+        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rotLerp = new Quat();
+
+        const scale1 = sticker.node.getScale();
+        const scale = new Vec3();
+
+        tween(tweenMoveProgress)
+            .to(0.5, { x: 1 }, {
+                easing: 'cubicInOut',
+                onUpdate: (target: { x: number }, ratio: number) =>
+                {
+                    Vec3.lerp(newPos, startPos, cachePosition, target.x);
+                    // Thêm chuyển động vòng cung theo hướng z
+                    const arcOffset = Math.sin(target.x * Math.PI) * 2;
+                    newPos.z += arcOffset;
+                    sticker.node.setWorldPosition(newPos);
+                    Quat.slerp(rotLerp, rot1, rot2, target.x);
+                    sticker.node.setWorldRotation(rotLerp);
+
+                    Vec3.lerp(scale, scale1, STICKER.IN_CACHE_SCALE, target.x);
+                    sticker.node.setScale(scale);
+
+                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 3, 0);
+                    sticker.setPeelProgress(peel);
+                } })
+            .start();
+        await PromiseDelay.GetCancelablePromise(0.5).wait();
+
+    }
+
+    getNode(): Node
+    {
+        return this.node;
     }
 }
 

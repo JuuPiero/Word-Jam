@@ -42,6 +42,20 @@ export class BoxController extends Component implements IBoxController
 
         return this._boxDataList;
     }
+
+    public findSuitableBox(stickerID: number): Box
+    {
+        for (let i = 0; i < this._activeBoxes.length; i++)
+        {
+            const box = this._activeBoxes[i];
+            const boxData = box.getBoxData();
+            if (boxData.stickerID === stickerID && !boxData.isFull())
+            {
+                return box;
+            }
+        }
+        return null;
+    }
 }
 
 

@@ -167,6 +167,8 @@ export class PromiseDelay extends Component implements IPromiseDelay
     
         game.off(Game.EVENT_PAUSE, this.onAppPause, this);
         game.off(Game.EVENT_RESUME, this.onAppResume, this);
+
+        PromiseDelay._Instance = null;
     }
 }
 

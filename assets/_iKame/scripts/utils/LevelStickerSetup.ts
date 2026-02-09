@@ -78,7 +78,7 @@ export class LevelStickerSetup extends Component {
             this._holdingMapData.set(holdNode.name, holdableObject);
             const rb = holdNode.addComponent(RigidBody);
             rb.isStatic = true;
-            rb.group = PHYSIC_GROUP.Holdable;
+            rb.group = PHYSIC_GROUP.HOLDABLE;
             const hixBox = holdNode.addComponent(MeshCollider);
             hixBox.mesh = meshRenderer.mesh;
             holdableObject.rigidBody = rb;
@@ -95,7 +95,7 @@ export class LevelStickerSetup extends Component {
             rb.isStatic = true;
             const hitBox = stickerNode.addComponent(MeshCollider);
             hitBox.mesh = sticker.getComponent(MeshRenderer).mesh;
-            rb.group = PHYSIC_GROUP.Sticker;
+            rb.group = PHYSIC_GROUP.STICKER;
         }
         //#endregion
 

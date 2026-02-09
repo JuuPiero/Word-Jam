@@ -49,5 +49,9 @@
       "__uuid__": "b753ad60-2b7c-4e6e-bea6-3d24695e34c2",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     }
-  ]
+  ],
+  "stickerNormalMesh": {
+    "__uuid__": "5239483a-c404-41da-a410-71368e1e2d24@a62fe",
+    "__expectedType__": "cc.Mesh"
+  }
 }
