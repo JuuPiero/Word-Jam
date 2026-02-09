@@ -4,6 +4,9 @@ export interface ISticker {
     peelOff(): void;
     getName(): string;
     getNodeUID(): string;
+    
+    addListenerOnRemoved(listener: (sticker: ISticker) => void): void;
+    removeListenerOnRemoved(listener: (sticker: ISticker) => void): void;
 }
 
 

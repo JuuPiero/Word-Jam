@@ -1,8 +1,8 @@
 import { _decorator, CCInteger, CCString, Component, Node } from 'cc';
 import { ISticker } from './ISticker';
 import { IHoldableObject } from '../holdableObject/IHoldableObject';
-import { StickerData } from '../../data/StickerData';
-import { ILevelController } from '../ILevelController';
+import { ILevelController } from '../../controllers/ILevelController';
+import { StickerData } from '../data/StickerData';
 const { ccclass, property } = _decorator;
 
 @ccclass('Sticker')
@@ -26,16 +26,62 @@ export class Sticker extends Component implements ISticker
     private _data: StickerData;
     private _levelController: ILevelController;
 
-    public setup(levelController: ILevelController): StickerData
+    private onStickerRemoved: ((sticker: ISticker) => void)[] = [];
+
+    public setup(levelController: ILevelController,
+        blockingStickers: ISticker[],
+        holdingObjects: IHoldableObject[],
+        weightLockStickers: ISticker[],
+        weightLockObjects: IHoldableObject[]
+    ): StickerData
     {
         this._levelController = levelController;
-        // TODO : Load holdable objects and stickers from names
+        this._data = new StickerData(
+            this.stickerID,
+            holdingObjects,
+            blockingStickers,
+            weightLockStickers,
+            weightLockObjects
+        );
+
+        for (const sticker of blockingStickers)
+        {
+            sticker.addListenerOnRemoved(this.onBlockingStickerRemoved.bind(this));
+        }
+
+        for (const sticker of weightLockStickers)
+        {
+            sticker.addListenerOnRemoved(this.onWeightLockStickerRemoved.bind(this));
+        }
+
+        for (const holdableObject of weightLockObjects)
+        {
+            holdableObject.addListenerOnRemoved(this.onWeightLockObjectRemoved.bind(this));
+        }
+
         return this._data;
+    }
+
+    public tryPeelOff(): void
+    {
+        if (this._data.getWeightLockObjectCount() > 0 || this._data.getWeightLockStickerCount() > 0 || this._data.getBlockingStickerCount() > 0)
+        {
+            return;
+        }
+        this.peelOff();
     }
 
     peelOff(): void
     {
-        //TODO : Implement this function
+        for (const holdableObject of this._data.HoldingObjects)
+        {
+            holdableObject.removeSticker(this);
+        }
+        this._data.clearHoldingObjects();
+        for (const listener of this.onStickerRemoved) {
+            listener(this);
+        }
+        this.node.active = false;
     }
     
     public getName(): string {
@@ -44,6 +90,37 @@ export class Sticker extends Component implements ISticker
 
     public getNodeUID(): string {
         return this.node.uuid;
+    }
+
+    public onWeightLockStickerRemoved(sticker: ISticker): void {
+        this._data.removeWeightLockSticker(sticker);
+    }
+
+    public onWeightLockObjectRemoved(holdableObject: IHoldableObject): void {
+        this._data.removeWeightLockObject(holdableObject);
+    }
+
+    public onBlockingStickerRemoved(sticker: ISticker): void {
+        this._data.removeBlockingSticker(sticker);
+    }
+
+    addListenerOnRemoved(listener: (sticker: ISticker) => void): void
+    {
+        this.onStickerRemoved.push(listener);
+    }
+
+    removeListenerOnRemoved(listener: (sticker: ISticker) => void): void
+    {
+        const index = this.onStickerRemoved.indexOf(listener);
+        if (index !== -1)
+        {
+            this.onStickerRemoved.splice(index, 1);
+        }
+    }
+
+    protected onDestroy(): void
+    {
+        this.onStickerRemoved = [];
     }
 }
 

@@ -1,4 +1,4 @@
-import { ISticker } from "../gameplay/stickers/ISticker";
+import { ISticker } from "../stickers/ISticker";
 
 export class HodlablleData {
     private _stickers : Set<ISticker> = new Set<ISticker>();

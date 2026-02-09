@@ -6,6 +6,9 @@ export interface IHoldableObject {
     freeObject(): void;
     getNodeUID(): string;
     getName(): string;
+
+    addListenerOnRemoved(listener: (sticker: IHoldableObject) => void): void;
+    removeListenerOnRemoved(listener: (sticker: IHoldableObject) => void): void;
 }
 
 

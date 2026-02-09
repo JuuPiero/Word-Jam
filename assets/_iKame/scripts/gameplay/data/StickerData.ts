@@ -30,6 +30,10 @@ export class StickerData
             this.weightLockObjects.add(obj);
         });
     }
+
+    public clearHoldingObjects(): void {
+        this.holdingObjects.clear();
+    }
     
     public removeHoldingObject(holdableObject: IHoldableObject): void {
         this.holdingObjects.delete(holdableObject);
@@ -61,6 +65,10 @@ export class StickerData
 
     public getWeightLockObjectCount(): number {
         return this.weightLockObjects.size;
+    }
+
+    public get HoldingObjects(): Set<IHoldableObject> {
+        return this.holdingObjects;
     }
 }
 
