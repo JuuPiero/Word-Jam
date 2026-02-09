@@ -20,6 +20,15 @@ export class HodlablleData {
     public getStickerCount(): number {
         return this._stickers.size;
     }
+
+    public getAllStickerNames(): string[] {
+        const names: string[] = [];
+        this._stickers.forEach((sticker: ISticker) => {
+            names.push(sticker.getName());
+        }
+        );
+        return names;
+    }
 }
 
 

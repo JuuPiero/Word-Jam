@@ -3,6 +3,7 @@ import { ISticker } from './ISticker';
 import { IHoldableObject } from '../holdableObject/IHoldableObject';
 import { ILevelController } from '../../controllers/ILevelController';
 import { StickerData } from '../data/StickerData';
+import { EDITOR } from 'cc/env';
 const { ccclass, property } = _decorator;
 
 @ccclass('Sticker')
@@ -27,6 +28,7 @@ export class Sticker extends Component implements ISticker
     private _levelController: ILevelController;
 
     private onStickerRemoved: ((sticker: ISticker) => void)[] = [];
+    private _isCanUpdate: boolean = false;
 
     public setup(levelController: ILevelController,
         blockingStickers: ISticker[],
@@ -59,7 +61,17 @@ export class Sticker extends Component implements ISticker
             holdableObject.addListenerOnRemoved(this.onWeightLockObjectRemoved.bind(this));
         }
 
+        this._isCanUpdate = true;
         return this._data;
+    }
+
+    protected lateUpdate(dt: number): void
+    {
+        if (!this._isCanUpdate || !EDITOR) return;
+        this.blockingStickers = this._data.getAllBlockingStickerNames();
+        this.holdingObjects = this._data.getAllHoldingObjectNames();
+        this.weightLockStickers = this._data.getAllWeightLockStickerNames();
+        this.weightLockObjects = this._data.getAllWeightLockObjectNames();
     }
 
     public tryPeelOff(): void

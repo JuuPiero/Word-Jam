@@ -70,6 +70,22 @@ export class StickerData
     public get HoldingObjects(): Set<IHoldableObject> {
         return this.holdingObjects;
     }
+
+    public getAllBlockingStickerNames(): string[] {
+        return Array.from(this.blockingStickers).map(sticker => sticker.getName());
+    }
+
+    public getAllHoldingObjectNames(): string[] {
+        return Array.from(this.holdingObjects).map(obj => obj.getName());
+    }
+
+    public getAllWeightLockStickerNames(): string[] {
+        return Array.from(this.weightLockStickers).map(sticker => sticker.getName());
+    }
+
+    public getAllWeightLockObjectNames(): string[] {
+        return Array.from(this.weightLockObjects).map(obj => obj.getName());
+    }
 }
 
 
