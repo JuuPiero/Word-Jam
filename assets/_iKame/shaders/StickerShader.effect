@@ -1,0 +1,127 @@
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: sticker-vs:vert
+      frag: sticker-fs:frag
+      rasterizerState:
+        cullMode: none
+      properties:
+        mainTexture: { value: white }
+        peel: { value: 0, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
+        highlight: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+}%
+
+CCProgram sticker-vs %{
+  precision highp float;
+  #include <legacy/input>
+  #include <builtin/uniforms/cc-global>
+  #include <legacy/local-batch>
+
+  out vec2 v_uv;
+  out vec3 v_worldNormal;
+
+  uniform VertexConstant {
+    float peel;
+  };
+
+  vec4 vert () {
+    vec4 position;
+    CCVertInput(position);
+
+    vec4 pos = position;
+    
+    // Set z to 0.1 (like Unity)
+    pos.z = 0.1;
+    
+    // Create 180 degree rotation matrix around X-axis (like Unity)
+    // cos(3.14) ≈ -1, sin(3.14) ≈ 0, but using exact values for consistency
+    mat3 rot_mat = mat3(
+      1.0,  0.0,        0.0,
+      0.0, -0.9999996, -0.0008727,
+      0.0,  0.0008727, -0.9999996
+    );
+    
+    pos.xyz = rot_mat * pos.xyz;
+    
+    // Apply peel transformations
+    pos.x += peel * 0.5;
+    pos.y += (-0.5 + peel) * 1.8;
+    
+    // Smoothstep blend based on UV.y
+    // Unity: smoothstep(peel*1.2, peel*1.2-0.2, uv.y)
+    // This means edge0 = peel*1.2, edge1 = peel*1.2-0.2
+    // Flip UV.y to match Unity's coordinate system (peel from bottom to top)
+    float edge0 = peel * 1.2;
+    float edge1 = peel * 1.2 - 0.2;
+    float peelMask = smoothstep(edge0, edge1, 1.0 - a_texCoord.y);
+    
+    // Lerp between original and peeled position
+    pos.xyz = mix(position.xyz, pos.xyz, peelMask);
+    
+    // Transform to clip space
+    mat4 matWorld, matWorldIT;
+    CCGetWorldMatrixFull(matWorld, matWorldIT);
+    
+    v_uv = a_texCoord;
+    v_worldNormal = (matWorldIT * vec4(a_normal, 0.0)).xyz;
+    
+    return cc_matProj * (cc_matView * matWorld) * pos;
+  }
+}%
+
+CCProgram sticker-fs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/uniforms/cc-global>
+
+  in vec2 v_uv;
+  in vec3 v_worldNormal;
+
+  uniform sampler2D mainTexture;
+
+  uniform Constant {
+    float highlight;
+  };
+
+  vec4 frag () {
+    vec4 col = texture(mainTexture, v_uv);
+    
+    // Back face initial color
+    if (!gl_FrontFacing) {
+      col.rgb = vec3(0.8);
+    }
+    
+    // Lighting calculation
+    vec3 lightDir = normalize(vec3(0.5, 0.8, -0.8));
+    vec3 normal = normalize(v_worldNormal);
+    float lighting = dot(lightDir, normal);
+    lighting = smoothstep(-0.2, 0.8, lighting);
+    
+    vec3 darkCol = pow(col.rgb, vec3(1.5)) * 0.8;
+    col.rgb = mix(darkCol, col.rgb, lighting);
+    
+    // Specular reflection
+    // Unity's UNITY_MATRIX_V[2].xyz is the camera forward direction
+    // In Cocos, we extract it from cc_matView (row 2, which is index [0][2], [1][2], [2][2])
+    vec3 viewDir = normalize(vec3(cc_matView[0][2], cc_matView[1][2], cc_matView[2][2]));
+    vec3 reflectDir = reflect(normalize(vec3(-0.5, -0.8, 0.8)), normal);
+    float spec = clamp(dot(reflectDir, viewDir), 0.0, 1.0);
+    col.rgb += (col.rgb + 0.5) * pow(spec, 5.0) * 0.15;
+    
+    // Back face final color override
+    if (!gl_FrontFacing) {
+      col.rgb = vec3(0.9);
+    }
+    
+    // Alpha discard
+    if (col.a < 0.9) {
+      discard;
+    }
+    
+    // Highlight effect
+    col.rgb = mix(col.rgb, vec3(1.0), highlight * 0.6);
+    
+    return CCFragOutput(col);
+  }
+}%

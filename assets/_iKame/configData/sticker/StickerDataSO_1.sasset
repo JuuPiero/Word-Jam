@@ -1,0 +1,21 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_1",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 0,
+  "stickerTexture": {
+    "__uuid__": "b2bd1de2-a05b-4b1a-807d-293013ddcd83@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "448f2ab7-0464-4916-931e-63cc446dfc42@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "0f2671a4-511b-4bb2-82ca-7474a4129c33",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": null
+}

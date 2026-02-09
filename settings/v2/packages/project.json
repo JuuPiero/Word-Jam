@@ -1,3 +1,30 @@
 {
-  "__version__": "1.0.6"
+  "__version__": "1.0.6",
+  "physics": {
+    "collisionMatrix": {
+      "0": 8,
+      "1": 0,
+      "2": 8,
+      "3": 13
+    },
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Sticker"
+      },
+      {
+        "index": 2,
+        "name": "Holdable"
+      },
+      {
+        "index": 3,
+        "name": "Free"
+      }
+    ]
+  },
+  "general": {
+    "designResolution": {
+      "height": 1920
+    }
+  }
 }

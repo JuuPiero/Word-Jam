@@ -1,0 +1,53 @@
+{
+  "__type__": "fc8d8xFHF9L1LjjdJeaSJLZ",
+  "_name": "StickerConfigs",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerDatas": [
+    {
+      "__uuid__": "dcb6dcf4-30ff-4f9b-9b4e-2e8120b601f9",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "b255f97c-8803-4946-927f-0d8cc3e379b9",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "5dc4b1e7-e882-44e7-8b0d-0b492cf4f44d",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "2be060b9-979f-495e-9741-6e5d93288ba3",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "91c29512-d575-44ac-ad6e-a9e781bccf96",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "27319bfc-058a-4594-abd9-bc4b7778890b",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "56867c55-c661-4d51-8e52-f2f5972cb50a",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "6d133d23-d851-420c-9f10-0820f506ab8c",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "42d48dc8-9b27-4f8c-8a95-dbadc88bc689",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "dd1d3fbe-49f5-4410-94ab-b991468dd7f6",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "b753ad60-2b7c-4e6e-bea6-3d24695e34c2",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    }
+  ]
+}
