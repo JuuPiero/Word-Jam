@@ -13,6 +13,7 @@ import { ISticker } from '../gameplay/stickers/ISticker';
 import { IHoldableObject } from '../gameplay/holdableObject/IHoldableObject';
 import { HodlablleData } from '../gameplay/data/HodlablleData';
 import { StickerData } from '../gameplay/data/StickerData';
+import { FreeStickerPool } from '../gameplay/pooling/FreeStickerPool';
 const { ccclass, property } = _decorator;
 
 @ccclass('LevelController')
@@ -23,6 +24,7 @@ export class LevelController extends Component implements ILevelController
 
     @property({ type: BoxController, group: "Controllers" }) public boxController: BoxController;
     @property({ type: CacheController, group: "Controllers" }) public cacheController: CacheController;
+    @property({type : FreeStickerPool, group : "Pooling"}) public freeStickerPool : FreeStickerPool;
     @property(BlockPicker) public blockPicker: BlockPicker;
 
     private _gameData: GameData;

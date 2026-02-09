@@ -81,6 +81,7 @@ export class LevelStickerSetup extends Component {
             rb.group = PHYSIC_GROUP.Holdable;
             const hixBox = holdNode.addComponent(MeshCollider);
             hixBox.mesh = meshRenderer.mesh;
+            holdableObject.rigidBody = rb;
         }
 
         const stickerNodes: Node[] = [];

@@ -12,7 +12,7 @@ export class HoldableObject extends Component implements IHoldableObject
     private _data: HodlablleData;
     private _levelController: ILevelController;
     
-    @property(RigidBody) private rigidBody: RigidBody;
+    @property(RigidBody) public rigidBody: RigidBody;
 
     @property([ CCString ]) public stickers: string[] = [];
     

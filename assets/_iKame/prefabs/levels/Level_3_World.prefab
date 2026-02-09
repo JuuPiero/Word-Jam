@@ -597,6 +597,9 @@
     "__prefab": {
       "__id__": 9
     },
+    "rigidBody": {
+      "__id__": 10
+    },
     "stickers": [
       "Sticker_44",
       "Sticker_51"
@@ -816,6 +819,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 20
+    },
+    "rigidBody": {
+      "__id__": 10
     },
     "stickers": [
       "Sticker_46",
@@ -1037,6 +1043,9 @@
     "__prefab": {
       "__id__": 31
     },
+    "rigidBody": {
+      "__id__": 10
+    },
     "stickers": [
       "Sticker_45",
       "Sticker_50"
@@ -1256,6 +1265,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 42
+    },
+    "rigidBody": {
+      "__id__": 10
     },
     "stickers": [
       "Sticker_2",
@@ -1495,6 +1507,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 53
+    },
+    "rigidBody": {
+      "__id__": 10
     },
     "stickers": [
       "Sticker_0",
@@ -1756,6 +1771,9 @@
     "__prefab": {
       "__id__": 64
     },
+    "rigidBody": {
+      "__id__": 10
+    },
     "stickers": [
       "Sticker_74",
       "Sticker_75",
@@ -1978,6 +1996,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 75
+    },
+    "rigidBody": {
+      "__id__": 10
     },
     "stickers": [
       "Sticker_54",
@@ -2203,6 +2224,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 86
+    },
+    "rigidBody": {
+      "__id__": 10
     },
     "stickers": [
       "Sticker_65",
@@ -2430,6 +2454,9 @@
     "__prefab": {
       "__id__": 97
     },
+    "rigidBody": {
+      "__id__": 10
+    },
     "stickers": [
       "Sticker_52",
       "Sticker_53",
@@ -2655,6 +2682,9 @@
     "__prefab": {
       "__id__": 108
     },
+    "rigidBody": {
+      "__id__": 10
+    },
     "stickers": [
       "Sticker_47",
       "Sticker_48"
@@ -2874,6 +2904,9 @@
     "_enabled": true,
     "__prefab": {
       "__id__": 119
+    },
+    "rigidBody": {
+      "__id__": 120
     },
     "stickers": [
       "Sticker_15",
@@ -25924,6 +25957,7 @@
       "__id__": 0
     },
     "fileId": "70ruEqjL1L6K6BwSSl9iSe",
+    "instance": null,
     "targetOverrides": null
   }
 ]
