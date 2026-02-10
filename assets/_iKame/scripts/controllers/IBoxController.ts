@@ -1,5 +1,5 @@
 import { BoxData } from "../gameplay/data/BoxData";
 
 export interface IBoxController {
-    setup(count: number) : BoxData[];
+    getNextBoxData(): BoxData;
 }

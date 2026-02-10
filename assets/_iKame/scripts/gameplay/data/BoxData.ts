@@ -11,18 +11,19 @@ export class BoxData {
         return this._filledStickerCount;
     }
 
-    constructor(stickerID: number) {
+    constructor(stickerID: number, filledStickerCount: number = 0) {
         this._stickerID = stickerID;
+        this._filledStickerCount = filledStickerCount;
     }
 
     public addFilledStickerCount(count: number): void {
         this._filledStickerCount += count;
     }
 
-    public reset(id : number): void 
+    public reset(id : number, filledStickerCount: number = 0): void 
     {
         this._stickerID = id;
-        this._filledStickerCount = 0;
+        this._filledStickerCount = filledStickerCount;
     }
 
     public isFull(): boolean {

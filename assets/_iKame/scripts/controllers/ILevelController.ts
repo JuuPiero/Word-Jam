@@ -1,4 +1,5 @@
 import { Node } from "cc";
+import { BoxData } from "../gameplay/data/BoxData";
 export interface ILevelController
 {
     spawnLevel(): void;
@@ -8,6 +9,7 @@ export interface ILevelController
     showTransparentBlocks(name: string, isTransparent: boolean): void;
     onPickObject(name: string): void;
     getNode(): Node;
+    getNextBoxData(): BoxData;
 }
 
 

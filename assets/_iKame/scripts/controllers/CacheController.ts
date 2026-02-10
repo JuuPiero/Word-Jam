@@ -13,6 +13,8 @@ export class CacheController extends Component
 
     private _activeCaches: SpriteRenderer[] = [];
 
+    private isStickerInPlace: boolean[] = [];
+
     setup(count: number): CacheData
     {
         this._data = new CacheData(count);
@@ -26,6 +28,7 @@ export class CacheController extends Component
                 continue;
             }
             this._activeCaches.push(box);
+            this.isStickerInPlace.push(false);
         }
 
         let centerX = 0
@@ -61,6 +64,16 @@ export class CacheController extends Component
     public setCache(index: number, id: number): void
     {
         this._data.setCacheAt(index, id);
+    }
+
+    public setStickerInPlace(index: number, inPlace: boolean): void
+    {
+        this.isStickerInPlace[index] = inPlace;
+    }
+
+    public isStickerReady(index: number): boolean
+    {
+        return this.isStickerInPlace[index];
     }
 }
 

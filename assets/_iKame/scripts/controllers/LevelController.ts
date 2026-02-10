@@ -1,10 +1,9 @@
-import { _decorator, CCInteger, Component, instantiate, Node, Prefab, Quat, tween, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
 import { BoxController } from './BoxController';
 import { CacheController } from './CacheController';
-import { DragRotateController } from '../commond/DragRotateController';
 import { BlockPicker } from '../gameplay/BlockPicker';
 import { HoldableObject } from '../gameplay/holdableObject/HoldableObject';
 import { Sticker } from '../gameplay/stickers/Sticker';
@@ -17,6 +16,7 @@ import { Box } from '../gameplay/boxes/Box';
 import { PromiseDelay } from '../utils/PromiseDelay';
 import { StickerConfigs } from '../configData/StickerConfigs';
 import { STICKER } from '../GameConstants';
+import { BoxData } from '../gameplay/data/BoxData';
 const { ccclass, property } = _decorator;
 
 @ccclass('LevelController')
@@ -123,7 +123,7 @@ export class LevelController extends Component implements ILevelController
             stickerDatas.push(stickerData);
         }
 
-        const boxDatas = this.boxController.setup(levelData.maxBox);
+        const boxDatas = this.boxController.setup(levelData.maxBox, this);
         const cacheData = this.cacheController.setup(levelData.maxCache);
 
         this._gameData = new GameData(this.levelIndex, boxDatas, cacheData, stickerDatas, holdableDatas);
@@ -182,9 +182,56 @@ export class LevelController extends Component implements ILevelController
         }
     }
 
-    public transferStickerToBox(sticker: Sticker, box: Box): void
+    public async transferStickerToBox(sticker: Sticker, box: Box): Promise<void>
     {
+        const targetNode : Node = box.getEmptySlotNode();
+        if (!targetNode) return;
 
+        const isBoxFull = box.addSticker();
+        sticker.node.setParent(this.node, true);
+        sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
+        
+        const startPos = sticker.node.getWorldPosition();
+        const targetPos = targetNode.getWorldPosition();
+        const tweenMoveProgress = {x : 0};
+        const newPos = new Vec3();
+        const rot1 = sticker.node.getWorldRotation();
+        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rotLerp = new Quat();
+
+        const scale1 = sticker.node.getScale();
+        const scale = new Vec3();
+
+        tween(tweenMoveProgress)
+            .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
+                easing: 'cubicInOut',
+                onUpdate: (target: { x: number }, ratio: number) =>
+                {
+                    Vec3.lerp(newPos, startPos, targetPos, target.x);
+                    // Thêm chuyển động vòng cung theo hướng z
+                    const arcOffset = Math.sin(target.x * Math.PI) * 2;
+                    newPos.z += arcOffset;
+                    sticker.node.setWorldPosition(newPos);
+                    Quat.slerp(rotLerp, rot1, rot2, target.x);
+                    sticker.node.setWorldRotation(rotLerp);
+
+                    Vec3.lerp(scale, scale1, STICKER.IN_BOX_SCALE, target.x);
+                    sticker.node.setScale(scale);
+
+                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
+                    sticker.setPeelProgress(peel);
+                } })
+            .start();
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION).wait();
+
+        if (!isBoxFull) return;
+        const nextBoxData = this.getNextBoxData();
+        if (!nextBoxData)
+        {
+            this.boxController.removeBox(box);
+            return;
+        }
+        await box.replaceBox(nextBoxData);
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
@@ -223,12 +270,17 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION).wait();
-
+        this.cacheController.setStickerInPlace(cacheIndex, true);
     }
 
     getNode(): Node
     {
         return this.node;
+    }
+
+    getNextBoxData(): BoxData
+    {
+        return this._gameData.getNewBoxData();
     }
 }
 
