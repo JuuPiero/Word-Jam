@@ -7,6 +7,8 @@ export interface ISticker {
     
     addListenerOnRemoved(listener: (sticker: ISticker) => void): void;
     removeListenerOnRemoved(listener: (sticker: ISticker) => void): void;
+
+    destroySticker(): void;
 }
 
 

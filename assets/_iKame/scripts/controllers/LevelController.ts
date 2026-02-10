@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, game, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -187,7 +187,8 @@ export class LevelController extends Component implements ILevelController
         const targetNode : Node = box.getEmptySlotNode();
         if (!targetNode) return;
 
-        const isBoxFull = box.addSticker();
+        this._stickerMap.delete(sticker.getName());
+        const isBoxFull = box.addSticker(sticker);
         sticker.node.setParent(this.node, true);
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         
@@ -222,8 +223,8 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION).wait();
-
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        sticker.node.setParent(targetNode, true);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
@@ -269,7 +270,7 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION).wait();
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
         this.cacheController.setStickerInPlace(cacheIndex, true);
     }
 

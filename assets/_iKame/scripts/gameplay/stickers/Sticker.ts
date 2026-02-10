@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, CCString, Collider, Component, easing, Mesh, MeshRenderer, Node, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCInteger, CCString, Collider, Component, easing, game, Mesh, MeshRenderer, Node, Tween, tween, Vec3 } from 'cc';
 import { ISticker } from './ISticker';
 import { IHoldableObject } from '../holdableObject/IHoldableObject';
 import { ILevelController } from '../../controllers/ILevelController';
@@ -182,7 +182,7 @@ export class Sticker extends Component implements ISticker
             })
             .start();
         
-        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION);
+        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION + game.deltaTime);
         await delay.wait();
     }
 
@@ -208,6 +208,11 @@ export class Sticker extends Component implements ISticker
         }
         const mat = this.meshRenderer.getMaterialInstance(0);
         mat.setProperty('peel', progress);
+    }
+
+    public destroySticker(): void
+    {
+        this.node.destroy();
     }
 }
 

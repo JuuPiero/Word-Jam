@@ -25,12 +25,12 @@ export const STICKER = {
 export const BOX = 
 {
     LID_OPEN_POS: new Vec3(0, 1.8, -6),
-    LID_CLOSE_POS: new Vec3(0, -0.2, 0.473),
+    LID_CLOSE_POS: new Vec3(0, -0.2, -0.473),
     LID_OPEN_ROT: new Vec3(60, 0, 0),
-    LID_CLOSE_DURATION: 0.5,
+    LID_CLOSE_DURATION: 0.15,
 
     BOX_MOVE_UP_DURATION: 0.3,
     BOX_MOVE_UP_POS: new Vec3(0, 4, 0),
     BOX_START_DOWN_POS: new Vec3(0, -1.5, 0),
-    BOX_START_DOWN_ROT: new Vec3(0, -540, 0)
+    BOX_START_DOWN_ROT: new Vec3(0, -180, 0)
 }

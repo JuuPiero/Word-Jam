@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, SpriteRenderer, Vec3 } from 'cc';
+import { _decorator, Component, game, Node, SpriteRenderer, Vec3 } from 'cc';
 import { CacheData } from '../gameplay/data/CacheData';
 const { ccclass, property } = _decorator;
 

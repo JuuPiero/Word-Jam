@@ -1,4 +1,4 @@
-import { _decorator, Component, easing, EventKeyboard, Input, input, KeyCode, MeshRenderer, Node, tween, Tween, Vec3 } from 'cc';
+import { _decorator, Component, easing, EventKeyboard, game, Input, input, KeyCode, MeshRenderer, Node, tween, Tween, Vec3 } from 'cc';
 import { StickerConfigs } from '../../configData/StickerConfigs';
 import { STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
@@ -49,7 +49,7 @@ export class FreeSticker extends Component {
             })
             .start();
         
-        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION);
+        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION + game.deltaTime);
         await delay.wait();
 
         const p = targetNode.getWorldPosition();
@@ -64,7 +64,7 @@ export class FreeSticker extends Component {
             .to(STICKER.AFTER_PEEL_DURATION, { scale: STICKER.AFTER_PEEL_END_SCALE }, { easing: easing.backOut })
             .start();
         
-        const delay2 = PromiseDelay.GetCancelablePromise(STICKER.AFTER_PEEL_DURATION);
+        const delay2 = PromiseDelay.GetCancelablePromise(STICKER.AFTER_PEEL_DURATION + game.deltaTime);
         await delay2.wait();
     }
 }
