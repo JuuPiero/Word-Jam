@@ -1,5 +1,6 @@
 import { _decorator, Component, game, Node, SpriteRenderer, Vec3 } from 'cc';
 import { CacheData } from '../gameplay/data/CacheData';
+import { Sticker } from '../gameplay/stickers/Sticker';
 const { ccclass, property } = _decorator;
 
 const CACHE_SPACING = .56
@@ -15,6 +16,8 @@ export class CacheController extends Component
 
     private isStickerInPlace: boolean[] = [];
 
+    private _stickes : Sticker[] = [];
+
     setup(count: number): CacheData
     {
         this._data = new CacheData(count);
@@ -29,6 +32,7 @@ export class CacheController extends Component
             }
             this._activeCaches.push(box);
             this.isStickerInPlace.push(false);
+            this._stickes.push(null);
         }
 
         let centerX = 0
@@ -61,9 +65,10 @@ export class CacheController extends Component
         return -1;
     }
 
-    public setCache(index: number, id: number): void
+    public setCache(index: number, id: number, sticker: Sticker): void
     {
         this._data.setCacheAt(index, id);
+        this._stickes[index] = sticker;
     }
 
     public setStickerInPlace(index: number, inPlace: boolean): void
@@ -71,9 +76,31 @@ export class CacheController extends Component
         this.isStickerInPlace[index] = inPlace;
     }
 
+    public getCachedId(indexSlot: number): number
+    {
+        return this._data.getCacheAt(indexSlot);
+    }
+
+    public getStickerAt(indexSlot: number): Sticker
+    {
+        return this._stickes[indexSlot];
+    }
+
     public isStickerReady(index: number): boolean
     {
         return this.isStickerInPlace[index];
+    }
+
+    public findFirstStickerWithID(id: number): {slotIndex: number, sticker: Sticker} | null
+    {
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            if (this._data.getCacheAt(i) === id)
+            {
+                return { slotIndex: i, sticker: this._stickes[i] };
+            }
+        }
+        return null;
     }
 }
 

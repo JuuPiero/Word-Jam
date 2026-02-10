@@ -29,6 +29,10 @@ export class CacheData {
     public clearCacheAt(index: number): void {
         this._inCachesIDs[index] = -1;
     }
+
+    public getCacheAt(index: number): number {
+        return this._inCachesIDs[index];
+    }
 }
 
 

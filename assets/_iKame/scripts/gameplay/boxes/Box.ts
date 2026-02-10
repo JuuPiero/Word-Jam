@@ -147,6 +147,10 @@ export class Box extends Component {
         this._isReady = true;
     }
 
+    public getEmptySlotCount(): number
+    {
+        return this._boxData.getEmptySlotCount();
+    }
 }
 
 

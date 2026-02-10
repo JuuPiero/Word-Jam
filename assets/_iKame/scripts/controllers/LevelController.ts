@@ -36,6 +36,9 @@ export class LevelController extends Component implements ILevelController
     private _stickerMap: Map<string, Sticker> = new Map<string, Sticker>();
     private _holdableMap: Map<string, HoldableObject> = new Map<string, HoldableObject>();
 
+    private _justCompletedBoxes: Set<Box> = new Set<Box>();
+    private _justCachedSlots: Set<number> = new Set<number>();
+
     @property(Node) private rotationRoot: Node;
 
     protected onLoad(): void
@@ -133,12 +136,21 @@ export class LevelController extends Component implements ILevelController
     {
         this._holdableMap.clear();
         this._stickerMap.clear();
+        this._justCompletedBoxes.clear();
+        this._justCachedSlots.clear();
         this.node.destroyAllChildren();
+    }
+
+    //TODO: Remove this function later
+    protected update(dt: number): void
+    {
+        this.doUpdate(dt);
     }
 
     doUpdate(deltaTime: number): void
     {
-
+        this.tryTransferStickerFromJustCompletedBoxes();
+        this.tryTransferStickerFromJustCachedSlots();
     }
 
     lateUpdate(deltaTime: number): void
@@ -153,7 +165,6 @@ export class LevelController extends Component implements ILevelController
 
     onPickObject(name: string): void
     {
-        //TODO implement this function later
         if (PREVIEW) console.log("Picked object: " + name);
         const sticker = this._stickerMap.get(name);
         if (sticker)
@@ -233,11 +244,13 @@ export class LevelController extends Component implements ILevelController
             return;
         }
         await box.replaceBox(nextBoxData);
+        this._justCompletedBoxes.add(box);
+        console.log("Box completed, added to just completed boxes", this._justCompletedBoxes.size);
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
     {
-        this.cacheController.setCache(cacheIndex, sticker.stickerID);
+        this.cacheController.setCache(cacheIndex, sticker.stickerID, sticker);
         sticker.node.setParent(this.node, true);
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         const startPos = sticker.node.getWorldPosition();
@@ -272,6 +285,7 @@ export class LevelController extends Component implements ILevelController
             .start();
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
         this.cacheController.setStickerInPlace(cacheIndex, true);
+        this._justCachedSlots.add(cacheIndex);
     }
 
     getNode(): Node
@@ -282,6 +296,96 @@ export class LevelController extends Component implements ILevelController
     getNextBoxData(): BoxData
     {
         return this._gameData.getNewBoxData();
+    }
+
+    private async transferStickerFromCacheToBox(sticker : Sticker, cacheIndex: number, box: Box): Promise<void>
+    {
+        const targetNode : Node = box.getEmptySlotNode();
+
+        // Clear cache
+        this.cacheController.setCache(cacheIndex, -1, null);
+        this.cacheController.setStickerInPlace(cacheIndex, false);
+
+        const isBoxFull = box.addSticker(sticker);
+        sticker.node.setParent(this.node, true);
+        
+        const startPos = sticker.node.getWorldPosition();
+        const targetPos = targetNode.getWorldPosition();
+        const tweenMoveProgress = {x : 0};
+        const newPos = new Vec3();
+        const rot1 = sticker.node.getWorldRotation();
+        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rotLerp = new Quat();
+
+        const scale1 = sticker.node.getScale();
+        const scale = new Vec3();
+
+        tween(tweenMoveProgress)
+            .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
+                easing: 'cubicInOut',
+                onUpdate: (target: { x: number }, ratio: number) =>
+                {
+                    Vec3.lerp(newPos, startPos, targetPos, target.x);
+                    // Thêm chuyển động vòng cung theo hướng z
+                    const arcOffset = Math.sin(target.x * Math.PI) * 2;
+                    newPos.z += arcOffset;
+                    sticker.node.setWorldPosition(newPos);
+                    Quat.slerp(rotLerp, rot1, rot2, target.x);
+                    sticker.node.setWorldRotation(rotLerp);
+
+                    Vec3.lerp(scale, scale1, STICKER.IN_BOX_SCALE, target.x);
+                    sticker.node.setScale(scale);
+
+                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
+                    sticker.setPeelProgress(peel);
+                } })
+            .start();
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        sticker.node.setParent(targetNode, true);
+        if (!isBoxFull) return;
+        const nextBoxData = this.getNextBoxData();
+        if (!nextBoxData)
+        {
+            await this.boxController.removeBox(box);
+            return;
+        }
+        await box.replaceBox(nextBoxData);
+        this._justCompletedBoxes.add(box);
+    }
+
+    private tryTransferStickerFromJustCompletedBoxes(): void
+    {
+        if (this._justCompletedBoxes.size === 0) return;
+        while (this._justCompletedBoxes.size > 0)
+        {
+            const box = this._justCompletedBoxes.values().next().value;
+            this._justCompletedBoxes.delete(box)
+            const stickerID = box.getBoxData().stickerID;
+            let emptySlotCount = box.getBoxData().getEmptySlotCount();
+            while (emptySlotCount > 0)
+            {
+                const res = this.cacheController.findFirstStickerWithID(stickerID);
+                if (!res || !res.sticker) break;
+                this.transferStickerFromCacheToBox(res.sticker, res.slotIndex, box);
+                --emptySlotCount;
+            }
+        }
+    }
+
+    private tryTransferStickerFromJustCachedSlots(): void
+    {
+        if (this._justCachedSlots.size === 0) return;
+
+        while (this._justCachedSlots.size > 0)
+        {
+            const slotIndex = this._justCachedSlots.values().next().value;
+            this._justCachedSlots.delete(slotIndex);
+            const box = this.boxController.findSuitableBox(this.cacheController.getCachedId(slotIndex));
+            if (!box) continue;
+            const sticker = this.cacheController.getStickerAt(slotIndex);
+            if (!sticker) continue;
+            this.transferStickerFromCacheToBox(sticker, slotIndex, box);
+        }
     }
 }
 

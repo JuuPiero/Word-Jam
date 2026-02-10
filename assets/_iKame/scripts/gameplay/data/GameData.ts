@@ -49,6 +49,6 @@ export class GameData
         /// TODO : optimize this by difficult level design
         const stickerIDs = this.TotalStickerIDs;
         const stickerID = stickerIDs[ Math.floor(Math.random() * stickerIDs.length) ];
-        return new BoxData(stickerID);
+        return new BoxData(2);
     }
 }

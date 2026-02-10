@@ -29,6 +29,10 @@ export class BoxData {
     public isFull(): boolean {
         return this._filledStickerCount >= BoxData.MAX_STICKER_COUNT;
     }
+
+    public getEmptySlotCount(): number {
+        return BoxData.MAX_STICKER_COUNT - this._filledStickerCount;
+    }
 }
 
 
