@@ -203,9 +203,6 @@ export class GameAlgorithmHelper {
         } else if (id >= 0) {
             fromCloset = true;
         }
-
-        console.log("Returning ID:", id);
-
         return { id, fromCloset, fromRandomWeight };
     }
 

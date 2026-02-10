@@ -461,6 +461,7 @@ export class LevelController extends Component implements ILevelController
     {
         Tween.stopAll();
         PromiseDelay.CancelAllPromises();
+        console.log("Level ended. isWin =", isWin);
         EventDispatcher.dispatch(EventName.EndGame, isWin);
     }
 }
