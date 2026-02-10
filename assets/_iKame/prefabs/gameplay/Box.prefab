@@ -299,7 +299,7 @@
       "__id__": 3
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 10
@@ -886,6 +886,9 @@
     "root": {
       "__id__": 2
     },
+    "lidNode": {
+      "__id__": 9
+    },
     "outLineSprites": [
       {
         "__id__": 16
@@ -897,7 +900,6 @@
         "__id__": 24
       }
     ],
-    "fillSprites": [],
     "iconSprite": {
       "__id__": 28
     },
