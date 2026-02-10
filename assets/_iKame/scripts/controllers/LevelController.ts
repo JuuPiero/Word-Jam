@@ -229,7 +229,7 @@ export class LevelController extends Component implements ILevelController
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
         {
-            this.boxController.removeBox(box);
+            await this.boxController.removeBox(box);
             return;
         }
         await box.replaceBox(nextBoxData);

@@ -66,12 +66,14 @@ export class BoxController extends Component implements IBoxController
         return this._levelController.getNextBoxData();
     }
 
-    public removeBox(box: Box): void
+    public async removeBox(box: Box)
     {
         const index = this._activeBoxes.indexOf(box);
         if (index >= 0)
         {
             this._activeBoxes.splice(index, 1);
+            await box.closeLidAnimation();
+            await box.moveUpAnimation();
             box.node.active = false;
             this.realignBoxes();
         }
