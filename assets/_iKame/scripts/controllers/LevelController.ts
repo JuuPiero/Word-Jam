@@ -161,7 +161,11 @@ export class LevelController extends Component implements ILevelController
 
     showTransparentBlocks(name: string, isTransparent: boolean): void
     {
-        //TODO implement this function later
+        const object = this._holdableMap.get(name);
+        if (object)
+        {
+            object.setMaterial(isTransparent ? this.stickerConfigs.objectTransparentMaterial : this.stickerConfigs.objectNormalMaterial);
+        }
     }
 
     onPickObject(name: string): void
@@ -235,7 +239,7 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
         t.stop();
         sticker.node.setParent(targetNode, true);
         if (!isBoxFull) return;
@@ -247,7 +251,6 @@ export class LevelController extends Component implements ILevelController
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
-        console.log("Box completed, added to just completed boxes", this._justCompletedBoxes.size);
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>

@@ -1,6 +1,6 @@
 {
   "__type__": "fc8d8xFHF9L1LjjdJeaSJLZ",
-  "_name": "StickerConfigs",
+  "_name": "AssetResources",
   "_objFlags": 0,
   "__editorExtras__": {},
   "_native": "",
@@ -53,5 +53,13 @@
   "stickerNormalMesh": {
     "__uuid__": "5239483a-c404-41da-a410-71368e1e2d24@a62fe",
     "__expectedType__": "cc.Mesh"
+  },
+  "objectNormalMaterial": {
+    "__uuid__": "8d67ed86-0e72-41e0-9a75-d4509ed5145f",
+    "__expectedType__": "cc.Material"
+  },
+  "objectTransparentMaterial": {
+    "__uuid__": "b6b6283d-5fb8-4d48-9025-82c7b38e80d8",
+    "__expectedType__": "cc.Material"
   }
 }

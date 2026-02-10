@@ -45,12 +45,13 @@ export class BlockPicker extends Component {
 
         event.getLocation(this.screenPos);
         const ray = this.mainCamera.screenPointToRay(this.screenPos.x, this.screenPos.y);
-        const isHit = PhysicsSystem.instance.raycastClosest(ray);
+        let isHit = PhysicsSystem.instance.raycastClosest(ray);
         if (isHit)
         {
             const result = PhysicsSystem.instance.raycastClosestResult; // First hit
             this.selectedNode = result.collider.node;
-            this.scheduleOnce( () => this.setBlockTransparent(), TRANSPARENT_THRESHOLD);
+            this.scheduleOnce(() => this.setBlockTransparent(), TRANSPARENT_THRESHOLD);
+            return;
         }
     }
 

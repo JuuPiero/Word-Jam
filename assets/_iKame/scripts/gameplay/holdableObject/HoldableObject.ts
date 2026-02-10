@@ -1,4 +1,4 @@
-import { _decorator, CCString, Component, MeshCollider, Node, RigidBody } from 'cc';
+import { _decorator, CCString, Component, Material, MeshCollider, MeshRenderer, Node, RigidBody } from 'cc';
 import { IHoldableObject } from './IHoldableObject';
 import { ISticker } from '../stickers/ISticker';
 import { HodlablleData } from '../data/HodlablleData';
@@ -13,13 +13,20 @@ export class HoldableObject extends Component implements IHoldableObject
     private _data: HodlablleData;
     private _levelController: ILevelController;
     
-    private rigidBody: RigidBody;
+    public rigidBody: RigidBody;
 
     @property([ CCString ]) public stickers: string[] = [];
     
     private onObjectRemoved: ((holdableObject: IHoldableObject) => void)[] = [];
 
-    private _isCanUpdate : boolean = false;
+    private _isCanUpdate: boolean = false;
+    
+    private mainMeshRender: MeshRenderer | null = null;
+
+    protected start(): void
+    {
+        this.mainMeshRender = this.getComponent(MeshRenderer);
+    }
     
     setup(level: ILevelController, stickers: ISticker[]): HodlablleData
     {
@@ -92,6 +99,11 @@ export class HoldableObject extends Component implements IHoldableObject
     protected onDestroy(): void
     {
         this.onObjectRemoved = [];
+    }
+
+    public setMaterial(mat: Material)
+    {
+        this.mainMeshRender.setSharedMaterial(mat, 0);
     }
 
 }

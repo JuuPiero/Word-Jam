@@ -1,7 +1,7 @@
 import { _decorator, Component, easing, game, MeshRenderer, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
 import { BoxData } from '../data/BoxData';
 import { StickerConfigs } from '../../configData/StickerConfigs';
-import { BOX } from '../../GameConstants';
+import { BOX, STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
 import { IBoxController } from '../../controllers/IBoxController';
 import { ISticker } from '../stickers/ISticker';
@@ -68,6 +68,27 @@ export class Box extends Component {
         const mat = stickerData.boxMaterial;
         if (mat)
             this.meshVisual.setSharedMaterial(mat, 0);
+    
+        if (prefillCount > 0) {
+            this.createPreSpawnStickerNode();
+        }
+    }
+
+    public createPreSpawnStickerNode(): void 
+    {
+        const pos = new Vec3(0, 0, .07);
+        for (let i = 0; i < this._boxData.filledStickerCount; i++)
+        {
+            const stickerNode = new Node('StickerInBox');
+            stickerNode.setParent(this.slotNodes[i], false);
+            stickerNode.setRotationFromEuler(0, 180, 0);
+            stickerNode.setWorldScale(STICKER.IN_BOX_SCALE);
+            stickerNode.setPosition(pos);
+            const renderMesh = stickerNode.addComponent(MeshRenderer);
+            renderMesh.mesh = this.stickerConfigs.stickerNormalMesh;
+            const stickerData = this.stickerConfigs.getStickerDataByID(this._boxData.stickerID);
+            renderMesh.setSharedMaterial(stickerData.stickerMaterial, 0);
+        }
     }
 
     public getEmptySlotNode(): Node 

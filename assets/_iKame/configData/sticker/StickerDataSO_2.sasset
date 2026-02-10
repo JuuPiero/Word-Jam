@@ -17,5 +17,8 @@
     "__uuid__": "e4be57e6-6b56-4644-bf15-ae1820aa258c",
     "__expectedType__": "cc.Material"
   },
-  "boxMaterial": null
+  "boxMaterial": {
+    "__uuid__": "35a275de-1f16-4ce4-b777-128f2b9fc651",
+    "__expectedType__": "cc.Material"
+  }
 }
