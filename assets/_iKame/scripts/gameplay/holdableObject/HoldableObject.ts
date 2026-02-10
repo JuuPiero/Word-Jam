@@ -1,9 +1,10 @@
-import { _decorator, CCString, Component, Node, RigidBody } from 'cc';
+import { _decorator, CCString, Component, MeshCollider, Node, RigidBody } from 'cc';
 import { IHoldableObject } from './IHoldableObject';
 import { ISticker } from '../stickers/ISticker';
 import { HodlablleData } from '../data/HodlablleData';
 import { ILevelController } from '../../controllers/ILevelController';
 import { EDITOR, PREVIEW } from 'cc/env';
+import { PHYSIC_GROUP } from '../../GameConstants';
 const { ccclass, property } = _decorator;
 
 @ccclass('HoldableObject')
@@ -12,7 +13,7 @@ export class HoldableObject extends Component implements IHoldableObject
     private _data: HodlablleData;
     private _levelController: ILevelController;
     
-    @property(RigidBody) public rigidBody: RigidBody;
+    private rigidBody: RigidBody;
 
     @property([ CCString ]) public stickers: string[] = [];
     
@@ -55,8 +56,15 @@ export class HoldableObject extends Component implements IHoldableObject
         {
             listener(this);
         }
-        // this.rigidBody.isDynamic = true;
-        this.node.active = false;
+        this.rigidBody = this.node.getComponent(RigidBody)!;
+        this.rigidBody.group = PHYSIC_GROUP.FREE;
+        this.rigidBody.isDynamic = true;
+        // const col = this.node.getComponent(MeshCollider);
+        // this.rigidBody.wakeUp();
+        this.scheduleOnce(() =>
+        {
+            this.node.destroy();
+        }, 10);
     }
 
     public getNodeUID(): string {

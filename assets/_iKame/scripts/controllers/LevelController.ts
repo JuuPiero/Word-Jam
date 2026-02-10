@@ -214,7 +214,7 @@ export class LevelController extends Component implements ILevelController
         const scale1 = sticker.node.getScale();
         const scale = new Vec3();
 
-        tween(tweenMoveProgress)
+        const t = tween(tweenMoveProgress)
             .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
@@ -235,6 +235,7 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        t.stop();
         sticker.node.setParent(targetNode, true);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
@@ -263,7 +264,7 @@ export class LevelController extends Component implements ILevelController
         const scale1 = sticker.node.getScale();
         const scale = new Vec3();
 
-        tween(tweenMoveProgress)
+        const t = tween(tweenMoveProgress)
             .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
@@ -284,6 +285,7 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        t.stop();
         this.cacheController.setStickerInPlace(cacheIndex, true);
         this._justCachedSlots.add(cacheIndex);
     }
@@ -320,7 +322,7 @@ export class LevelController extends Component implements ILevelController
         const scale1 = sticker.node.getScale();
         const scale = new Vec3();
 
-        tween(tweenMoveProgress)
+        const t = tween(tweenMoveProgress)
             .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
@@ -341,6 +343,7 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        t.stop();
         sticker.node.setParent(targetNode, true);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();

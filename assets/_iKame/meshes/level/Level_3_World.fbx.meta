@@ -2275,134 +2275,6 @@
       ],
       "subMetas": {}
     },
-    "93cfa": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@93cfa",
-      "displayName": "",
-      "id": "93cfa",
-      "name": "Master.material",
-      "userData": {
-        "gltfIndex": 0
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "9a341": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@9a341",
-      "displayName": "",
-      "id": "9a341",
-      "name": "Tem_6.material",
-      "userData": {
-        "gltfIndex": 1
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "f0397": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@f0397",
-      "displayName": "",
-      "id": "f0397",
-      "name": "Tem_9.material",
-      "userData": {
-        "gltfIndex": 2
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "939ff": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@939ff",
-      "displayName": "",
-      "id": "939ff",
-      "name": "Tem_2.material",
-      "userData": {
-        "gltfIndex": 3
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "25bed": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@25bed",
-      "displayName": "",
-      "id": "25bed",
-      "name": "Tem_4.material",
-      "userData": {
-        "gltfIndex": 4
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "7d052": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@7d052",
-      "displayName": "",
-      "id": "7d052",
-      "name": "Tem_5.material",
-      "userData": {
-        "gltfIndex": 5
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "6342c": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@6342c",
-      "displayName": "",
-      "id": "6342c",
-      "name": "Tem.material",
-      "userData": {
-        "gltfIndex": 6
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "491c0": {
-      "importer": "gltf-material",
-      "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@491c0",
-      "displayName": "",
-      "id": "491c0",
-      "name": "Tem_8.material",
-      "userData": {
-        "gltfIndex": 7
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
     "1fd9c": {
       "importer": "gltf-scene",
       "uuid": "32080d45-4be4-426a-8d1b-024669bc51e1@1fd9c",
@@ -2598,18 +2470,31 @@
         "32080d45-4be4-426a-8d1b-024669bc51e1@e874c"
       ],
       "materials": [
-        "32080d45-4be4-426a-8d1b-024669bc51e1@93cfa",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@9a341",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@f0397",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@939ff",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@25bed",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@7d052",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@6342c",
-        "32080d45-4be4-426a-8d1b-024669bc51e1@491c0"
+        "a4accb89-6661-49e9-b0fd-82d334ef4ff9",
+        "b29fd5ca-808c-411b-8735-8103c5d471f7",
+        "53d9c7a1-0112-49f6-b956-2850c874917e",
+        "a1697620-901f-409a-9e5d-56861ef37cee",
+        "7de95017-c4a6-435e-96b8-6f6b72610356",
+        "08843817-5997-4586-89fc-189ca986d516",
+        "1692a012-f3c8-4d70-a682-53006c6dc406",
+        "a9adbcb6-c9b7-4d1b-addd-956f34194a94"
       ],
       "scenes": [
         "32080d45-4be4-426a-8d1b-024669bc51e1@1fd9c"
       ]
-    }
+    },
+    "tangents": 2,
+    "skipValidation": false,
+    "disableMeshSplit": false,
+    "allowMeshDataAccess": true,
+    "meshCompress": {
+      "enable": true,
+      "encode": false,
+      "compress": true,
+      "quantize": true
+    },
+    "morphNormals": 1,
+    "dumpMaterials": true,
+    "materialDumpDir": "db://assets/_iKame/meshes/level/Materials_Level_3_World"
   }
 }
