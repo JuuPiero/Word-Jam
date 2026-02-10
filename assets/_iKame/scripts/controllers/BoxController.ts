@@ -15,7 +15,7 @@ export class BoxController extends Component implements IBoxController
     @property([ Box ]) public boxes: Box[] = [];
     private _levelController: ILevelController;
     
-    setup(count: number, level: ILevelController): BoxData[]
+    setup(count: number, level: ILevelController)
     {
         this._levelController = level;
         for (let i = 0; i < this.boxes.length; i++)
@@ -40,9 +40,22 @@ export class BoxController extends Component implements IBoxController
             this._activeBoxes[ i ].node.active = true;
             this._activeBoxes[ i ].node.setPosition(i * BOX_SPACING - offsetX, 0, 0);
             
-            this._boxDataList.push(this._activeBoxes[ i ].setup(this));
         }
+    }
 
+    setupFirstBoxes(): BoxData[]
+    {
+        for (let i = 0; i < this._activeBoxes.length; i++)
+        {
+            const box = this._activeBoxes[ i ];
+            const boxData = this._levelController.getNextBoxData();
+            this._boxDataList.push(box.setup(this, boxData));
+        }
+        return this._boxDataList;
+    }
+
+    public getBoxesDataList(): BoxData[]
+    {
         return this._boxDataList;
     }
 

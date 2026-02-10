@@ -126,10 +126,11 @@ export class LevelController extends Component implements ILevelController
             stickerDatas.push(stickerData);
         }
 
-        const boxDatas = this.boxController.setup(levelData.maxBox, this);
+        this.boxController.setup(levelData.maxBox, this);
         const cacheData = this.cacheController.setup(levelData.maxCache);
-
+        const boxDatas = this.boxController.getBoxesDataList();
         this._gameData = new GameData(this.levelIndex, boxDatas, cacheData, stickerDatas, holdableDatas);
+        this.boxController.setupFirstBoxes();
     }
 
     clearLevel(): void
@@ -234,7 +235,7 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
         t.stop();
         sticker.node.setParent(targetNode, true);
         if (!isBoxFull) return;
@@ -297,7 +298,7 @@ export class LevelController extends Component implements ILevelController
 
     getNextBoxData(): BoxData
     {
-        return this._gameData.getNewBoxData();
+        return this._gameData.getNewBoxData(.36);
     }
 
     private async transferStickerFromCacheToBox(sticker : Sticker, cacheIndex: number, box: Box): Promise<void>

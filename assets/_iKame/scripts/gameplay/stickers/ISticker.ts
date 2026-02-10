@@ -1,5 +1,3 @@
-import { HoldableObject } from "../holdableObject/HoldableObject";
-
 export interface ISticker {
     peelOff(): Promise<void>;
     getName(): string;
@@ -9,6 +7,9 @@ export interface ISticker {
     removeListenerOnRemoved(listener: (sticker: ISticker) => void): void;
 
     destroySticker(): void;
+
+    getBlockingPoint(): number;
+    getStickerID(): number;
 }
 
 

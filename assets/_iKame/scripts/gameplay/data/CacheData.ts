@@ -33,6 +33,20 @@ export class CacheData {
     public getCacheAt(index: number): number {
         return this._inCachesIDs[index];
     }
+
+    public getAllCachedIDs(): number[] {
+        return this._inCachesIDs.filter(id => id !== -1);
+    }
+
+    public getEmptyCacheCount(): number {
+        let count = 0;
+        for (const id of this._inCachesIDs) {
+            if (id === -1) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
 
 

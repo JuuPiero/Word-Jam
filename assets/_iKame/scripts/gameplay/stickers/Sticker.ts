@@ -214,6 +214,16 @@ export class Sticker extends Component implements ISticker
     {
         this.node.destroy();
     }
+
+    public getBlockingPoint(): number
+    {
+        return this._data.getBlockingPoint();
+    }
+
+    public getStickerID(): number
+    {
+        return this.stickerID;
+    }
 }
 
 

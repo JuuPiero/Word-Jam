@@ -31,12 +31,12 @@ export class Box extends Component {
         return this._isReady;
     }
 
-    public setup(boxesController: IBoxController): BoxData
+    public setup(boxesController: IBoxController, boxData: BoxData): BoxData
     {
         this.lidNode.active = false;
         this._boxesController = boxesController;
-        this._boxData = new BoxData(0);
-        this.updateData(this._boxData.stickerID);
+        this._boxData = boxData;
+        this.updateData(this._boxData.stickerID, this._boxData.filledStickerCount);
         this._isReady = true;
         return this._boxData;
     }

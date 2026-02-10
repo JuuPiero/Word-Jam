@@ -1,3 +1,5 @@
+import { LevelController } from "../../controllers/LevelController";
+import { GameAlgorithmHelper, NextTargetParams } from "../difficulty/GameAlgorithmHelper";
 import { BoxData } from "./BoxData";
 import { CacheData } from "./CacheData";
 import { HodlablleData as HoldablleData } from "./HodlablleData";
@@ -13,6 +15,8 @@ export class GameData
     private _holdableDatas: Set<HoldablleData>;
 
     private _stickerCountByIDMap: Map<number, number> = new Map<number, number>();
+
+    private _lastPoint: number = 0;
     
     constructor(levelIndex: number, boxDatas : BoxData[], cacheData: CacheData, stickerDatas: StickerData[], holdableDatas: HoldablleData[]) {
         this.levelIndex = levelIndex;
@@ -43,12 +47,53 @@ export class GameData
         return this.StickerCountByIDMap.size;
     }
 
-    public getNewBoxData(): BoxData
+    public getNewBoxData(difficulty : number): BoxData
     {
-        /// set random at first, will be reset later
-        /// TODO : optimize this by difficult level design
-        const stickerIDs = this.TotalStickerIDs;
-        const stickerID = stickerIDs[ Math.floor(Math.random() * stickerIDs.length) ];
-        return new BoxData(2);
+        const param: NextTargetParams = new NextTargetParams();
+        
+        param.idCountRemainingDict = this.StickerCountByIDMap;
+        
+        param.idPointsDict.clear();
+        this._stickerDatas.forEach((stickerData) =>
+        {
+            const v = param.idPointsDict.get(stickerData.id) || [];
+            v.push(stickerData.getBlockingPoint());
+            //sort v ascending
+            v.sort((a, b) => a - b);
+            param.idPointsDict.set(stickerData.id, v);
+        });
+
+        param.idPointDict.clear();
+        const idList = this.TotalStickerIDs;
+        for (const id of idList)
+        {
+            const listPoints = param.idPointsDict.get(id);
+            let loop = 3;
+            let minPoint = 0;
+            while (loop > 0)
+            {
+                loop--;
+                const p = listPoints[loop] || 0;
+                minPoint += p;
+            }
+            param.idPointDict.set(id, minPoint);
+        }
+
+        param.currentBoxesIdFreeSlotCount.clear();
+        this._boxDatas.forEach((boxData) => {
+            const freeSlotCount = boxData.getEmptySlotCount();
+            param.currentBoxesIdFreeSlotCount.set(boxData.stickerID, freeSlotCount);
+        })
+
+        param.currentBoxesIds = this._boxDatas.map(boxData => boxData.stickerID);
+        param.currentCacheIds = this._cacheData.getAllCachedIDs();
+        param.difficultPoint = difficulty;
+        param.freeHoleCount = this._cacheData.getEmptyCacheCount();
+
+        param.lastPoint = this._lastPoint;
+
+        const res = GameAlgorithmHelper.getNextTargetId(param)
+        this._lastPoint = res.realPoint;
+        return new BoxData(res.targetId);
     }
 }

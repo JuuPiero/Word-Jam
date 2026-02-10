@@ -86,6 +86,15 @@ export class StickerData
     public getAllWeightLockObjectNames(): string[] {
         return Array.from(this.weightLockObjects).map(obj => obj.getName());
     }
+
+    public getBlockingPoint(): number
+    {
+        let totalPoints = 0;
+        const filterdBlockingStickers = Array.from(this.blockingStickers).filter(s => s.getStickerID() !== this.id).length;
+        const weightLockStickerCount = Array.from(this.weightLockStickers).filter(s => s.getStickerID() !== this.id).length;
+        totalPoints += filterdBlockingStickers + weightLockStickerCount;
+        return totalPoints;
+    }
 }
 
 
