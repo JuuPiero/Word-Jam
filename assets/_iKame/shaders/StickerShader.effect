@@ -9,7 +9,7 @@ CCEffect %{
       properties:
         mainTexture: { value: white }
         peel: { value: 0, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
-        highlight: { value: 0, editor: { slide: true, range: [0, 1.0], step: 1 } }
+        highlight: { value: 0, editor: { slide: true, range: [0, 1.0], step: 0.01 } }
 }%
 
 CCProgram sticker-vs %{
@@ -93,7 +93,7 @@ CCProgram sticker-fs %{
     }
     
     // Lighting calculation
-    vec3 lightDir = normalize(vec3(0.5, 0.8, -0.8));
+    vec3 lightDir = normalize(vec3(0.5, 0.8, 0.8));
     vec3 normal = normalize(v_worldNormal);
     float lighting = dot(lightDir, normal);
     lighting = smoothstep(-0.2, 0.8, lighting);

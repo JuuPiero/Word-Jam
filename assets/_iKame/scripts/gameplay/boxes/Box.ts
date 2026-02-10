@@ -123,7 +123,7 @@ export class Box extends Component {
     public async moveUpAnimation(): Promise<void>
     {
         Tween.stopAllByTarget(this.root);
-        const startPos = this.root.getPosition();
+        this.root.setPosition(Vec3.ZERO);
         tween(this.root)
             .to(BOX.BOX_MOVE_UP_DURATION,
                 {
@@ -171,6 +171,17 @@ export class Box extends Component {
     public getEmptySlotCount(): number
     {
         return this._boxData.getEmptySlotCount();
+    }
+
+    public shake(delay : number): void {
+        Tween.stopAllByTarget(this.root);
+        const shakeDuration = 0.16;
+        const pos2 = new Vec3(0, 0, -.3)
+        tween(this.root)
+            .delay(delay)
+            .to(shakeDuration * 0.4, { position: pos2 }, {easing: easing.circOut})
+            .to(shakeDuration * 0.6, { position: Vec3.ZERO })
+            .start();
     }
 }
 

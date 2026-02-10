@@ -102,6 +102,40 @@ export class CacheController extends Component
         }
         return null;
     }
+
+    public isAllEmpty(): boolean
+    {
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            if (this._data.isCacheTakenAt(i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public isAllTaken(): boolean
+    {
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            if (!this._data.isCacheTakenAt(i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public getAllIDs(): Set<number>
+    {
+        const ids: Set<number> = new Set<number>();
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            ids.add(this._data.getCacheAt(i));
+        }
+        return ids;
+    }
 }
 
 

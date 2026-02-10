@@ -117,5 +117,40 @@ export class BoxController extends Component implements IBoxController
                 .start();
         }
     }
+
+    public getActiveBoxCount(): number
+    {
+        return this._activeBoxes.length;
+    }
+
+    public isAllBoxesReady(): boolean
+    {
+        for (let i = 0; i < this._activeBoxes.length; i++)
+        {
+            if (!this._activeBoxes[i].isReady) return false;
+        }
+        return true;
+    }
+
+    public isAllBoxFilled(): boolean
+    {
+        for (let i = 0; i < this._activeBoxes.length; i++)
+        {
+            const boxData = this._activeBoxes[i].getBoxData();
+            if (!boxData.isFull()) return false;
+        }
+        return true;
+    }
+
+    public getAllIDsInBoxes(): Set<number>
+    {
+        const ids: Set<number> = new Set<number>();
+        for (let i = 0; i < this._activeBoxes.length; i++)
+        {
+            const boxData = this._activeBoxes[i].getBoxData();
+            ids.add(boxData.stickerID);
+        }
+        return ids;
+    }
 }
 

@@ -25,11 +25,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 32
+        "__id__": 38
       }
     ],
     "_prefab": {
-      "__id__": 34
+      "__id__": 40
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -83,12 +83,21 @@
       },
       {
         "__id__": 27
+      },
+      {
+        "__id__": 31
+      },
+      {
+        "__id__": 33
+      },
+      {
+        "__id__": 35
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 31
+      "__id__": 37
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -457,9 +466,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.4,
-      "y": 0.4,
-      "z": 0.4
+      "x": 0.39,
+      "y": 0.39,
+      "z": 0.39
     },
     "_mobility": 0,
     "_layer": 1073741824,
@@ -561,9 +570,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.4,
-      "y": 0.4,
-      "z": 0.4
+      "x": 0.39,
+      "y": 0.39,
+      "z": 0.39
     },
     "_mobility": 0,
     "_layer": 1073741824,
@@ -665,9 +674,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.4,
-      "y": 0.4,
-      "z": 0.4
+      "x": 0.39,
+      "y": 0.39,
+      "z": 0.39
     },
     "_mobility": 0,
     "_layer": 1073741824,
@@ -841,6 +850,174 @@
     "nestedPrefabInstanceRoots": null
   },
   {
+    "__type__": "cc.Node",
+    "_name": "Slot4",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [],
+    "_prefab": {
+      "__id__": 32
+    },
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": -0.163,
+      "y": -0.605,
+      "z": 0.544
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 0.4,
+      "y": 0.4,
+      "z": 0.4
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "81uuM0HjFHE7ewhBbOQc6a",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Slot5",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [],
+    "_prefab": {
+      "__id__": 34
+    },
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0.443,
+      "y": 0.081,
+      "z": 0.544
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 0.4,
+      "y": 0.4,
+      "z": 0.4
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "dd4bVEe/tEp6OaisZN/FIM",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Slot6",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [],
+    "_prefab": {
+      "__id__": 36
+    },
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": -0.413,
+      "y": 0.338,
+      "z": 0.536
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 0.4,
+      "y": 0.4,
+      "z": 0.4
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "75W3+PJ6hAXZ8rACY3+RZs",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -863,20 +1040,20 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 33
+      "__id__": 39
     },
     "meshVisual": {
       "__id__": 5
     },
     "slotNodes": [
       {
-        "__id__": 15
+        "__id__": 35
       },
       {
-        "__id__": 19
+        "__id__": 33
       },
       {
-        "__id__": 23
+        "__id__": 31
       }
     ],
     "stickerConfigs": {
@@ -918,7 +1095,6 @@
       "__id__": 0
     },
     "fileId": "56L2Xz/lpPL4KJ7klW7+yC",
-    "instance": null,
     "targetOverrides": null
   }
 ]

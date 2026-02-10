@@ -91,7 +91,7 @@ CCProgram master-fs %{
     vec3 originCol = col.rgb;
     
     // Lighting
-    vec3 lightDir = normalize(vec3(0.5, 0.8, -0.8));
+    vec3 lightDir = normalize(vec3(0.5, 0.8, 0.8));
     vec3 normal = normalize(v_worldNorm);
     float lighting = dot(lightDir, normal);
     lighting = smoothstep(-0.2, 0.8, lighting);
@@ -99,7 +99,7 @@ CCProgram master-fs %{
     // Specular
     // Unity's UNITY_MATRIX_V[2].xyz is the camera forward direction (view direction)
     vec3 viewDir = normalize(vec3(cc_matView[0][2], cc_matView[1][2], cc_matView[2][2]));
-    vec3 reflectDir = reflect(normalize(vec3(-0.5, -0.8, 0.8)), normal);
+    vec3 reflectDir = reflect(normalize(vec3(-0.5, -0.8, -0.8)), normal);
     float spec = clamp(dot(reflectDir, viewDir), 0.0, 1.0);
     
     // Calculate base lighting

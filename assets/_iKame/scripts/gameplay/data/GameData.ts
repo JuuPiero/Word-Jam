@@ -64,7 +64,7 @@ export class GameData
         });
 
         param.idPointDict.clear();
-        const idList = this.TotalStickerIDs;
+        const idList = this.TotalStickerIDs; 
         for (const id of idList)
         {
             const listPoints = param.idPointsDict.get(id);
@@ -91,6 +91,8 @@ export class GameData
         param.freeHoleCount = this._cacheData.getEmptyCacheCount();
 
         param.lastPoint = this._lastPoint;
+
+        console.log("Box Point Param:", param.idPointDict, "diff ", difficulty);
 
         const res = GameAlgorithmHelper.getNextTargetId(param)
         this._lastPoint = res.realPoint;

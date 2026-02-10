@@ -14106,13 +14106,8 @@
     "holdingObjects": [
       "HoldableObject_1"
     ],
-    "weightLockStickers": [
-      "Sticker_47",
-      "Sticker_48"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_9"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },

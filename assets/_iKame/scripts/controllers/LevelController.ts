@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, game, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, easing, game, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -17,6 +17,8 @@ import { PromiseDelay } from '../utils/PromiseDelay';
 import { StickerConfigs } from '../configData/StickerConfigs';
 import { STICKER } from '../GameConstants';
 import { BoxData } from '../gameplay/data/BoxData';
+import { EventName } from '../gameSystems/EventName';
+import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 const { ccclass, property } = _decorator;
 
 @ccclass('LevelController')
@@ -40,6 +42,10 @@ export class LevelController extends Component implements ILevelController
     private _justCachedSlots: Set<number> = new Set<number>();
 
     @property(Node) private rotationRoot: Node;
+
+    private isLevelFinished: boolean = false;
+
+    private totalStickerCount: number = 0;
 
     protected onLoad(): void
     {
@@ -131,6 +137,10 @@ export class LevelController extends Component implements ILevelController
         const boxDatas = this.boxController.getBoxesDataList();
         this._gameData = new GameData(this.levelIndex, boxDatas, cacheData, stickerDatas, holdableDatas);
         this.boxController.setupFirstBoxes();
+
+        this.totalStickerCount = stickerDatas.length;
+
+        this.isLevelFinished = false;
     }
 
     clearLevel(): void
@@ -209,7 +219,7 @@ export class LevelController extends Component implements ILevelController
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         
         const startPos = sticker.node.getWorldPosition();
-        const targetPos = targetNode.getWorldPosition();
+        const targetPos = new Vec3();
         const tweenMoveProgress = {x : 0};
         const newPos = new Vec3();
         const rot1 = sticker.node.getWorldRotation();
@@ -221,9 +231,10 @@ export class LevelController extends Component implements ILevelController
 
         const t = tween(tweenMoveProgress)
             .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
-                easing: 'cubicInOut',
+                easing: easing.cubicInOut,
                 onUpdate: (target: { x: number }, ratio: number) =>
                 {
+                    targetNode.getWorldPosition(targetPos);
                     Vec3.lerp(newPos, startPos, targetPos, target.x);
                     // Thêm chuyển động vòng cung theo hướng z
                     const arcOffset = Math.sin(target.x * Math.PI) * 2;
@@ -239,9 +250,11 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
+        box.shake(STICKER.TRANSFER_DURATION * 0.96);
         await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
         t.stop();
         sticker.node.setParent(targetNode, true);
+        sticker.node.setPosition(Vec3.ZERO);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
@@ -251,6 +264,7 @@ export class LevelController extends Component implements ILevelController
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
+        this.checkLevelResult();
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
@@ -292,6 +306,7 @@ export class LevelController extends Component implements ILevelController
         t.stop();
         this.cacheController.setStickerInPlace(cacheIndex, true);
         this._justCachedSlots.add(cacheIndex);
+        this.checkLevelResult();
     }
 
     getNode(): Node
@@ -301,7 +316,9 @@ export class LevelController extends Component implements ILevelController
 
     getNextBoxData(): BoxData
     {
-        return this._gameData.getNewBoxData(.36);
+        const progress = this._stickerMap.size / this.totalStickerCount;
+        const difficulty = this.levelsData[this.levelIndex].evaluateDifficulty(progress);
+        return this._gameData.getNewBoxData(difficulty);
     }
 
     private async transferStickerFromCacheToBox(sticker : Sticker, cacheIndex: number, box: Box): Promise<void>
@@ -327,7 +344,7 @@ export class LevelController extends Component implements ILevelController
         const scale = new Vec3();
 
         const t = tween(tweenMoveProgress)
-            .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
+            .to(STICKER.TRANSFER_DURATION_FROM_CACHE, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
                 {
@@ -346,9 +363,12 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        box.shake(STICKER.TRANSFER_DURATION_FROM_CACHE * 0.96);
+        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION_FROM_CACHE + game.deltaTime).wait();
         t.stop();
         sticker.node.setParent(targetNode, true);
+        sticker.node.setPosition(Vec3.ZERO);
+        
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
@@ -358,6 +378,7 @@ export class LevelController extends Component implements ILevelController
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
+        this.checkLevelResult();
     }
 
     private tryTransferStickerFromJustCompletedBoxes(): void
@@ -393,6 +414,54 @@ export class LevelController extends Component implements ILevelController
             if (!sticker) continue;
             this.transferStickerFromCacheToBox(sticker, slotIndex, box);
         }
+    }
+
+    public checklevelWin(): boolean
+    {
+        if (this._stickerMap.size > 0) return false;
+        if (!this.cacheController.isAllEmpty()) return false;
+        if (this.boxController.getActiveBoxCount() > 0) return false;
+        return true;
+    }
+
+    public checkLevelLose(): boolean
+    {
+        if (!this.cacheController.isAllTaken()) return false;
+        if (!this.boxController.isAllBoxesReady()) return false;
+        
+        const idInBoxes = this.boxController.getAllIDsInBoxes();
+        const idInCache = this.cacheController.getAllIDs();
+        for (const id of idInCache)
+        {
+            if (idInBoxes.has(id)) return false;
+        }
+        return true;
+    }
+
+    private checkLevelResult(): void 
+    {
+        if (this.isLevelFinished) return;
+
+        if (this.checklevelWin())
+        {
+            this.isLevelFinished = true;
+            this.endLevel(true);
+            return;
+        }
+
+        if (this.checkLevelLose())
+        {
+            this.isLevelFinished = true;
+            this.endLevel(false);
+            return;
+        }
+    }
+
+    private endLevel(isWin: boolean): void
+    {
+        Tween.stopAll();
+        PromiseDelay.CancelAllPromises();
+        EventDispatcher.dispatch(EventName.EndGame, isWin);
     }
 }
 

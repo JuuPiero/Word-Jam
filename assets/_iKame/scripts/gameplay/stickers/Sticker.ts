@@ -11,19 +11,19 @@ const { ccclass, property } = _decorator;
 @ccclass('Sticker')
 export class Sticker extends Component implements ISticker
 {
-    @property({ type: [ CCString ], readonly: true })
+    @property({ type: [ CCString ] })
     public blockingStickers : string[] = [];
 
-    @property({ type: [ CCString ], readonly: true })
+    @property({ type: [ CCString ] })
     public holdingObjects: string[] = [];
     
-    @property({ type: [ CCString ], readonly: true })
+    @property({ type: [ CCString ] })
     public weightLockStickers: string[] = [];
 
-    @property({ type: [ CCString ], readonly: true })
+    @property({ type: [ CCString ] })
     public weightLockObjects: string[] = [];
 
-    @property({ type: CCInteger, readonly: true })
+    @property({ type: CCInteger })
     public stickerID: number = 0;
 
     private _data: StickerData;
