@@ -1,4 +1,4 @@
-import { _decorator, CCString, Component, Material, MeshCollider, MeshRenderer, Node, RigidBody } from 'cc';
+import { _decorator, CCString, Component, Material, MeshCollider, MeshRenderer, Node, RigidBody, Vec3 } from 'cc';
 import { IHoldableObject } from './IHoldableObject';
 import { ISticker } from '../stickers/ISticker';
 import { HodlablleData } from '../data/HodlablleData';
@@ -56,6 +56,8 @@ export class HoldableObject extends Component implements IHoldableObject
             this.freeObject();
         }
     }
+
+    private force : Vec3 = new Vec3(0, 0.2, 0);
     
     freeObject(): void
     {
@@ -68,7 +70,10 @@ export class HoldableObject extends Component implements IHoldableObject
         this.rigidBody.isDynamic = true;
         const col = this.node.getComponent(MeshCollider);
         col.convex = true;
-        // this.rigidBody.mass = 1;
+        this.rigidBody.wakeUp();
+        this.rigidBody.linearDamping = 0.01;
+        this.rigidBody.angularDamping = 0.01;
+        this.rigidBody.applyForce(this.force);
         this.node.setParent(this._levelController.getNode(), true);
         this.scheduleOnce(() =>
         {
