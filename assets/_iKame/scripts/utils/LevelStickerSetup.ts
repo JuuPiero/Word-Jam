@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, Component, JsonAsset, Material, MeshCollider, MeshRenderer, Node, PhysicsGroup, RigidBody } from 'cc';
+import { _decorator, CCBoolean, Component, JsonAsset, Material, MeshCollider, MeshRenderer, Node, PhysicMaterial, PhysicsGroup, RigidBody } from 'cc';
 import { StickerConfigs } from '../configData/StickerConfigs';
 import { Sticker } from '../gameplay/stickers/Sticker';
 import { HoldableObject } from '../gameplay/holdableObject/HoldableObject';
@@ -31,6 +31,7 @@ export class LevelStickerSetup extends Component {
     @property(Material) private holdingMaterial: Material = null;
     @property(StickerConfigs) private stickerConfig: StickerConfigs = null;
     @property(JsonAsset) protected jsonSetupData: JsonAsset = null;
+    @property(PhysicMaterial) private physicMaterial: PhysicMaterial = null;
 
     private _stickerMapData: Map<string, Sticker> = new Map<string, Sticker>();
     private _holdingMapData: Map<string, HoldableObject> = new Map<string, HoldableObject>();
@@ -81,6 +82,7 @@ export class LevelStickerSetup extends Component {
             rb.group = PHYSIC_GROUP.HOLDABLE;
             const hixBox = holdNode.addComponent(MeshCollider);
             hixBox.mesh = meshRenderer.mesh;
+            hixBox.material = this.physicMaterial;
             holdableObject.rigidBody = rb;
         }
 

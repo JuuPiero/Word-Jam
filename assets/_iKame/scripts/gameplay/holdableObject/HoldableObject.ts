@@ -66,8 +66,9 @@ export class HoldableObject extends Component implements IHoldableObject
         this.rigidBody = this.node.getComponent(RigidBody)!;
         // this.rigidBody.group = PHYSIC_GROUP.FREE;
         this.rigidBody.isDynamic = true;
-        // const col = this.node.getComponent(MeshCollider);
-        this.rigidBody.mass = 1;
+        const col = this.node.getComponent(MeshCollider);
+        col.convex = true;
+        // this.rigidBody.mass = 1;
         this.node.setParent(this._levelController.getNode(), true);
         this.scheduleOnce(() =>
         {

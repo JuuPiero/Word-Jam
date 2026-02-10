@@ -596,7 +596,10 @@
     "__prefab": {
       "__id__": 13
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -819,7 +822,10 @@
     "__prefab": {
       "__id__": 24
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -1064,7 +1070,10 @@
     "__prefab": {
       "__id__": 35
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -1291,7 +1300,10 @@
     "__prefab": {
       "__id__": 46
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -1520,7 +1532,10 @@
     "__prefab": {
       "__id__": 57
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -1747,7 +1762,10 @@
     "__prefab": {
       "__id__": 68
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -1974,7 +1992,10 @@
     "__prefab": {
       "__id__": 79
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
@@ -2197,7 +2218,10 @@
     "__prefab": {
       "__id__": 90
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": false,
     "_center": {
       "__type__": "cc.Vec3",
