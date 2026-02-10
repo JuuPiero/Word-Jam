@@ -65,7 +65,8 @@ export class GameAlgorithmHelper {
                 if (count > maxScrewCount) {
                     return {
                         targetId: objectId,
-                        realPoint: this.getObjectPoint(param.idPointDict, objectId)
+                        realPoint: this.getObjectPoint(param.idPointDict, objectId),
+                        overLimit: true
                     };
                 }
             }
@@ -95,13 +96,16 @@ export class GameAlgorithmHelper {
         point = Math.max(0, Math.min(param.lastPoint + this.POINT_TOLERANCE, point));
 
         // ============ BƯỚC 3: TÌM OBJECT GẦN ĐIỂM MỤC TIÊU NHẤT ============
-        const result = this.getNearestColorByPoint(param, point);
+        const nearest = this.getNearestColorByPoint(param, point);
 
-        if (result !== -1) {
-            const realPoint = this.getObjectPoint(param.idPointDict, result);
+        if (nearest.id !== -1) {
+            const realPoint = this.getObjectPoint(param.idPointDict, nearest.id);
             return {
-                targetId: result,
-                realPoint: realPoint
+                targetId: nearest.id,
+                realPoint: realPoint,
+                pointRequest: point,
+                fromCloset: nearest.fromCloset,
+                fromRandomWeight: nearest.fromRandomWeight
             };
         }
 
@@ -109,11 +113,13 @@ export class GameAlgorithmHelper {
         // Nếu không tìm được object phù hợp, chọn random object còn lại
         const ignoreColors = param.currentBoxesIds;
 
-        const fallbackColor = this.getFallbackBoxColor(param.idCountRemainingDict, ignoreColors);
+        const fallbackColor = this.getFallbackBoxColor(param.idCountRemainingDict, ignoreColors, param.idPointDict);
         if (fallbackColor !== -1) {
             return {
                 targetId: fallbackColor,
-                realPoint: this.getObjectPoint(param.idPointDict, fallbackColor)
+                realPoint: this.getObjectPoint(param.idPointDict, fallbackColor),
+                pointRequest: point,
+                isFallBack: true
             };
         }
 
@@ -129,24 +135,34 @@ export class GameAlgorithmHelper {
      * Tìm object có điểm gần nhất với điểm mục tiêu.
      * Nếu có nhiều object cùng khoảng cách, sử dụng weighted random để chọn.
      */
-    private static getNearestColorByPoint(param: NextTargetParams, point: number): number {
+    private static getNearestColorByPoint(
+        param: NextTargetParams,
+        point: number
+    ): { id: number; fromCloset: boolean; fromRandomWeight: boolean } {
         let id = -1; // Object Id được chọn
         let minPoint = Number.MAX_VALUE; // Khoảng cách nhỏ nhất tìm được
         let isUseWeight = false; // Flag để biết có nhiều object cùng khoảng cách không
         const idWeightDict = new Map<number, number>(); // Weight cho random
+        let fromCloset = false;
+        let fromRandomWeight = false;
 
         // Duyệt qua tất cả object còn lại
         for (const [currentId, count] of param.idCountRemainingDict.entries()) {
-            if (count === 0) continue; // Bỏ qua object đã hết
+            if (count === 0) {
+                continue; // Bỏ qua object đã hết
+            }
 
             // Bỏ qua object đã có box đang active
-            if (param.currentBoxesIds && param.currentBoxesIds.indexOf(currentId) !== -1) continue;
+            if (param.currentBoxesIds && param.currentBoxesIds.indexOf(currentId) !== -1) {
+                continue;
+            }
 
             const colorPoint = this.getObjectPoint(param.idPointDict, currentId);
 
             // Object có điểm quá cao (khó hơn target quá POINT_TOLERANCE) -> bỏ qua
-            if (colorPoint > point + this.POINT_TOLERANCE) continue;
-
+            if (colorPoint > point + this.POINT_TOLERANCE) {
+                continue;
+            }
             // Tính khoảng cách giữa điểm object và điểm mục tiêu
             const diff = Math.abs(colorPoint - point);
             if (diff < minPoint) {
@@ -180,12 +196,17 @@ export class GameAlgorithmHelper {
                 currentWeight += weight;
                 if (currentWeight >= randomValue) {
                     id = objectId;
+                    fromRandomWeight = true;
                     break;
                 }
             }
+        } else if (id >= 0) {
+            fromCloset = true;
         }
 
-        return id;
+        console.log("Returning ID:", id);
+
+        return { id, fromCloset, fromRandomWeight };
     }
 
     /**
@@ -207,26 +228,30 @@ export class GameAlgorithmHelper {
         return totalPoint;
     }
 
-    private static getFallbackBoxColor(idCountRemainingDict: Map<number, number>, ignoreColors: number[]): number {
+    private static getFallbackBoxColor(
+        idCountRemainingDict: Map<number, number>,
+        ignoreColors: number[],
+        idPointDict: Map<number, number>
+    ): number {
         const cachedColorKeys: number[] = Array.from(idCountRemainingDict.keys());
 
-        // Shuffle the list
-        for (let i = cachedColorKeys.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = cachedColorKeys[i];
-            cachedColorKeys[i] = cachedColorKeys[j];
-            cachedColorKeys[j] = temp;
-        }
+        // Sắp xếp theo điểm tăng dần (giống C#)
+        cachedColorKeys.sort((a, b) => {
+            const pointA = this.getObjectPoint(idPointDict, a);
+            const pointB = this.getObjectPoint(idPointDict, b);
+            return pointA - pointB;
+        });
 
         if (cachedColorKeys.length === 0) return -1;
 
-        // Lấy màu còn lại trong dicts, khác với màu box hiện tại
+        // Lấy màu có điểm nhỏ nhất, ưu tiên màu không bị ignore
         for (const color of cachedColorKeys) {
             if (ignoreColors.indexOf(color) !== -1) continue;
             return color;
         }
 
-        return cachedColorKeys[Math.floor(Math.random() * cachedColorKeys.length)];
+        // Nếu tất cả đều bị ignore thì lấy màu có điểm nhỏ nhất (đầu danh sách đã sort)
+        return cachedColorKeys[0];
     }
 
     /**
@@ -294,4 +319,11 @@ export class NextTargetParams
 export class NextTargetResult {
     targetId: number = -1;
     realPoint: number = 0;
+
+    // Optional debug/flags (kept optional to avoid breaking call sites)
+    pointRequest?: number;
+    overLimit?: boolean;
+    isFallBack?: boolean;
+    fromCloset?: boolean;
+    fromRandomWeight?: boolean;
 }
