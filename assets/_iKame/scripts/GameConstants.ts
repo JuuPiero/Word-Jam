@@ -18,9 +18,11 @@ export const STICKER = {
 
     IN_BOX_SCALE: new Vec3(0.362, 0.362, 0.362),
     IN_CACHE_SCALE: new Vec3(0.4, 0.4, 0.4),
+    IN_BOX_ROTATION: new Vec3(0, 180, 0),
 
     TRANSFER_DURATION: 0.5,
     TRANSFER_DURATION_FROM_CACHE: 0.35,
+
 }
 
 export const BOX = 

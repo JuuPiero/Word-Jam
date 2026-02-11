@@ -21,6 +21,8 @@ import { EventName } from '../gameSystems/EventName';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 const { ccclass, property } = _decorator;
 
+const FRAME_SKIP = 5;
+
 @ccclass('LevelController')
 export class LevelController extends Component implements ILevelController
 {
@@ -158,10 +160,16 @@ export class LevelController extends Component implements ILevelController
         this.doUpdate(dt);
     }
 
+    private _frameCount: number = 0;
+
     doUpdate(deltaTime: number): void
     {
-        this.tryTransferStickerFromJustCompletedBoxes();
-        this.tryTransferStickerFromJustCachedSlots();
+        this._frameCount++;
+        if (this._frameCount % FRAME_SKIP === 0)
+        {
+            this.tryTransferStickerFromJustCompletedBoxes();
+            this.tryTransferStickerFromJustCachedSlots();
+        }
     }
 
     lateUpdate(deltaTime: number): void
@@ -191,7 +199,11 @@ export class LevelController extends Component implements ILevelController
 
     public async tryPeelSticker(sticker: Sticker): Promise<void>
     {
-        if (!sticker.canPeelOff()) return ;
+        if (!sticker.canPeelOff())
+        {
+            sticker.giveHintBlinking();
+            return;
+        }
         await sticker.peelOff();
         const targetBox = this.boxController.findSuitableBox(sticker.stickerID);
         if (targetBox)
@@ -255,6 +267,7 @@ export class LevelController extends Component implements ILevelController
         t.stop();
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
+        sticker.node.setRotationFromEuler(STICKER.IN_BOX_ROTATION);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
@@ -368,7 +381,7 @@ export class LevelController extends Component implements ILevelController
         t.stop();
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
-        
+        sticker.node.setRotationFromEuler(STICKER.IN_BOX_ROTATION);
         if (!isBoxFull) return;
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)

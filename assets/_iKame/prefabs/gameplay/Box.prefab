@@ -867,7 +867,7 @@
       "__type__": "cc.Vec3",
       "x": -0.163,
       "y": -0.605,
-      "z": 0.544
+      "z": 0.554
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -923,7 +923,7 @@
       "__type__": "cc.Vec3",
       "x": 0.443,
       "y": 0.081,
-      "z": 0.544
+      "z": 0.554
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -979,7 +979,7 @@
       "__type__": "cc.Vec3",
       "x": -0.413,
       "y": 0.338,
-      "z": 0.536
+      "z": 0.546
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -1095,6 +1095,7 @@
       "__id__": 0
     },
     "fileId": "56L2Xz/lpPL4KJ7klW7+yC",
+    "instance": null,
     "targetOverrides": null
   }
 ]

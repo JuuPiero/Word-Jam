@@ -28,5 +28,11 @@
       "width": 1080
     }
   },
-  "custom_joint_texture_layouts": []
+  "custom_joint_texture_layouts": [],
+  "layer": [
+    {
+      "name": "BACKGROUND",
+      "value": 524288
+    }
+  ]
 }

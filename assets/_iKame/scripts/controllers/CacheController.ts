@@ -1,9 +1,11 @@
-import { _decorator, Component, game, Node, SpriteRenderer, Vec3 } from 'cc';
+import { _decorator, Color, Component, easing, game, Material, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
 import { CacheData } from '../gameplay/data/CacheData';
 import { Sticker } from '../gameplay/stickers/Sticker';
 const { ccclass, property } = _decorator;
 
 const CACHE_SPACING = .56
+const WARNING_COLOR = new Color(255, 126, 126, 255);
+
 @ccclass('CacheController')
 export class CacheController extends Component
 {
@@ -17,6 +19,13 @@ export class CacheController extends Component
     private isStickerInPlace: boolean[] = [];
 
     private _stickes : Sticker[] = [];
+
+    @property(Material)
+    public cacheSlotMaterial: Material = null;
+
+    private _tweenObjectWarning = {value : 0};
+    private _tweenWarning: Tween<any> = null;
+    private _tweenColor : Color = new Color();
 
     setup(count: number): CacheData
     {
@@ -46,7 +55,7 @@ export class CacheController extends Component
             this._activeCaches[i].node.active = true;
             this._activeCaches[ i ].node.setPosition(i * CACHE_SPACING - offsetX, 0, 0);
         }
-
+        this.updateMaterialWarning(0);
         return this._data;
     }
 
@@ -57,7 +66,7 @@ export class CacheController extends Component
             if (!this._data.isCacheTakenAt(i))
             {
                 const pos = this._activeCaches[ i ].node.getWorldPosition();
-                Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].node.forward, -0.1);
+                Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].node.forward, -0.03);
                 Vec3.copy(outPosition, pos);
                 return i;
             }
@@ -68,7 +77,29 @@ export class CacheController extends Component
     public setCache(index: number, id: number, sticker: Sticker): void
     {
         this._data.setCacheAt(index, id);
-        this._stickes[index] = sticker;
+        this._stickes[ index ] = sticker;
+        
+        if (this.getFilledCacheCount() >= this._activeCaches.length - 1)
+        {
+            this.warningStart();
+        }
+        else
+        {
+            this.warningStop();
+        }
+    }
+
+    public getFilledCacheCount(): number
+    {
+        let count = 0;
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            if (this._data.isCacheTakenAt(i))
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public setStickerInPlace(index: number, inPlace: boolean): void
@@ -135,6 +166,38 @@ export class CacheController extends Component
             ids.add(this._data.getCacheAt(i));
         }
         return ids;
+    }
+
+    public warningStart(): void
+    {
+        Tween.stopAllByTarget(this._tweenObjectWarning);
+        this.updateMaterialWarning(0);
+        this._tweenObjectWarning.value = 0;
+        const t = tween(this._tweenObjectWarning)
+            .to(.3, { value: 1 }, { easing: easing.sineInOut, onUpdate: (target: any) => {
+                this.updateMaterialWarning(target.value);
+            }})
+            .to(1, { value: 0 }, { easing: easing.sineOut, onUpdate: (target: any) => {
+                this.updateMaterialWarning(target.value);
+            }});
+        
+        tween(this._tweenObjectWarning)
+            .repeatForever(t)
+            .start();
+    }
+
+
+    private updateMaterialWarning(value: number): void
+    {
+        Color.lerp(this._tweenColor, Color.WHITE, WARNING_COLOR, value);
+        this.cacheSlotMaterial.setProperty('tintColor', this._tweenColor);
+    }
+
+    public warningStop(): void
+    {
+        Tween.stopAllByTarget(this._tweenObjectWarning);
+        this._tweenObjectWarning.value = 0;
+        this.updateMaterialWarning(0);
     }
 }
 

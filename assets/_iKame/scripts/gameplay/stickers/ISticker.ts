@@ -10,6 +10,8 @@ export interface ISticker {
 
     getBlockingPoint(): number;
     getStickerID(): number;
+
+    blinking(): void;
 }
 
 

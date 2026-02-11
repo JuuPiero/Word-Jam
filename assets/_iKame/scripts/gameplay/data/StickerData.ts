@@ -95,6 +95,14 @@ export class StickerData
         totalPoints += filterdBlockingStickers + weightLockStickerCount;
         return totalPoints;
     }
+
+    public get BlockingStickers(): Set<ISticker> {
+        return this.blockingStickers;
+    }
+
+    public get WeightLockStickers(): Set<ISticker> {
+        return this.weightLockStickers;
+    }
 }
 
 

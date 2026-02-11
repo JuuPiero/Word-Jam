@@ -156,7 +156,9 @@ export class Sticker extends Component implements ISticker
         this.onStickerRemoved = [];
     }
 
-    private _tweebPeel : Tween<any> | null = null;
+    private _tweebPeel: Tween<any> | null = null;
+    private _tweenBlinking: Tween<any> | null = null;
+    private _blinkingObj: { value: number } = { value: 0 };
 
     public async playPeelAnimation(): Promise<void> 
     {
@@ -222,6 +224,36 @@ export class Sticker extends Component implements ISticker
     public getStickerID(): number
     {
         return this.stickerID;
+    }
+
+    public blinking(): void
+    {
+        if (this._tweenBlinking) {
+            this._tweenBlinking.stop();
+        }
+        this._tweenBlinking = tween(this._blinkingObj)
+            .to(0.2, { value: 1 }, { easing: easing.circInOut,
+                onUpdate: (target: any, ratio: number) => {
+                    const mat = this.meshRenderer.getMaterialInstance(0);
+                    mat.setProperty('highlight', target.value);
+                }
+            })
+            .to(0.2, { value: 0 }, { easing: easing.cubicIn,
+                onUpdate: (target: any, ratio: number) => {
+                    const mat = this.meshRenderer.getMaterialInstance(0);
+                    mat.setProperty('highlight', target.value);
+                }
+            }).start();
+    }
+
+    public giveHintBlinking(): void
+    {
+        this._data.WeightLockStickers.forEach(s => {
+            s.blinking();
+        });
+        this._data.BlockingStickers.forEach(s => {
+            s.blinking();
+        });
     }
 }
 

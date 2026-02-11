@@ -156,7 +156,7 @@ export class HoldableObject extends Component implements IHoldableObject
             return;
         }
 
-        if (PREVIEW || EDITOR) console.log('Resetting material to original', this.originalMaterials);
+        // if (PREVIEW || EDITOR) console.log('Resetting material to original', this.originalMaterials);
         const restoreCount = Math.min(renderer.sharedMaterials.length, this.originalMaterials.length);
         for (let k = 0; k < restoreCount; k++)
         {
