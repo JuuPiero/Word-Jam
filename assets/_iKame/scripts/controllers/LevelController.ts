@@ -17,8 +17,8 @@ import { PromiseDelay } from '../utils/PromiseDelay';
 import { StickerConfigs } from '../configData/StickerConfigs';
 import { STICKER } from '../GameConstants';
 import { BoxData } from '../gameplay/data/BoxData';
-import { EventName } from '../gameSystems/EventName';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
+import { EventName } from '../systems/EventName';
 const { ccclass, property } = _decorator;
 
 const FRAME_SKIP = 5;
@@ -151,13 +151,7 @@ export class LevelController extends Component implements ILevelController
         this._stickerMap.clear();
         this._justCompletedBoxes.clear();
         this._justCachedSlots.clear();
-        this.node.destroyAllChildren();
-    }
-
-    //TODO: Remove this function later
-    protected update(dt: number): void
-    {
-        this.doUpdate(dt);
+        this.rotationRoot.destroyAllChildren();
     }
 
     private _frameCount: number = 0;
@@ -481,6 +475,16 @@ export class LevelController extends Component implements ILevelController
     public isLevelFinished(): boolean
     {
         return this._isLevelFinished;
+    }
+
+    public getTutorialStickerPosition(): Vec3
+    {
+        const sticker = this._stickerMap.get(this.levelsData[ this.levelIndex ].stickerTutName);
+        if (sticker)
+        {
+            return sticker.node.getWorldPosition();
+        }
+        return Vec3.ZERO;
     }
 }
 

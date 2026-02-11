@@ -37,3 +37,7 @@ export const BOX =
     BOX_START_DOWN_POS: new Vec3(0, -1.5, 0),
     BOX_START_DOWN_ROT: new Vec3(0, -180, 0)
 }
+
+export const FORCE_STORE_ON_TRANSITION = false;
+export const FORCE_STORE_DURATION = 0;
+export const ALLOW_REPLAY = false;

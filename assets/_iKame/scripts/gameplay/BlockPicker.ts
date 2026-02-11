@@ -1,9 +1,8 @@
 import { _decorator, AudioClip, Camera, Component, EventTouch, Input, input, Node, ParticleSystem, PhysicsSystem, Vec2 } from 'cc';
 import { DragRotateController } from '../commond/DragRotateController';
 import { ILevelController } from '../controllers/ILevelController';
-import { PHYSIC_GROUP } from '../GameConstants';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
-import { EventName } from '../gameSystems/EventName';
+import { EventName } from '../systems/EventName';
 const { ccclass, property } = _decorator;
 
 const TRANSPARENT_THRESHOLD = 0.24; // Threshold to show transparent blocks

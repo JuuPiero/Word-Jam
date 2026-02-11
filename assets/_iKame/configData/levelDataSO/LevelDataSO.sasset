@@ -13,7 +13,8 @@
     "maxCache": 5,
     "diffCurve": {
       "__id__": 1
-    }
+    },
+    "stickerTutName": "Sticker_7"
   },
   {
     "__type__": "cc.RealCurve",

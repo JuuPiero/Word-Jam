@@ -1,3 +1,6 @@
+import { GameController } from "./GameController";
+import { EGameState } from "./gameStates/EGameState";
+
 export class EventName
 {
     public static readonly ShowScreen: string = 'ShowScreen';
@@ -9,4 +12,6 @@ export class EventName
     public static readonly ReplayGame: string = 'ReplayGame';
     public static readonly AddIQ: string = 'AddIQ';
     public static readonly ShowSmoke: string = 'ShowSmoke';
+    public static readonly ChangeGameState: string = 'ChangeGameState';
+    public static readonly FirstTouch: string = 'FirstTouch';
 }
