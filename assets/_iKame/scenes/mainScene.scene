@@ -16914,8 +16914,8 @@
     "_enabled": true,
     "__prefab": null,
     "threshold": 0.3,
-    "sensitivity": 0.03,
-    "maxVelocity": 38,
+    "sensitivity": 0.013,
+    "maxVelocity": 10,
     "autoRotateInterval": 5,
     "is360": true,
     "_id": "5fS8d15LRPbZSLS0Fqfbpa"

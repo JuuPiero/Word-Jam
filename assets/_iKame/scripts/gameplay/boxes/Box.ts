@@ -63,6 +63,11 @@ export class Box extends Component {
         return this._boxData;
     }
 
+    public updateVisual(): void 
+    {
+        this.updateData(this._boxData.stickerID, this._boxData.filledStickerCount);
+    }
+
     public updateData(id: number, prefillCount: number = 0): void
     {
         this.lidNode.active = false;
@@ -182,9 +187,10 @@ export class Box extends Component {
     public async replaceBox(data: BoxData): Promise<void>
     {
         this._isReady = false;
+        this.resetData(data.stickerID, data.filledStickerCount);
         await this.closeLidAnimation();
         await this.moveUpAnimation();
-        this.updateData(data.stickerID, data.filledStickerCount);
+        this.updateVisual();
         await this.respawnAnimation();
         this._isReady = true;
     }
