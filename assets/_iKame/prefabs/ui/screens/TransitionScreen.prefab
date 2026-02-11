@@ -143,7 +143,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 1919.9999999999998
+      "height": 1920
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -401,7 +401,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 1919.9999999999998
+      "height": 1920
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -484,7 +484,10 @@
     "opacity": {
       "__id__": 20
     },
-    "transitionSound": null,
+    "transitionSound": {
+      "__uuid__": "9d0641d1-7327-4218-ad40-e6669271a2a9",
+      "__expectedType__": "cc.AudioClip"
+    },
     "transitionParticles": [],
     "_id": ""
   },

@@ -19,6 +19,7 @@ import { LEVEL, STICKER } from '../GameConstants';
 import { BoxData } from '../gameplay/data/BoxData';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { EventName } from '../systems/EventName';
+import { ETrackingEvent, TrackingManager } from '../systems/playable/base-script/PlayableAds/Tracking/TrackingManager';
 const { ccclass, property } = _decorator;
 
 const FRAME_SKIP = 5;
@@ -51,6 +52,10 @@ export class LevelController extends Component implements ILevelController
     private _isLevelFinished: boolean = false;
 
     private totalStickerCount: number = 0;
+
+    private _is25Complete: boolean = false;
+    private _is50Complete: boolean = false;
+    private _is75Complete: boolean = false;
 
     protected onLoad(): void
     {
@@ -149,10 +154,19 @@ export class LevelController extends Component implements ILevelController
         this._isLevelFinished = false;
 
         this.setLevelScale(LEVEL.DEFAULT_SCALE);
+        this.rotationRoot.setRotationFromEuler(Vec3.ZERO);
+
+        TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_STARTED);
+
+        this._is25Complete = false;
+        this._is50Complete = false;
+        this._is75Complete = false;
     }
 
     clearLevel(): void
     {
+        this.boxController.clear();
+        this.cacheController.clear();
         this._holdableMap.clear();
         this._stickerMap.clear();
         this._justCompletedBoxes.clear();
@@ -204,8 +218,10 @@ export class LevelController extends Component implements ILevelController
             sticker.giveHintBlinking();
             return;
         }
+        this._stickerMap.delete(sticker.getName());
         this._gameData.removeStickerData(sticker.getData());
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPeelSound);
+        this.trackingLevelProgress();
         await sticker.peelOff();
         const targetBox = this.boxController.findSuitableBox(sticker.stickerID);
         if (targetBox)
@@ -226,7 +242,6 @@ export class LevelController extends Component implements ILevelController
     {
         const targetNode : Node = box.getEmptySlotNode();
         if (!targetNode) return;
-        this._stickerMap.delete(sticker.getName());
         const isBoxFull = box.addSticker(sticker);
         sticker.node.setParent(this.node, true);
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
@@ -278,11 +293,11 @@ export class LevelController extends Component implements ILevelController
         if (!nextBoxData)
         {
             await this.boxController.removeBox(box);
+            this.checkLevelResult();
             return;
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
-        this.checkLevelResult();
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
@@ -398,11 +413,11 @@ export class LevelController extends Component implements ILevelController
         if (!nextBoxData)
         {
             await this.boxController.removeBox(box);
+            this.checkLevelResult();
             return;
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
-        this.checkLevelResult();
     }
 
     private tryTransferStickerFromJustCompletedBoxes(): void
@@ -468,6 +483,7 @@ export class LevelController extends Component implements ILevelController
 
         if (this.checklevelWin())
         {
+            TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_SOLVED);
             this._isLevelFinished = true;
             this.endLevel(true);
             return;
@@ -475,6 +491,7 @@ export class LevelController extends Component implements ILevelController
 
         if (this.checkLevelLose())
         {
+            TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_FAILED);
             this._isLevelFinished = true;
             this.endLevel(false);
             return;
@@ -485,8 +502,9 @@ export class LevelController extends Component implements ILevelController
     {
         Tween.stopAll();
         PromiseDelay.CancelAllPromises();
-        console.log("Level ended. isWin =", isWin);
-        EventDispatcher.dispatch(EventName.EndGame, isWin);
+        this.levelIndex += isWin ? 1 : 0;
+        const isLastLevel = this.levelIndex >= this.levelsData.length;
+        EventDispatcher.dispatch(EventName.EndGame, isWin, isLastLevel);
     }
 
     public isLevelFinished(): boolean
@@ -510,6 +528,26 @@ export class LevelController extends Component implements ILevelController
         let s: number = math.lerp(LEVEL.MIN_SCALE, LEVEL.MAX_SCALE, progress);
         this._levelScale.set(s, s, s);
         this.rotationRoot.setScale(this._levelScale);
+    }
+
+    public trackingLevelProgress(): void 
+    {
+        const progress = 1 - this._stickerMap.size / this.totalStickerCount;
+        if (!this._is25Complete && progress >= 0.25)
+        {
+            TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_PASS_25);
+            this._is25Complete = true;
+        }
+        if (!this._is50Complete && progress >= 0.5)
+        {
+            TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_PASS_50);
+            this._is50Complete = true;
+        }
+        if (!this._is75Complete && progress >= 0.75)
+        {
+            TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_PASS_75);
+            this._is75Complete = true;
+        }
     }
 }
 

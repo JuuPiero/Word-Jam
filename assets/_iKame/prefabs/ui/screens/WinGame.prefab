@@ -427,8 +427,8 @@
       "y": 563.754,
       "z": 0
     },
-    "delay": 0,
-    "duration": 0.5,
+    "delay": 0.1,
+    "duration": 1,
     "repeatForever": false,
     "_id": ""
   },
@@ -807,8 +807,8 @@
       "y": -581.9875,
       "z": 0
     },
-    "delay": 0,
-    "duration": 0.5,
+    "delay": 0.1,
+    "duration": 1,
     "repeatForever": false,
     "_id": ""
   },
@@ -918,7 +918,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "fb7fbqxOPBBEbiNqDpHZMGU",
+    "_componentId": "799fbMa0B9K4akAaqhT9OUb",
     "handler": "clickToStore",
     "customEventData": ""
   },
@@ -1124,8 +1124,8 @@
       "y": 1,
       "z": 1
     },
-    "duration": 0.5,
-    "delay": 0,
+    "duration": 1,
+    "delay": 0.1,
     "repeatForever": false,
     "_id": ""
   },

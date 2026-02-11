@@ -200,6 +200,19 @@ export class CacheController extends Component
         this._tweenObjectWarning.value = 0;
         this.updateMaterialWarning(0);
     }
+
+    public clear(): void 
+    {
+        for (let i = 0; i < this._activeCaches.length; i++)
+        {
+            this._data.clearCacheAt(i);
+            this.isStickerInPlace[i] = false;
+            this._stickes[i]?.destroySticker();
+        }
+        this.warningStop();
+        this._stickes = [];
+        this._activeCaches = [];
+    }
 }
 
 

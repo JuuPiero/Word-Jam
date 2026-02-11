@@ -29,13 +29,6 @@ export class EndGameScreen extends ScreenBase {
         TrackingManager.TrackEvent(ETrackingEvent.ENDCARD_SHOWN);    
 
         this.scheduleOnce(this.toStoreForce, 5);
-
-        this.replayButton.active = ALLOW_REPLAY;
-        this.playnowButton.active = !ALLOW_REPLAY;
-
-        this.toggleNodes.forEach( (node) => {
-            node.active = !ALLOW_REPLAY;
-        } );
     }
 
     replayGame(): void 
@@ -50,6 +43,13 @@ export class EndGameScreen extends ScreenBase {
         if (!ALLOW_REPLAY) {
             this.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         }
+        
+        this.replayButton.active = ALLOW_REPLAY;
+        this.playnowButton.active = !ALLOW_REPLAY;
+
+        this.toggleNodes.forEach( (node) => {
+            node.active = !ALLOW_REPLAY;
+        } );
     }
 
     protected onDisable(): void

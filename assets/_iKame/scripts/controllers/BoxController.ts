@@ -14,6 +14,13 @@ export class BoxController extends Component implements IBoxController
     private _boxDataList: BoxData[] = [];
     @property([ Box ]) public boxes: Box[] = [];
     private _levelController: ILevelController;
+
+
+    clear(): void 
+    {
+        this._activeBoxes = [];
+        this._boxDataList = [];
+    }
     
     setup(count: number, level: ILevelController)
     {
