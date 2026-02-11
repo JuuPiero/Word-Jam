@@ -20,7 +20,8 @@
         "index": 3,
         "name": "Free"
       }
-    ]
+    ],
+    "fixedTimeStep": 0.02
   },
   "general": {
     "designResolution": {

@@ -1,4 +1,4 @@
-import { _decorator, AudioClip, Camera, Component, EventTouch, Input, input, Node, ParticleSystem, PhysicsSystem, Vec2 } from 'cc';
+import { _decorator, AudioClip, Camera, Component, EventTouch, Input, input, Node, ParticleSystem, PhysicsSystem, Vec2, Vec3 } from 'cc';
 import { DragRotateController } from '../commond/DragRotateController';
 import { ILevelController } from '../controllers/ILevelController';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
@@ -43,11 +43,25 @@ export class BlockPicker extends Component {
 
         event.getLocation(this.screenPos);
         const ray = this.mainCamera.screenPointToRay(this.screenPos.x, this.screenPos.y);
-        let isHit = PhysicsSystem.instance.raycastClosest(ray);
+        let isHit = PhysicsSystem.instance.raycast(ray);
+        
+        let minDistance = Number.MAX_VALUE;
+        let targetNode: Node = null;
+
         if (isHit)
         {
-            const result = PhysicsSystem.instance.raycastClosestResult; // First hit
-            this.selectedNode = result.collider.node;
+            const result = PhysicsSystem.instance.raycastResults;
+            for (let i = 0; i < result.length; i++)
+            {
+                const distance = Vec3.squaredDistance(this.mainCamera.node.getWorldPosition(), result[ i ].hitPoint);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    targetNode = result[ i ].collider.node;
+                }
+            }
+
+            this.selectedNode = targetNode;
             this.scheduleOnce(() => this.setBlockTransparent(), TRANSPARENT_THRESHOLD);
             return;
         }

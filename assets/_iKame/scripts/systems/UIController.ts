@@ -51,6 +51,14 @@ export class UIController extends Component {
     protected onLoad(): void {
         EventDispatcher.addListener(EventName.ShowScreen, this.onShowScreen, this);
         EventDispatcher.addListener(EventName.BackScreen, this.onBackScreen, this);
+
+        // this.idleScreen = this.node.getComponentInChildren(IdleScreen);
+        // this.gameplayScreen = this.node.getComponentInChildren(GameplayScreen);
+        // this.endGame = this.node.getComponentInChildren(EndGameScreen);
+        // this.winGameScreen = this.node.getComponentInChildren(WinGameScreen);
+        // this.emptyScreen = this.node.getComponentInChildren(EmptyScreen);
+        // this.transitionScreen = this.node.getComponentInChildren(TransitionScreen);
+        // this.introScreen = this.node.getComponentInChildren(IntroScreen);
     }
 
     protected onDestroy(): void {

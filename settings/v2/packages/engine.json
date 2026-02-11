@@ -1,5 +1,5 @@
 {
-  "__version__": "1.0.10",
+  "__version__": "1.0.12",
   "modules": {
     "configs": {
       "defaultConfig": {
@@ -265,7 +265,7 @@
         }
       },
       "physics-cannon": {
-        "_value": false
+        "_value": "physics-cannon"
       },
       "physics-physx": {
         "_value": "physics-physx",
@@ -374,7 +374,7 @@
       },
       "render-pipeline": {
         "_value": true,
-        "_option": "custom-pipeline"
+        "_option": "legacy-pipeline"
       },
       "custom-pipeline": {
         "_value": true
@@ -383,20 +383,17 @@
         "_value": false
       }
     },
-    "flags": {
-      "LOAD_SPINE_MANUALLY": false,
-      "LOAD_PHYSX_MANUALLY": false
-    },
+    "flags": {},
     "includeModules": [
       "2d",
       "3d",
       "animation",
       "audio",
       "base",
-      "custom-pipeline",
       "dragon-bones",
       "gfx-webgl",
       "intersection-2d",
+      "legacy-pipeline",
       "light-probe",
       "marionette",
       "particle",
