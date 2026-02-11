@@ -28,7 +28,7 @@ export class GameStartState extends GameStateBase {
         try
         {
             this.levelController.clearLevel();
-            await PromiseDelay.Wait(0.5);
+            await PromiseDelay.Wait(1);
             this.levelController.spawnLevel();
             this.stateMachine.changeState(EGameState.Intro);
         }

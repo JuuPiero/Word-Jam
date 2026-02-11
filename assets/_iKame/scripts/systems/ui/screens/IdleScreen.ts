@@ -26,6 +26,7 @@ export class IdleScreen extends ScreenBase
     protected onEnable(): void
     {
         input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
+        this.tutorialHand.active = false;
     }
 
     onShow(): void
@@ -37,12 +38,11 @@ export class IdleScreen extends ScreenBase
 
     private showTutorialHand(): void
     {
-        this.tutorialHand.active = false;
+        this.tutorialHand.active = true;
         const worldPos = this.levelController.getTutorialStickerPosition();
         const uiPos = getUIPosition(worldPos, this.mainCamera, this.canvasNode);
         this.tutorialHand.setPosition(uiPos);
         console.log("UI Pos: " + uiPos.toString());
-        this.tutorialHand.active = true;
     }
 
     private onTouchStart(event: EventTouch): void
@@ -58,7 +58,6 @@ export class IdleScreen extends ScreenBase
     public onHide(): void
     {
         this.tutorialHand.active = false;
-        this.zoomHands.active = false;
     }
 }
 

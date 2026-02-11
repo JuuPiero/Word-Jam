@@ -1,21 +1,20 @@
-import { _decorator, Component, Node, Tween, tween, UIOpacity } from 'cc';
+import { _decorator, CCBoolean, Component, Node, Tween, tween, UIOpacity } from 'cc';
 import { PromiseDelay } from '../../../utils/PromiseDelay';
 import { PlayableAdsManager } from '../../playable/base-script/PlayableAds/PlayableAdsManager';
 const { ccclass, property } = _decorator;
 
-export const FADE_DURATION: number = 0.2;
+export const FADE_DURATION: number = 0.12;
 
 @ccclass('ScreenBase')
 export abstract class ScreenBase extends Component {
     
     @property(UIOpacity)
-    opacity : UIOpacity = null;
+    opacity: UIOpacity = null;
 
     public async show() : Promise<void>
     {
-        if (this.node.active == true)
+        if (this.node.active)
             return;
-        this.registerEvents();
         this.node.active = true;
         Tween.stopAllByTarget(this.opacity);
         this.opacity.opacity = 0;
@@ -26,9 +25,8 @@ export abstract class ScreenBase extends Component {
 
     public async hide() : Promise<void>
     {
-        if (this.node.active == false)
+        if (!this.node.active)
             return;
-        this.unregisterEvents();
         Tween.stopAllByTarget(this.opacity);
         this.opacity.opacity = 255;
         tween(this.opacity).to(FADE_DURATION, { opacity: 0 }).start();
@@ -47,16 +45,6 @@ export abstract class ScreenBase extends Component {
 
     }
 
-    public registerEvents(): void
-    {
-
-    }
-
-    public unregisterEvents(): void
-    {
-
-    }
-    
     clickToStore(): void
     {
         PlayableAdsManager.Instance().ButtonOpenStore();

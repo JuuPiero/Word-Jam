@@ -11,13 +11,14 @@ import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { Stack } from '../commond/Stack';
 import { EGameState } from './gameStates/EGameState';
 import { PromiseDelay } from '../utils/PromiseDelay';
+import { IntroScreen } from './ui/screens/IntroScreen';
 
 
 
 
 const { ccclass, property } = _decorator;
 
-const FADE_DURATION = 0.2;
+// const FADE_DURATION = 0.2;
 
 @ccclass('UIController')
 export class UIController extends Component {
@@ -40,8 +41,8 @@ export class UIController extends Component {
     @property(TransitionScreen)
     public transitionScreen: TransitionScreen = null;
 
-    @property(EmptyScreen)
-    public introScreen: EmptyScreen = null;
+    @property(IntroScreen)
+    public introScreen: IntroScreen = null;
 
     private stackStates: Stack<ScreenBase> = new Stack<ScreenBase>();
 
@@ -62,12 +63,13 @@ export class UIController extends Component {
         if (this.activeScreen == screen)
             return;
         this.activeScreen = screen;
-        this.stackStates.forEach((scr: ScreenBase) => {
-            scr.hide();
-        });
-        await PromiseDelay.Wait(FADE_DURATION);
-        screen.show();
+        for (let i = 0; i < this.stackStates.size(); i++)
+        {
+            const scr = this.stackStates.get(i);
+            await scr.hide();
+        }
         this.stackStates.push(screen);
+        await screen.show();
     }
 
     public async backState(): Promise<void>

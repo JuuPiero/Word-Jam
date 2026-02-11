@@ -181,9 +181,10 @@ export class CacheController extends Component
                 this.updateMaterialWarning(target.value);
             }});
         
-        tween(this._tweenObjectWarning)
-            .repeatForever(t)
-            .start();
+        t.start();
+        // tween(this._tweenObjectWarning)
+        //     .repeatForever(t)
+        //     .start();
     }
 
 

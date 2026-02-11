@@ -38,6 +38,10 @@ export class Box extends Component {
         this._boxData = boxData;
         this.updateData(this._boxData.stickerID, this._boxData.filledStickerCount);
         this._isReady = true;
+        for (const s of this._stickers) {
+            s.destroySticker();
+        }
+        this._stickers = [];
         return this._boxData;
     }
 

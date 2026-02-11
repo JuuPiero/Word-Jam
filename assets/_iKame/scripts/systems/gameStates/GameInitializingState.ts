@@ -23,9 +23,13 @@ export class GameInitializingState extends GameStateBase
         this.init();
     }
 
-    public async init()
+    public onUpdate(dt: number): void
     {
         this.stateMachine.changeState(EGameState.Start);
+    }
+
+    public async init()
+    {
     }
 }
 

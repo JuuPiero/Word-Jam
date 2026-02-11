@@ -1,20 +1,32 @@
 import { _decorator, easing, Node, Slider, tween, Vec3} from 'cc';
 import { GameStateBase } from './GameStateBase';
 import { EGameState } from './EGameState';
-import { IChangeState } from '../../designPatterns/stateMachine/BaseStateMachine';
 
+const INTRO_TIME = 0.25;
 export class GameIntroState extends GameStateBase
 {
+    private _timer: number = 0;
+    
     public onEnter(): void
     {
-        super.onEnter();    
-        this.playIntroAsync();
+        super.onEnter();
+        console.log("Entering GameIntroState");
     }
 
-    private async playIntroAsync()
+    public onUpdate(dt: number): void
     {
-        this.stateMachine.changeState(EGameState.Idle);
+        this._timer += dt;
+        if (this._timer >= INTRO_TIME) {
+            this.stateMachine.changeState(EGameState.Idle);
+        }
     }
+
+    public onExit(): void
+    {
+        super.onExit();
+        console.log("Exiting GameIntroState");
+    }
+
 }
 
 

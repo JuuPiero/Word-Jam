@@ -41,3 +41,10 @@ export const BOX =
 export const FORCE_STORE_ON_TRANSITION = false;
 export const FORCE_STORE_DURATION = 0;
 export const ALLOW_REPLAY = false;
+
+export const LEVEL =
+{
+    DEFAULT_SCALE: .1,
+    MIN_SCALE: 0.8,
+    MAX_SCALE: 1.6
+}

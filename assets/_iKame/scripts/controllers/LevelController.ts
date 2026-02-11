@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, easing, game, instantiate, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, easing, game, instantiate, math, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -15,7 +15,7 @@ import { StickerData } from '../gameplay/data/StickerData';
 import { Box } from '../gameplay/boxes/Box';
 import { PromiseDelay } from '../utils/PromiseDelay';
 import { StickerConfigs } from '../configData/StickerConfigs';
-import { STICKER } from '../GameConstants';
+import { LEVEL, STICKER } from '../GameConstants';
 import { BoxData } from '../gameplay/data/BoxData';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { EventName } from '../systems/EventName';
@@ -54,13 +54,14 @@ export class LevelController extends Component implements ILevelController
         this.blockPicker.levelController = this;
     }
 
-    protected start(): void
-    {
-        this.spawnLevel();
-    }
+    // protected start(): void
+    // {
+    //     this.spawnLevel();
+    // }
 
     spawnLevel()
     {
+        // return;
         const levelData = this.levelsData[ this.levelIndex ];
         var levelNode = instantiate(levelData.levelPrefab);
         levelNode.setParent(this.rotationRoot, false);
@@ -143,6 +144,8 @@ export class LevelController extends Component implements ILevelController
         this.totalStickerCount = stickerDatas.length;
 
         this._isLevelFinished = false;
+
+        this.setLevelScale(LEVEL.DEFAULT_SCALE);
     }
 
     clearLevel(): void
@@ -485,6 +488,14 @@ export class LevelController extends Component implements ILevelController
             return sticker.node.getWorldPosition();
         }
         return Vec3.ZERO;
+    }
+
+    private _levelScale : Vec3 = new Vec3(1,1,1);
+    public setLevelScale(progress: number): void
+    {
+        let s: number = math.lerp(LEVEL.MIN_SCALE, LEVEL.MAX_SCALE, progress);
+        this._levelScale.set(s, s, s);
+        this.rotationRoot.setScale(this._levelScale);
     }
 }
 

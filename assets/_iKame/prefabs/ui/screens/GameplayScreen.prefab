@@ -28,20 +28,20 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 35
-      },
-      {
-        "__id__": 37
-      },
-      {
         "__id__": 39
       },
       {
         "__id__": 41
+      },
+      {
+        "__id__": 43
+      },
+      {
+        "__id__": 45
       }
     ],
     "_prefab": {
-      "__id__": 43
+      "__id__": 47
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -85,7 +85,7 @@
         "__id__": 3
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 9
@@ -109,7 +109,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -683.6889999999999,
+      "y": -829.758,
       "z": 0
     },
     "_lrot": {
@@ -420,7 +420,7 @@
     "_left": 0,
     "_right": 0,
     "_top": -760.4660000000001,
-    "_bottom": 198.38850425902638,
+    "_bottom": 52.3195042590263,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -575,6 +575,12 @@
       },
       {
         "__id__": 33
+      },
+      {
+        "__id__": 35
+      },
+      {
+        "__id__": 37
       }
     ],
     "removedComponents": []
@@ -697,6 +703,46 @@
     ]
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 36
+    },
+    "propertyPath": [
+      "slideEvents",
+      "length"
+    ],
+    "value": 1
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "f7vAAKmHJHTaIrIXWEvJhM"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 36
+    },
+    "propertyPath": [
+      "slideEvents",
+      "0"
+    ],
+    "value": {
+      "__id__": 38
+    }
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "",
+    "_componentId": "23533dFCU9IWId6Fu8JpA6g",
+    "handler": "setScale",
+    "customEventData": ""
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -706,12 +752,12 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 36
+      "__id__": 40
     },
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 1919.9999999999998
+      "height": 1920
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -734,7 +780,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 38
+      "__id__": 42
     },
     "_alignFlags": 45,
     "_target": null,
@@ -770,7 +816,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 40
+      "__id__": 44
     },
     "_opacity": 255,
     "_id": ""
@@ -789,11 +835,13 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 42
+      "__id__": 46
     },
     "opacity": {
-      "__id__": 39
+      "__id__": 43
     },
+    "levelController": null,
+    "scaleSlider": null,
     "_id": ""
   },
   {
@@ -809,11 +857,71 @@
       "__id__": 0
     },
     "fileId": "e0/HW71kRKAZCrkRGZgdA+",
-    "targetOverrides": null,
+    "instance": null,
+    "targetOverrides": [
+      {
+        "__id__": 48
+      },
+      {
+        "__id__": 50
+      }
+    ],
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 21
       }
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 45
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "scaleSlider"
+    ],
+    "target": {
+      "__id__": 21
+    },
+    "targetInfo": {
+      "__id__": 49
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "f7vAAKmHJHTaIrIXWEvJhM"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 21
+    },
+    "sourceInfo": {
+      "__id__": 51
+    },
+    "propertyPath": [
+      "_handle"
+    ],
+    "target": {
+      "__id__": 21
+    },
+    "targetInfo": {
+      "__id__": 52
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "f7vAAKmHJHTaIrIXWEvJhM"
+    ]
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "0fEjyxTR9DS7C+mTXeGB9E"
     ]
   }
 ]
