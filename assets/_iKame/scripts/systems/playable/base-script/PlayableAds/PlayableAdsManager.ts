@@ -110,13 +110,13 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
     }
     ClickOpenStore()
     {
-        TrackingManager.TrackEvent(ETrackingEvent.CLICK_CONVERTION);
+        TrackingManager.TrackEvent(ETrackingEvent.CTA_CLICKED);
         super_html_playable.download();
         super_html_playable.game_end();
     }
 
     ForceOpenStore(){
-        TrackingManager.TrackEvent(ETrackingEvent.FORCE_CONVERTION);
+        TrackingManager.TrackEvent(ETrackingEvent.CTA_CLICKED);
         super_html_playable.download();
         super_html_playable.game_end();
     }
