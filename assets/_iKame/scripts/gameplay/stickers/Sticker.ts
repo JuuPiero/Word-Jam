@@ -255,6 +255,11 @@ export class Sticker extends Component implements ISticker
             s.blinking();
         });
     }
+
+    public getData(): StickerData
+    {
+        return this._data;
+    }
 }
 
 

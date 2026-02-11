@@ -204,6 +204,7 @@ export class LevelController extends Component implements ILevelController
             sticker.giveHintBlinking();
             return;
         }
+        this._gameData.removeStickerData(sticker.getData());
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPeelSound);
         await sticker.peelOff();
         const targetBox = this.boxController.findSuitableBox(sticker.stickerID);

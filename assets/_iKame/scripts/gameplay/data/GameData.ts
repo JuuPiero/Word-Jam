@@ -50,57 +50,93 @@ export class GameData
     public getNewBoxData(difficulty : number): BoxData
     {
         const param: NextTargetParams = new NextTargetParams();
-        
-        param.idCountRemainingDict = this.StickerCountByIDMap;
 
+        // 1. Đếm số lượng sticker còn lại cho từng ID (tương đương Id_CountRemaining_Dict)
+        //    Sao chép map để tránh mutate dữ liệu gốc trong getter
+        const idCountRemainingDict = new Map<number, number>(this.StickerCountByIDMap);
+        param.idCountRemainingDict = idCountRemainingDict;
+
+        // 2. Cộng thêm các sticker đang nằm trong cache (giống slot + storage trong Unity)
         const inCacheIDs = this._cacheData.getAllCachedIDs();
         inCacheIDs.forEach((id) =>
         {
             const count = param.idCountRemainingDict.get(id) || 0;
             param.idCountRemainingDict.set(id, count + 1);
         });
-        
+
+        // 3. Xây idPointsDict: danh sách điểm chặn cho từng ID (tương đương Id_Points_Dict)
         param.idPointsDict.clear();
         this._stickerDatas.forEach((stickerData) =>
         {
-            const v = param.idPointsDict.get(stickerData.id) || [];
-            v.push(stickerData.getBlockingPoint());
-            //sort v ascending
-            v.sort((a, b) => a - b);
-            param.idPointsDict.set(stickerData.id, v);
+            const id = stickerData.id;
+            let list = param.idPointsDict.get(id);
+            if (!list)
+            {
+                list = [];
+                param.idPointsDict.set(id, list);
+            }
+            list.push(stickerData.getBlockingPoint());
         });
 
+        // Sắp xếp và tính tổng 3 điểm nhỏ nhất cho từng ID (tương đương Id_Point_Dict)
         param.idPointDict.clear();
-        const idList = this.TotalStickerIDs; 
-        for (const id of idList)
+        for (const [id, listPoints] of param.idPointsDict.entries())
         {
-            const listPoints = param.idPointsDict.get(id);
-            let loop = 3;
-            let minPoint = 0;
-            while (loop > 0)
+            listPoints.sort((a, b) => a - b);
+            let totalPoint = 0;
+            const loopCount = Math.min(3, listPoints.length);
+            for (let i = 0; i < loopCount; i++)
             {
-                loop--;
-                const p = listPoints[loop] || 0;
-                minPoint += p;
+                totalPoint += listPoints[i];
             }
-            param.idPointDict.set(id, minPoint);
+            param.idPointDict.set(id, totalPoint);
         }
 
+        // Đảm bảo mọi ID trong idCountRemainingDict đều có entry trong idPointDict
+        for (const id of param.idCountRemainingDict.keys())
+        {
+            if (!param.idPointDict.has(id))
+            {
+                param.idPointDict.set(id, 0);
+            }
+        }
+
+        // 4. Thông tin các box đang active (chỉ tính box còn slot trống, giống Unity)
         param.currentBoxesIdFreeSlotCount.clear();
+        param.currentBoxesIds = [];
+        let totalFreeSlots = 0;
         for (const boxData of this._boxDatas)
         {
             if (boxData.stickerID < 0) continue;
             const freeSlotCount = boxData.getEmptySlotCount();
+            if (freeSlotCount <= 0) continue;
+
             param.currentBoxesIdFreeSlotCount.set(boxData.stickerID, freeSlotCount);
+            if (param.currentBoxesIds.indexOf(boxData.stickerID) === -1)
+            {
+                param.currentBoxesIds.push(boxData.stickerID);
+            }
+            totalFreeSlots += freeSlotCount;
         }
 
-        param.currentBoxesIds = this._boxDatas.map(boxData => boxData.stickerID).filter(id => id >= 0);
+        // Nếu tổng số sticker còn lại <= tổng số slot trống hiện có thì không cần spawn box mới
+        let totalStickers = 0;
+        for (const count of param.idCountRemainingDict.values())
+        {
+            totalStickers += count;
+        }
+        if (totalStickers <= totalFreeSlots)
+        {
+            return null;
+        }
+
+        // 5. Cache IDs, độ khó, số slot trống & last point
         param.currentCacheIds = this._cacheData.getAllCachedIDs();
         param.difficultPoint = difficulty;
         param.freeHoleCount = this._cacheData.getEmptyCacheCount();
         param.lastPoint = this._lastPoint;
-        
-        const res = GameAlgorithmHelper.getNextTargetId(param)
+
+        const res = GameAlgorithmHelper.getNextTargetId(param);
         this._lastPoint = res.realPoint;
         if (res.targetId < 0) return null;
         return new BoxData(res.targetId);
