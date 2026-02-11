@@ -49,8 +49,7 @@ export class FreeSticker extends Component {
             })
             .start();
         
-        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION + game.deltaTime);
-        await delay.wait();
+        await PromiseDelay.Wait(STICKER.PEEL_DURATION + game.deltaTime);
 
         const p = targetNode.getWorldPosition();
         // Vec3.scaleAndAdd(p, p, Vec3.UP, STICKER.AFTER_PEEL_WORLD_POSITION_OFFSET);
@@ -64,8 +63,7 @@ export class FreeSticker extends Component {
             .to(STICKER.AFTER_PEEL_DURATION, { scale: STICKER.AFTER_PEEL_END_SCALE }, { easing: easing.backOut })
             .start();
         
-        const delay2 = PromiseDelay.GetCancelablePromise(STICKER.AFTER_PEEL_DURATION + game.deltaTime);
-        await delay2.wait();
+        await PromiseDelay.Wait(STICKER.AFTER_PEEL_DURATION + game.deltaTime);
     }
 }
 

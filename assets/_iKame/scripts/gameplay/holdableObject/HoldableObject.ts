@@ -12,7 +12,6 @@ export class HoldableObject extends Component implements IHoldableObject
 {
     private _data: HodlablleData;
     private _levelController: ILevelController;
-    
     public rigidBody: RigidBody;
 
     @property([ CCString ]) public stickers: string[] = [];
@@ -23,9 +22,37 @@ export class HoldableObject extends Component implements IHoldableObject
     
     private mainMeshRender: MeshRenderer | null = null;
 
+    private originalMaterials: Material[] | null = null;
+
+    private ensureRenderer(): MeshRenderer | null
+    {
+        if (!this.mainMeshRender)
+        {
+            this.mainMeshRender = this.getComponent(MeshRenderer);
+        }
+        return this.mainMeshRender;
+    }
+
+    private cacheOriginalMaterialsIfNeeded(): void
+    {
+        const renderer = this.ensureRenderer();
+        if (!renderer) return;
+        if (this.originalMaterials) return;
+
+        // IMPORTANT: sharedMaterials is a live array; keep a snapshot copy.
+        this.originalMaterials = renderer.sharedMaterials.slice();
+    }
+
+    protected onLoad(): void
+    {
+        // Helps if setMaterialTrans() gets called before start().
+        this.ensureRenderer();
+    }
+
     protected start(): void
     {
-        this.mainMeshRender = this.getComponent(MeshRenderer);
+        this.ensureRenderer();
+        this.cacheOriginalMaterialsIfNeeded();
     }
     
     setup(level: ILevelController, stickers: ISticker[]): HodlablleData
@@ -70,15 +97,14 @@ export class HoldableObject extends Component implements IHoldableObject
         this.rigidBody.isDynamic = true;
         const col = this.node.getComponent(MeshCollider);
         col.convex = true;
-        this.rigidBody.wakeUp();
         this.rigidBody.linearDamping = 0.01;
         this.rigidBody.angularDamping = 0.01;
         this.rigidBody.applyForce(this.force);
         this.node.setParent(this._levelController.getNode(), true);
         this.scheduleOnce(() =>
         {
-            this.node.destroy();
-        }, 10);
+            this.node.active = false;
+        }, 30);
     }
 
     public getNodeUID(): string {
@@ -108,9 +134,34 @@ export class HoldableObject extends Component implements IHoldableObject
         this.onObjectRemoved = [];
     }
 
-    public setMaterial(mat: Material)
+    public setMaterialTrans(mat: Material | null)
     {
-        this.mainMeshRender.setSharedMaterial(mat, 0);
+        const renderer = this.ensureRenderer();
+        if (!renderer) return;
+
+        if (mat)
+        {
+            this.cacheOriginalMaterialsIfNeeded();
+            const count = renderer.sharedMaterials.length;
+            for (let i = 0; i < count; i++)
+            {
+                renderer.setSharedMaterial(mat, i);
+            }
+            return;
+        }
+
+        if (!this.originalMaterials)
+        {
+            // No snapshot captured (likely never applied a temp material). Nothing to restore.
+            return;
+        }
+
+        if (PREVIEW || EDITOR) console.log('Resetting material to original', this.originalMaterials);
+        const restoreCount = Math.min(renderer.sharedMaterials.length, this.originalMaterials.length);
+        for (let k = 0; k < restoreCount; k++)
+        {
+            renderer.setSharedMaterial(this.originalMaterials[k], k);
+        }
     }
 
 }

@@ -10,6 +10,7 @@ export interface ILevelController
     onPickObject(name: string): void;
     getNode(): Node;
     getNextBoxData(): BoxData;
+    isLevelFinished(): boolean;
 }
 
 

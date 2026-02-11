@@ -182,8 +182,7 @@ export class Sticker extends Component implements ISticker
             })
             .start();
         
-        const delay = PromiseDelay.GetCancelablePromise(STICKER.PEEL_DURATION + game.deltaTime);
-        await delay.wait();
+        await PromiseDelay.Wait(STICKER.PEEL_DURATION + game.deltaTime);
     }
 
     public setNormalMesh (mesh : Mesh) : void 

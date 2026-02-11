@@ -12,7 +12,7 @@ export class CancelablePromiseDelay extends Component {
     public async testAysnc(): Promise<void>
     {
         console.log('Starting delay...');
-        const delay = PromiseDelay.GetCancelablePromise(4);
+        const delay = PromiseDelay.Wait(4);
         await delay.wait();
         
         if (delay.isCancelled()) {

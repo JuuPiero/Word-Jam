@@ -7,7 +7,7 @@ import { CacheController } from './CacheController';
 import { BlockPicker } from '../gameplay/BlockPicker';
 import { HoldableObject } from '../gameplay/holdableObject/HoldableObject';
 import { Sticker } from '../gameplay/stickers/Sticker';
-import { PREVIEW } from 'cc/env';
+import { EDITOR, PREVIEW } from 'cc/env';
 import { ISticker } from '../gameplay/stickers/ISticker';
 import { IHoldableObject } from '../gameplay/holdableObject/IHoldableObject';
 import { HodlablleData } from '../gameplay/data/HodlablleData';
@@ -43,7 +43,7 @@ export class LevelController extends Component implements ILevelController
 
     @property(Node) private rotationRoot: Node;
 
-    private isLevelFinished: boolean = false;
+    private _isLevelFinished: boolean = false;
 
     private totalStickerCount: number = 0;
 
@@ -140,7 +140,7 @@ export class LevelController extends Component implements ILevelController
 
         this.totalStickerCount = stickerDatas.length;
 
-        this.isLevelFinished = false;
+        this._isLevelFinished = false;
     }
 
     clearLevel(): void
@@ -174,13 +174,13 @@ export class LevelController extends Component implements ILevelController
         const object = this._holdableMap.get(name);
         if (object)
         {
-            object.setMaterial(isTransparent ? this.stickerConfigs.objectTransparentMaterial : this.stickerConfigs.objectNormalMaterial);
+            object.setMaterialTrans(isTransparent ? this.stickerConfigs.objectTransparentMaterial : null);
         }
     }
 
     onPickObject(name: string): void
     {
-        if (PREVIEW) console.log("Picked object: " + name);
+        if (PREVIEW || EDITOR) console.log("Picked object: " + name);
         const sticker = this._stickerMap.get(name);
         if (sticker)
         {
@@ -251,7 +251,7 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         box.shake(STICKER.TRANSFER_DURATION * 0.96);
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        await PromiseDelay.Wait(STICKER.TRANSFER_DURATION + game.deltaTime);
         t.stop();
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
@@ -302,7 +302,7 @@ export class LevelController extends Component implements ILevelController
                     sticker.setPeelProgress(peel);
                 } })
             .start();
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION + game.deltaTime).wait();
+        await PromiseDelay.Wait(STICKER.TRANSFER_DURATION + game.deltaTime);
         t.stop();
         this.cacheController.setStickerInPlace(cacheIndex, true);
         this._justCachedSlots.add(cacheIndex);
@@ -364,7 +364,7 @@ export class LevelController extends Component implements ILevelController
                 } })
             .start();
         box.shake(STICKER.TRANSFER_DURATION_FROM_CACHE * 0.96);
-        await PromiseDelay.GetCancelablePromise(STICKER.TRANSFER_DURATION_FROM_CACHE + game.deltaTime).wait();
+        await PromiseDelay.Wait(STICKER.TRANSFER_DURATION_FROM_CACHE + game.deltaTime);
         t.stop();
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
@@ -440,18 +440,18 @@ export class LevelController extends Component implements ILevelController
 
     private checkLevelResult(): void 
     {
-        if (this.isLevelFinished) return;
+        if (this._isLevelFinished) return;
 
         if (this.checklevelWin())
         {
-            this.isLevelFinished = true;
+            this._isLevelFinished = true;
             this.endLevel(true);
             return;
         }
 
         if (this.checkLevelLose())
         {
-            this.isLevelFinished = true;
+            this._isLevelFinished = true;
             this.endLevel(false);
             return;
         }
@@ -463,6 +463,11 @@ export class LevelController extends Component implements ILevelController
         PromiseDelay.CancelAllPromises();
         console.log("Level ended. isWin =", isWin);
         EventDispatcher.dispatch(EventName.EndGame, isWin);
+    }
+
+    public isLevelFinished(): boolean
+    {
+        return this._isLevelFinished;
     }
 }
 

@@ -117,7 +117,7 @@ export class Box extends Component {
             }
         )
         .start();
-        await PromiseDelay.GetCancelablePromise(BOX.LID_CLOSE_DURATION + game.deltaTime).wait();
+        await PromiseDelay.Wait(BOX.LID_CLOSE_DURATION + game.deltaTime);
     }
 
     public async moveUpAnimation(): Promise<void>
@@ -134,7 +134,7 @@ export class Box extends Component {
                 }
             )
             .start();
-        await PromiseDelay.GetCancelablePromise(BOX.BOX_MOVE_UP_DURATION + game.deltaTime).wait();
+        await PromiseDelay.Wait(BOX.BOX_MOVE_UP_DURATION + game.deltaTime);
     }
 
     public async respawnAnimation(): Promise<void>
@@ -155,7 +155,7 @@ export class Box extends Component {
                 }
             )
             .start();
-        await PromiseDelay.GetCancelablePromise(BOX.BOX_MOVE_UP_DURATION + game.deltaTime).wait();
+        await PromiseDelay.Wait(BOX.BOX_MOVE_UP_DURATION + game.deltaTime);
     }
 
     public async replaceBox(data: BoxData): Promise<void>

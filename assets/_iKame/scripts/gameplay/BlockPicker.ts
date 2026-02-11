@@ -40,6 +40,8 @@ export class BlockPicker extends Component {
 
     protected onTouchStart(event: EventTouch): void
     {
+        if(this.levelController.isLevelFinished())
+            return;
         this.dragRotateController.onTouchStart(event);
         this.dragRotateController.allowAutoRotate = true;
 
@@ -57,6 +59,8 @@ export class BlockPicker extends Component {
 
     protected onTouchMove(event: EventTouch): void
     {
+        if(this.levelController.isLevelFinished())
+            return;
         this.dragRotateController.onTouchMove(event);
         // if (this.dragRotateController.isDragging())
         //     this.unscheduleAllCallbacks();
@@ -64,6 +68,8 @@ export class BlockPicker extends Component {
 
     protected onTouchEnd(event: EventTouch): void
     {
+        if(this.levelController.isLevelFinished())
+            return;
         this.unscheduleAllCallbacks();
         if (this.selectedNode)
         {
