@@ -152,7 +152,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 1919.9999999999998
+      "height": 1920
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -525,7 +525,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -1317.1069999999997,
+      "y": -1317.107,
       "z": 0
     },
     "_lrot": {
@@ -1614,7 +1614,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 1919.9999999999998
+      "height": 1920
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1697,7 +1697,10 @@
     "opacity": {
       "__id__": 74
     },
-    "lostSFX": null,
+    "lostSFX": {
+      "__uuid__": "1ad943f6-1180-44de-a401-2425d059fe5e",
+      "__expectedType__": "cc.AudioClip"
+    },
     "playnowButton": {
       "__id__": 22
     },
@@ -1724,6 +1727,7 @@
       "__id__": 0
     },
     "fileId": "c9ViHGPE9PAoXcW7VdIitg",
+    "instance": null,
     "targetOverrides": null
   }
 ]

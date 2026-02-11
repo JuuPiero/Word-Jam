@@ -18,9 +18,6 @@ export class BlockPicker extends Component {
     @property(DragRotateController)
     private dragRotateController: DragRotateController = null;
 
-    @property([AudioClip])
-    private pickClips: AudioClip[] = [];
-
     private selectedNode: Node = null;
     private showingTransparent: boolean = false;
 
@@ -79,7 +76,6 @@ export class BlockPicker extends Component {
         if (this.dragRotateController.isDragging() == false && this.selectedNode && !this.showingTransparent)
         {
             this.levelController.onPickObject(this.selectedNode.name);
-            EventDispatcher.dispatch(EventName.PlaySFX, this.pickClips[Math.floor(Math.random() * this.pickClips.length)], 1.0);
             this.selectedNode = null;
 
             //TODO: enable touch particle effect later

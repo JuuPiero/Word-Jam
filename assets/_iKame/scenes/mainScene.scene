@@ -458,6 +458,18 @@
       "__uuid__": "81e1dcf7-6ba1-48a2-81dc-5319ffccd10a",
       "__expectedType__": "fc8d8xFHF9L1LjjdJeaSJLZ"
     },
+    "stickerPeelSound": {
+      "__uuid__": "fbdcf519-6d9c-49c2-ae4f-16bb735a1409",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "stickerPlaceInBoxSound": {
+      "__uuid__": "2007dd94-3044-4444-ab60-a5f907c9b7f1",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "stickerFlySound": {
+      "__uuid__": "a64d5105-76a5-49ad-8677-4fc12b7db243",
+      "__expectedType__": "cc.AudioClip"
+    },
     "rotationRoot": {
       "__id__": 9
     },
@@ -2005,7 +2017,6 @@
     "dragRotateController": {
       "__id__": 10
     },
-    "pickClips": [],
     "_id": "a2ACGyHtNJXavIxLZmLiuL"
   },
   {
@@ -3927,7 +3938,7 @@
     "_clip": null,
     "_loop": false,
     "_playOnAwake": false,
-    "_volume": 0.23,
+    "_volume": 0.1,
     "_id": "37tInrn2ZJv4MN48x6E7ua"
   },
   {
@@ -3947,7 +3958,7 @@
       "__id__": 186
     },
     "bgmClip": {
-      "__uuid__": "60fb5d07-9f6f-42cd-8dee-85356f1e032c",
+      "__uuid__": "4c78522a-8f5a-41bb-9610-f3740f583ccc",
       "__expectedType__": "cc.AudioClip"
     },
     "_id": "31qSjT3gBEB7m6GZNrvyrd"
