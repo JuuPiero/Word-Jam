@@ -139,6 +139,22 @@ export class GameData
         const res = GameAlgorithmHelper.getNextTargetId(param);
         this._lastPoint = res.realPoint;
         if (res.targetId < 0) return null;
+
+        //Double check xem ID này có trùng lặp với box đang hiện có không
+        // nếu trùng thì lấy một ID khác trong danh sách đã tính toán được
+        if (this._boxDatas.find(box => box.stickerID ===  res.targetId))
+        {
+            const stikerIdsRemains = this.TotalStickerIDs;
+            for (const id of stikerIdsRemains)
+            {
+                if (id !== res.targetId && !this._boxDatas.find(box => box.stickerID ===  id))
+                {
+                    return new BoxData(id);
+                }
+            }
+            return null;
+        }
+
         return new BoxData(res.targetId);
     }
 
