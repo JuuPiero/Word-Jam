@@ -1085,7 +1085,7 @@
       "__expectedType__": "cc.AudioClip"
     },
     "boxMoveUpSound": {
-      "__uuid__": "1aff2258-cda3-44fb-8bf7-865a75e3cb28",
+      "__uuid__": "f37eb0e4-18ae-4455-8053-f8c7a7df6c9a",
       "__expectedType__": "cc.AudioClip"
     },
     "boxRespawnSound": {

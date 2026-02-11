@@ -146,7 +146,7 @@ export class Box extends Component {
 
     public async moveUpAnimation(): Promise<void>
     {
-        EventDispatcher.dispatch(EventName.PlaySFX, this.boxMoveUpSound);
+        EventDispatcher.dispatch(EventName.PlaySFX, this.boxMoveUpSound, 0.37);
         Tween.stopAllByTarget(this.root);
         this.root.setPosition(Vec3.ZERO);
         tween(this.root)
