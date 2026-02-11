@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Tween, tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, Component, Node, Tween, tween, Vec3 } from 'cc';
 import { IBoxController } from './IBoxController';
 import { BoxData } from '../gameplay/data/BoxData';
 import { Box } from '../gameplay/boxes/Box';
@@ -14,11 +14,6 @@ export class BoxController extends Component implements IBoxController
     private _boxDataList: BoxData[] = [];
     @property([ Box ]) public boxes: Box[] = [];
     private _levelController: ILevelController;
-
-    // protected onLoad(): void
-    // {
-    //     this.boxes = this.node.getComponentsInChildren(Box)  
-    // }
     
     setup(count: number, level: ILevelController)
     {
@@ -90,6 +85,7 @@ export class BoxController extends Component implements IBoxController
         if (index >= 0)
         {
             this._activeBoxes.splice(index, 1);
+            this._boxDataList.splice(index, 1);
             await box.closeLidAnimation();
             await box.moveUpAnimation();
             box.node.active = false;

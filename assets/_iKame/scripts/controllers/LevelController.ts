@@ -272,6 +272,7 @@ export class LevelController extends Component implements ILevelController
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;
+        box.resetData(-1, 0);
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
         {
@@ -391,6 +392,7 @@ export class LevelController extends Component implements ILevelController
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;
+        box.resetData(-1, 0);
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
         {

@@ -1,10 +1,12 @@
-import { _decorator, Component, easing, game, MeshRenderer, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, Component, easing, game, MeshRenderer, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
 import { BoxData } from '../data/BoxData';
 import { StickerConfigs } from '../../configData/StickerConfigs';
 import { BOX, STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
 import { IBoxController } from '../../controllers/IBoxController';
 import { ISticker } from '../stickers/ISticker';
+import { EventDispatcher } from '../../designPatterns/observer/EventDispatcher';
+import { EventName } from '../../systems/EventName';
 const { ccclass, property } = _decorator;
 
 @ccclass('Box')
@@ -22,6 +24,11 @@ export class Box extends Component {
 
     @property([ SpriteRenderer ]) public outLineSprites: SpriteRenderer[] = [];
     @property(SpriteRenderer) public iconSprite: SpriteRenderer;
+
+        
+    @property(AudioClip) closeLidSound: AudioClip | null = null;
+    @property(AudioClip) boxMoveUpSound: AudioClip | null = null;
+    @property(AudioClip) boxRespawnSound: AudioClip | null = null;
 
     private _boxesController: IBoxController;
     private _stickers : ISticker[] = [];
@@ -65,17 +72,24 @@ export class Box extends Component {
         this._stickers = [];
         this._boxData.reset(id, prefillCount);
         const stickerData = this.stickerConfigs.getStickerDataByID(this._boxData.stickerID);
-        this.outLineSprites.forEach((spr) => {
-            spr.spriteFrame = stickerData.stickerOutlineTexture;
-        });
-        this.iconSprite.spriteFrame = stickerData.stickerTexture;
-        const mat = stickerData.boxMaterial;
-        if (mat)
-            this.meshVisual.setSharedMaterial(mat, 0);
-    
+        if (stickerData)
+        {
+            this.outLineSprites.forEach((spr) => {
+                spr.spriteFrame = stickerData.stickerOutlineTexture;
+            });
+            this.iconSprite.spriteFrame = stickerData.stickerTexture;
+            const mat = stickerData.boxMaterial;
+            if (mat)
+                this.meshVisual.setSharedMaterial(mat, 0);
+        }
         if (prefillCount > 0) {
             this.createPreSpawnStickerNode();
         }
+    }
+
+    public resetData(id : number, filledStickerCount: number): void
+    {
+        this._boxData.reset(id, filledStickerCount);
     }
 
     public createPreSpawnStickerNode(): void 
@@ -106,6 +120,7 @@ export class Box extends Component {
 
     public async closeLidAnimation(): Promise<void>
     {
+        EventDispatcher.dispatch(EventName.PlaySFX, this.closeLidSound);
         this.lidNode.active = true;
         Tween.stopAllByTarget(this.lidNode);
         this.lidNode.setRotationFromEuler(BOX.LID_OPEN_ROT);
@@ -126,6 +141,7 @@ export class Box extends Component {
 
     public async moveUpAnimation(): Promise<void>
     {
+        EventDispatcher.dispatch(EventName.PlaySFX, this.boxMoveUpSound);
         Tween.stopAllByTarget(this.root);
         this.root.setPosition(Vec3.ZERO);
         tween(this.root)
@@ -143,6 +159,7 @@ export class Box extends Component {
 
     public async respawnAnimation(): Promise<void>
     {
+        EventDispatcher.dispatch(EventName.PlaySFX, this.boxRespawnSound);
         Tween.stopAllByTarget(this.root);
         this.root.setPosition(BOX.BOX_START_DOWN_POS);
         this.root.setRotationFromEuler(BOX.BOX_START_DOWN_ROT);

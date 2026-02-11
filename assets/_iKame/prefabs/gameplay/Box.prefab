@@ -1080,6 +1080,18 @@
     "iconSprite": {
       "__id__": 28
     },
+    "closeLidSound": {
+      "__uuid__": "496be6c7-f7ac-4bfe-a823-629ba51efabb",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "boxMoveUpSound": {
+      "__uuid__": "1aff2258-cda3-44fb-8bf7-865a75e3cb28",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "boxRespawnSound": {
+      "__uuid__": "e2ae4fcb-d9e6-4b47-b8ff-8d8451510785",
+      "__expectedType__": "cc.AudioClip"
+    },
     "_id": ""
   },
   {

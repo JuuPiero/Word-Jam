@@ -52,6 +52,13 @@ export class GameData
         const param: NextTargetParams = new NextTargetParams();
         
         param.idCountRemainingDict = this.StickerCountByIDMap;
+
+        const inCacheIDs = this._cacheData.getAllCachedIDs();
+        inCacheIDs.forEach((id) =>
+        {
+            const count = param.idCountRemainingDict.get(id) || 0;
+            param.idCountRemainingDict.set(id, count + 1);
+        });
         
         param.idPointsDict.clear();
         this._stickerDatas.forEach((stickerData) =>
@@ -80,12 +87,14 @@ export class GameData
         }
 
         param.currentBoxesIdFreeSlotCount.clear();
-        this._boxDatas.forEach((boxData) => {
+        for (const boxData of this._boxDatas)
+        {
+            if (boxData.stickerID < 0) continue;
             const freeSlotCount = boxData.getEmptySlotCount();
             param.currentBoxesIdFreeSlotCount.set(boxData.stickerID, freeSlotCount);
-        })
+        }
 
-        param.currentBoxesIds = this._boxDatas.map(boxData => boxData.stickerID);
+        param.currentBoxesIds = this._boxDatas.map(boxData => boxData.stickerID).filter(id => id >= 0);
         param.currentCacheIds = this._cacheData.getAllCachedIDs();
         param.difficultPoint = difficulty;
         param.freeHoleCount = this._cacheData.getEmptyCacheCount();
@@ -93,6 +102,12 @@ export class GameData
         
         const res = GameAlgorithmHelper.getNextTargetId(param)
         this._lastPoint = res.realPoint;
+        if (res.targetId < 0) return null;
         return new BoxData(res.targetId);
+    }
+
+    public removeStickerData(stickerData : StickerData): void
+    {
+        this._stickerDatas.delete(stickerData);
     }
 }

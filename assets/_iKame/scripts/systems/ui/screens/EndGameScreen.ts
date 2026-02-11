@@ -23,22 +23,19 @@ export class EndGameScreen extends ScreenBase {
     @property([ Node ])
     public toggleNodes: Node[] = [];
 
-    protected onLoad(): void
-    {
-        this.replayButton.active = ALLOW_REPLAY;
-        this.playnowButton.active = !ALLOW_REPLAY;
-
-        this.toggleNodes.forEach( (node) => {
-            node.active = !ALLOW_REPLAY;
-        } );
-    }
-        
     onShow(): void 
     {
         EventDispatcher.dispatch(EventName.PlaySFX, this.lostSFX);
         TrackingManager.TrackEvent(ETrackingEvent.ENDCARD_SHOWN);    
 
         this.scheduleOnce(this.toStoreForce, 5);
+
+        this.replayButton.active = ALLOW_REPLAY;
+        this.playnowButton.active = !ALLOW_REPLAY;
+
+        this.toggleNodes.forEach( (node) => {
+            node.active = !ALLOW_REPLAY;
+        } );
     }
 
     replayGame(): void 
