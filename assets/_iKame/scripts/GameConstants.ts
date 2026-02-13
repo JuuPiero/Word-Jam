@@ -40,7 +40,7 @@ export const BOX =
 
 export const FORCE_STORE_ON_TRANSITION = false;
 export const FORCE_STORE_DURATION = 0;
-export const ALLOW_REPLAY = false;
+export const ALLOW_REPLAY = true;
 
 export const LEVEL =
 {

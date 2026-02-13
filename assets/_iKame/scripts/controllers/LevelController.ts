@@ -20,6 +20,7 @@ import { BoxData } from '../gameplay/data/BoxData';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { EventName } from '../systems/EventName';
 import { ETrackingEvent, TrackingManager } from '../systems/playable/base-script/PlayableAds/Tracking/TrackingManager';
+import { DragRotateController } from '../commond/DragRotateController';
 const { ccclass, property } = _decorator;
 
 const FRAME_SKIP = 5;
@@ -33,6 +34,7 @@ export class LevelController extends Component implements ILevelController
 
     @property({ type: BoxController, group: "Controllers" }) public boxController: BoxController;
     @property({ type: CacheController, group: "Controllers" }) public cacheController: CacheController;
+    @property({type: DragRotateController, group : "Controllers"}) public rotateController: DragRotateController;
     @property(BlockPicker) public blockPicker: BlockPicker;
     @property({ type: StickerConfigs, group: "ConfigData" }) public stickerConfigs: StickerConfigs;
     @property({ type: AudioClip, group: "Audio" }) public stickerPeelSound: AudioClip = null;
@@ -73,7 +75,7 @@ export class LevelController extends Component implements ILevelController
         const levelData = this.levelsData[ this.levelIndex ];
         var levelNode = instantiate(levelData.levelPrefab);
         levelNode.setParent(this.rotationRoot, false);
-
+        this.rotateController.allowAutoRotate = false;
         const holdableObjects = levelNode.getComponentsInChildren(HoldableObject);
         for (const holdableObject of holdableObjects)
         {
