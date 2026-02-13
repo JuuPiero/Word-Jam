@@ -26,7 +26,9 @@
   "general": {
     "designResolution": {
       "height": 1920,
-      "width": 1080
+      "width": 1080,
+      "fitHeight": false,
+      "fitWidth": true
     }
   },
   "custom_joint_texture_layouts": [],
