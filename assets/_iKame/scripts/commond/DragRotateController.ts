@@ -43,13 +43,14 @@ export class DragRotateController extends Component {
     // ── private state ────────────────────────────────────────────────────
     private _currentVelocity: Vec2 = new Vec2();
     private _idleTime: number = 0;
-    private _isDragging: boolean = false;
+    private _touchActive: boolean = false;  // true while finger is down
+    private _hasDragged: boolean = false;   // true if finger moved significantly this touch
     private _lastAutoRotateDirection: number = 1;
     private _lastMoveTime: number = 0;
 
     // ── lifecycle ────────────────────────────────────────────────────────
     update(deltaTime: number) {
-        if (this._isDragging) {
+        if (this._touchActive) {
             this._idleTime = 0;
         } else {
             this.handleRotate();
@@ -117,7 +118,8 @@ export class DragRotateController extends Component {
 
     // ── touch callbacks (attach via node.on / input.on externally) ───────
     onTouchStart(event: EventTouch): void {
-        this._isDragging = true;
+        this._touchActive = true;
+        this._hasDragged = false;
         this._currentVelocity.set(0, 0);
         this._idleTime = 0;
         this._lastMoveTime = performance.now();
@@ -136,6 +138,7 @@ export class DragRotateController extends Component {
         if (DragRotateController.IsLocked) return;
 
         DragRotateController.OnRotationInput?.();
+        this._hasDragged = true;
 
         // Smooth velocity toward current delta instead of accumulating — prevents
         // light drags from building up disproportionately large inertia.
@@ -159,11 +162,12 @@ export class DragRotateController extends Component {
     }
 
     onTouchEnd(event: EventTouch): void {
-        this._isDragging = false;
+        this._touchActive = false;
         // If the finger was held still before release (no movement for > 100ms),
         // clear velocity so the node does not continue spinning.
         if (performance.now() - this._lastMoveTime > 100) {
             this._currentVelocity.set(0, 0);
+            this._hasDragged = false;
         }
     }
 
@@ -184,8 +188,10 @@ export class DragRotateController extends Component {
     }
 
     // ── public API ───────────────────────────────────────────────────────
+    /** Returns true if the user moved their finger significantly during this touch.
+     *  Use this to distinguish a tap (false) from a drag rotation (true). */
     public isDragging(): boolean {
-        return this._isDragging;
+        return this._hasDragged;
     }
 }
 

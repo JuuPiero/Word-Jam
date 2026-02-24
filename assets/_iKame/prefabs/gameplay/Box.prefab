@@ -200,7 +200,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": 0.028
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -295,8 +295,6 @@
       "__id__": 0
     },
     "fileId": "e9rc+AbnFHpbZWdZQm79jN",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {

@@ -174,17 +174,17 @@ export class CacheController extends Component
         this.updateMaterialWarning(0);
         this._tweenObjectWarning.value = 0;
         const t = tween(this._tweenObjectWarning)
-            .to(.3, { value: 1 }, { easing: easing.sineInOut, onUpdate: (target: any) => {
+            .to(.23, { value: 1 }, { easing: easing.sineInOut, onUpdate: (target: any) => {
                 this.updateMaterialWarning(target.value);
             }})
-            .to(1, { value: 0 }, { easing: easing.sineOut, onUpdate: (target: any) => {
+            .to(.5, { value: 0 }, { easing: easing.sineOut, onUpdate: (target: any) => {
                 this.updateMaterialWarning(target.value);
             }});
         
-        t.start();
-        // tween(this._tweenObjectWarning)
-        //     .repeatForever(t)
-        //     .start();
+        // t.start();
+        tween(this._tweenObjectWarning)
+            .repeat(4, t)
+            .start();
     }
 
 

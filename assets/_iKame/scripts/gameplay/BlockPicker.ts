@@ -87,6 +87,7 @@ export class BlockPicker extends Component {
         }
         event.getUILocation(this.uiPos);
 
+        this.dragRotateController.onTouchEnd(event);
         if (this.dragRotateController.isDragging() == false && this.selectedNode && !this.showingTransparent)
         {
             this.levelController.onPickObject(this.selectedNode.name);
@@ -98,7 +99,6 @@ export class BlockPicker extends Component {
             // this.touchParticle.clear();
             // this.touchParticle.play();
         }
-        this.dragRotateController.onTouchEnd(event);
         this.showingTransparent = false;
     }
 
