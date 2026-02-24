@@ -1940,7 +1940,7 @@
       "userData": {
         "gltfIndex": 0,
         "fixAlphaTransparencyArtifacts": true,
-        "hasAlpha": false,
+        "hasAlpha": true,
         "type": "texture"
       },
       "ver": "1.0.3",

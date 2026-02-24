@@ -22121,10 +22121,17 @@
     "_enabled": true,
     "__prefab": null,
     "threshold": 0.3,
-    "sensitivity": 0.013,
-    "maxVelocity": 10,
+    "sensitivity": 0.76,
+    "stopAcceleration": 0.06,
+    "maxVelocity": 6.2,
+    "velocitySmoothing": 0.25,
     "autoRotateInterval": 5,
-    "is360": true,
+    "autoRotateSpeed": 3,
+    "allowHorizontalRotation": true,
+    "allowVerticalRotation": true,
+    "camera": {
+      "__id__": 651
+    },
     "_id": "5fS8d15LRPbZSLS0Fqfbpa"
   },
   {
