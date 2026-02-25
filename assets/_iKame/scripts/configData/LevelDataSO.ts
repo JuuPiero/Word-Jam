@@ -1,5 +1,6 @@
 import { _decorator, CCInteger, CCString, Prefab, RealCurve } from 'cc';
 import { bh } from 'db://scriptable-asset/scriptable_runtime';
+import { ColorDistributionConfig } from './ColorDistributionConfig';
 const { ccclass, property } = _decorator;
 
 @bh.createAssetMenu('LevelDataSO', 'ScriptableAsset/LevelDataSO')
@@ -10,6 +11,8 @@ export class LevelDataSO extends bh.ScriptableAsset {
     @property(CCInteger) public maxCache: number = 5;
     @property(RealCurve) public diffCurve: RealCurve = new RealCurve();
     @property(CCString) public stickerTutName: string = "";
+    @property(ColorDistributionConfig) public colorDistributionConfig: ColorDistributionConfig | null = null;
+
     public evaluateDifficulty(t: number): number {
         return this.diffCurve.evaluate(t);
     }

@@ -101,7 +101,11 @@ export class LevelController extends Component implements ILevelController
             }
             holdableDatas.push(holdableObject.setup(this, stickersForObject));
         }
-
+        let colors: number[];
+        if (levelData.colorDistributionConfig)
+        {
+            colors = levelData.colorDistributionConfig.getColors(stickers.length, math.randomRangeInt(0, 1000));
+        }
         const stickerDatas: StickerData[] = [];
         for (const sticker of stickers)
         {
@@ -141,7 +145,8 @@ export class LevelController extends Component implements ILevelController
                     weightLockObjects.push(holdableObject);
                 }
             }
-            const stickerData = sticker.setup(this, blockingStickers, holdingObjects, weightLockStickers, weightLockObjects);
+            const colorID = colors ? colors[stickerDatas.length] : -1;
+            const stickerData = sticker.setup(this, blockingStickers, holdingObjects, weightLockStickers, weightLockObjects, colorID);
             stickerDatas.push(stickerData);
         }
 

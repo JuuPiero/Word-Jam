@@ -40,9 +40,14 @@ export class Sticker extends Component implements ISticker
         blockingStickers: ISticker[],
         holdingObjects: IHoldableObject[],
         weightLockStickers: ISticker[],
-        weightLockObjects: IHoldableObject[]
+        weightLockObjects: IHoldableObject[],
+        colorID: number
     ): StickerData
     {
+        if (colorID >= 0) 
+        {
+            this.stickerID = colorID;
+        }
         this.meshRenderer = this.getComponent(MeshRenderer);
 
         this._levelController = levelController;
