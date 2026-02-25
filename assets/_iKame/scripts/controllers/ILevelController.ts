@@ -1,4 +1,4 @@
-import { Node } from "cc";
+import { Material, Node } from "cc";
 import { BoxData } from "../gameplay/data/BoxData";
 export interface ILevelController
 {
@@ -11,6 +11,7 @@ export interface ILevelController
     getNode(): Node;
     getNextBoxData(): BoxData;
     isLevelFinished(): boolean;
+    getStickerMaterialByID(id: number): Material;
 }
 
 

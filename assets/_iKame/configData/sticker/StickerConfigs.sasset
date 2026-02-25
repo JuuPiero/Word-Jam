@@ -1,52 +1,52 @@
 {
   "__type__": "fc8d8xFHF9L1LjjdJeaSJLZ",
-  "_name": "AssetResources",
+  "_name": "StickerConfigs",
   "_objFlags": 0,
   "__editorExtras__": {},
   "_native": "",
   "stickerDatas": [
     {
-      "__uuid__": "dcb6dcf4-30ff-4f9b-9b4e-2e8120b601f9",
+      "__uuid__": "3c4aac86-c676-4693-8adc-82949c05f749",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "b255f97c-8803-4946-927f-0d8cc3e379b9",
+      "__uuid__": "e3a8248e-8c2a-484a-992f-35caa5453d1f",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "5dc4b1e7-e882-44e7-8b0d-0b492cf4f44d",
+      "__uuid__": "bc41e13d-0884-42b5-90ed-91fd1acc9995",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "2be060b9-979f-495e-9741-6e5d93288ba3",
+      "__uuid__": "60e9cb10-d187-4938-9baf-f90f12c07423",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "91c29512-d575-44ac-ad6e-a9e781bccf96",
+      "__uuid__": "69b4bf32-69e5-41d9-b6d3-367740087d92",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "27319bfc-058a-4594-abd9-bc4b7778890b",
+      "__uuid__": "a54356dd-fbec-4eb7-8e96-0807a7b57673",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "56867c55-c661-4d51-8e52-f2f5972cb50a",
+      "__uuid__": "48e59bc3-cd10-40d3-8916-a9f47a167860",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "6d133d23-d851-420c-9f10-0820f506ab8c",
+      "__uuid__": "9142dfc1-9c0f-4826-a187-ba7928662274",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "42d48dc8-9b27-4f8c-8a95-dbadc88bc689",
+      "__uuid__": "68983696-ffd3-4639-8b2b-7590ac91ca3b",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "dd1d3fbe-49f5-4410-94ab-b991468dd7f6",
+      "__uuid__": "fa41b6f4-83f1-4020-813c-dd9f7c088ccc",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "b753ad60-2b7c-4e6e-bea6-3d24695e34c2",
+      "__uuid__": "059ca0b3-6c50-4fce-ab1b-255d71d2cf08",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     }
   ],

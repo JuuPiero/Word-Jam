@@ -1,4 +1,4 @@
-import { _decorator, AudioClip, CCInteger, Component, easing, game, instantiate, math, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, CCInteger, Component, easing, game, instantiate, Material, math, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -550,6 +550,11 @@ export class LevelController extends Component implements ILevelController
             TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_PASS_75);
             this._is75Complete = true;
         }
+    }
+
+    public getStickerMaterialByID(id: number): Material
+    {
+        return this.stickerConfigs.getStickerDataByID(id).stickerMaterial;
     }
 }
 

@@ -54,6 +54,9 @@ export class Sticker extends Component implements ISticker
             weightLockObjects
         );
 
+        const mat = this._levelController.getStickerMaterialByID(this.stickerID);
+        this.meshRenderer.setMaterialInstance(mat, 0);
+
         for (const sticker of blockingStickers)
         {
             sticker.addListenerOnRemoved(this.onBlockingStickerRemoved.bind(this));
