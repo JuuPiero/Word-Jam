@@ -6,41 +6,43 @@
     "__editorExtras__": {},
     "_native": "",
     "levelPrefab": {
-      "__uuid__": "e59e5ebb-6110-4e29-b15e-03ba88a2f00b",
+      "__uuid__": "aeae64dc-22d4-4913-bebf-913bb0a26422",
       "__expectedType__": "cc.Prefab"
     },
-    "maxBox": 4,
+    "maxBox": 2,
     "maxCache": 5,
-    "stickerTutName": "Sticker_7",
-    "colorDistributionConfig": null,
-    "difficultyCurve": {
+    "curveScale": 7,
+    "diffCurve": {
       "__id__": 1
-    }
-  },
-  {
-    "__type__": "cc.CurveRange",
-    "mode": 1,
-    "spline": {
-      "__id__": 2
     },
-    "multiplier": 13
+    "stickerTutName": "Sticker_7",
+    "colorDistributionConfig": {
+      "__uuid__": "f7ca346b-28ab-4d97-8846-24391792eafc",
+      "__expectedType__": "44712Z9EmNLsrKgUak4V8vO"
+    }
   },
   {
     "__type__": "cc.RealCurve",
     "_times": [
       0,
+      0.4024390243902439,
+      0.41589783837175553,
+      0.624390243902439,
+      0.6341463414634146,
+      0.775609756097561,
+      0.7878048780487805,
       1
     ],
     "_values": [
       {
         "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
+        "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 1,
+        "value": 0,
         "rightTangent": 0,
-        "rightTangentWeight": 0,
+        "rightTangentWeight": 0.13414634146341464,
         "leftTangent": 0,
-        "leftTangentWeight": 0,
+        "leftTangentWeight": 1,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -48,11 +50,83 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 1,
+        "value": 0,
         "rightTangent": 0,
-        "rightTangentWeight": 0,
+        "rightTangentWeight": 0.0044862713271705355,
         "leftTangent": 0,
-        "leftTangentWeight": 0,
+        "leftTangentWeight": 0.13414634146341464,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 2,
+        "tangentWeightMode": 0,
+        "value": 0.3236391912988182,
+        "rightTangent": 0.4437229437229433,
+        "rightTangentWeight": 0.06981903826215638,
+        "leftTangent": 0.4437229437229433,
+        "leftTangentWeight": 0.004908091656309593,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 2,
+        "tangentWeightMode": 0,
+        "value": 0.3560606060606061,
+        "rightTangent": -0.03523662935733037,
+        "rightTangentWeight": 0.0032540507884267628,
+        "leftTangent": -0.03523662935733037,
+        "leftTangentWeight": 0.06954059985130652,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 2,
+        "tangentWeightMode": 0,
+        "value": 0.6742424242424242,
+        "rightTangent": 0.3005865102639291,
+        "rightTangentWeight": 0.04923866780529376,
+        "leftTangent": 0.3005865102639291,
+        "leftTangentWeight": 0.009325723615306154,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 2,
+        "tangentWeightMode": 0,
+        "value": 0.6893939393939394,
+        "rightTangent": 0,
+        "rightTangentWeight": 0.004065040650406507,
+        "leftTangent": 0,
+        "leftTangentWeight": 0.054459435517217804,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 2,
+        "tangentWeightMode": 0,
+        "value": 0.9696969696969697,
+        "rightTangent": 0,
+        "rightTangentWeight": 0.07073170731707315,
+        "leftTangent": 0,
+        "leftTangentWeight": 0.008130081300813014,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 1,
+        "rightTangent": 0.14280738418669442,
+        "rightTangentWeight": 1,
+        "leftTangent": 0.14280738418669442,
+        "leftTangentWeight": 0.07144931647712809,
         "easingMethod": 0,
         "__editorExtras__": null
       }
