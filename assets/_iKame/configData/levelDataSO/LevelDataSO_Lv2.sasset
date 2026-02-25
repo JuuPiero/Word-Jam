@@ -11,7 +11,7 @@
     },
     "maxBox": 2,
     "maxCache": 5,
-    "curveScale": 10,
+    "curveScale": 1,
     "diffCurve": {
       "__id__": 1
     },
@@ -25,10 +25,6 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.3,
-      0.3070310803433863,
-      0.7,
-      0.7146341463414634,
       1
     ],
     "_values": [
@@ -38,57 +34,9 @@
         "tangentWeightMode": 0,
         "value": 0,
         "rightTangent": 0,
-        "rightTangentWeight": 0.09999999999999999,
+        "rightTangentWeight": 0.4714045207910317,
         "leftTangent": 0,
         "leftTangentWeight": 1,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0,
-        "rightTangent": 0,
-        "rightTangentWeight": 0.0023436934477954288,
-        "leftTangent": 0,
-        "leftTangentWeight": 0.09999999999999999,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0.10251264600171561,
-        "rightTangent": 0.067523056653491,
-        "rightTangentWeight": 0.06383251386126229,
-        "leftTangent": 0.067523056653491,
-        "leftTangentWeight": 0.0023490302464179934,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0.15151515151515152,
-        "rightTangent": 0.38343085897552903,
-        "rightTangentWeight": 0.001741446883857012,
-        "leftTangent": 0.38343085897552903,
-        "leftTangentWeight": 0.001741446883857012,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0.9924242424242424,
-        "rightTangent": -0.09782632394395367,
-        "rightTangentWeight": 0.0955760254794306,
-        "leftTangent": -0.09782632394395367,
-        "leftTangentWeight": 0.004901334639970804,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -100,7 +48,7 @@
         "rightTangent": -0.08262423720230072,
         "rightTangentWeight": 1,
         "leftTangent": -0.08262423720230072,
-        "leftTangentWeight": 0.15805950135013705,
+        "leftTangentWeight": 0.33446919216594556,
         "easingMethod": 0,
         "__editorExtras__": null
       }
