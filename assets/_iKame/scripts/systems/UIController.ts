@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, game, Node, ResolutionPolicy, UITransform, view } from 'cc';
 import { IdleScreen } from './ui/screens/IdleScreen';
 import { GameplayScreen } from './ui/screens/GameplayScreen';
 import { EndGameScreen } from './ui/screens/EndGameScreen';
@@ -13,8 +13,7 @@ import { EGameState } from './gameStates/EGameState';
 import { PromiseDelay } from '../utils/PromiseDelay';
 import { IntroScreen } from './ui/screens/IntroScreen';
 
-
-
+const SQUARE_RATIO = 3/4 // 4:3 ratio
 
 const { ccclass, property } = _decorator;
 
@@ -47,6 +46,8 @@ export class UIController extends Component {
     private stackStates: Stack<ScreenBase> = new Stack<ScreenBase>();
 
     public activeScreen: ScreenBase = null;
+
+    private _uiTransform: UITransform;
     
     protected onLoad(): void {
         EventDispatcher.addListener(EventName.ShowScreen, this.onShowScreen, this);
@@ -64,6 +65,16 @@ export class UIController extends Component {
     protected onDestroy(): void {
         EventDispatcher.removeListener(EventName.ShowScreen, this.onShowScreen, this);
         EventDispatcher.removeListener(EventName.BackScreen, this.onBackScreen, this);
+
+        window.removeEventListener('resize', this.onResize.bind(this))
+        window.removeEventListener('orientationchange', this.onResize.bind(this))
+    }
+
+    protected start(): void
+    {
+        this.onResize();
+        window.addEventListener('resize', this.onResize.bind(this));
+        window.addEventListener('orientationchange', this.onResize.bind(this))
     }
 
     public async showScreen(screen: ScreenBase): Promise<void>
@@ -126,6 +137,18 @@ export class UIController extends Component {
     public onBackScreen()
     {
         this.backState();
+    }
+
+    public onResize()
+    {
+        if (!this._uiTransform) this._uiTransform = this.node.getComponent(UITransform); 
+        const ratio = this._uiTransform.contentSize.width / this._uiTransform.contentSize.height;
+        if (ratio > SQUARE_RATIO)
+        {
+            view.setDesignResolutionSize(1080, 1920, ResolutionPolicy.FIXED_HEIGHT);
+            return;
+        }
+        view.setDesignResolutionSize(1080, 1920, ResolutionPolicy.FIXED_WIDTH);
     }
 }
 
