@@ -16,8 +16,8 @@ export const STICKER = {
     AFTER_PEEL_DURATION: 0.2,
     AFTER_PEEL_WORLD_POSITION_OFFSET: new Vec3(-0.4, 1, 0),
 
-    IN_BOX_SCALE: new Vec3(0.362, 0.362, 0.362),
-    IN_CACHE_SCALE: new Vec3(0.4, 0.4, 0.4),
+    IN_BOX_SCALE: new Vec3(0.3, 0.3, 0.3),
+    IN_CACHE_SCALE: new Vec3(0.314, 0.314, 0.314),
     IN_BOX_ROTATION: new Vec3(0, 180, 0),
 
     TRANSFER_DURATION: 0.5,

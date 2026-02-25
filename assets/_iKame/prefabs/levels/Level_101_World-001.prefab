@@ -4656,23 +4656,8 @@
     "holdingObjects": [
       "HoldableObject_8"
     ],
-    "weightLockStickers": [
-      "Sticker_57",
-      "Sticker_8",
-      "Sticker_0",
-      "Sticker_13",
-      "Sticker_55",
-      "Sticker_58",
-      "Sticker_70",
-      "Sticker_75",
-      "Sticker_78",
-      "Sticker_68",
-      "Sticker_12",
-      "Sticker_54"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_6"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },
@@ -8394,11 +8379,7 @@
     "holdingObjects": [
       "HoldableObject_4"
     ],
-    "weightLockStickers": [
-      "Sticker_63",
-      "Sticker_64",
-      "Sticker_62"
-    ],
+    "weightLockStickers": [],
     "weightLockObjects": [
       "HoldableObject_5"
     ],
@@ -11569,20 +11550,8 @@
     "holdingObjects": [
       "HoldableObject_2"
     ],
-    "weightLockStickers": [
-      "Sticker_59",
-      "Sticker_60",
-      "Sticker_61",
-      "Sticker_3",
-      "Sticker_52",
-      "Sticker_6",
-      "Sticker_53",
-      "Sticker_51"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_0",
-      "HoldableObject_7"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },
@@ -12596,9 +12565,9 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 1.6360812187194824,
-      "y": -1.9626597166061401,
-      "z": 1.6295429468154907
+      "x": 1.651,
+      "y": -1.963,
+      "z": 1.695
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -12700,15 +12669,8 @@
     "holdingObjects": [
       "HoldableObject_4"
     ],
-    "weightLockStickers": [
-      "Sticker_59",
-      "Sticker_60",
-      "Sticker_61",
-      "Sticker_3"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_0"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },
@@ -15925,23 +15887,8 @@
     "holdingObjects": [
       "HoldableObject_1"
     ],
-    "weightLockStickers": [
-      "Sticker_57",
-      "Sticker_8",
-      "Sticker_0",
-      "Sticker_13",
-      "Sticker_55",
-      "Sticker_58",
-      "Sticker_70",
-      "Sticker_75",
-      "Sticker_78",
-      "Sticker_68",
-      "Sticker_12",
-      "Sticker_54"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_6"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },
@@ -18853,23 +18800,8 @@
     "holdingObjects": [
       "HoldableObject_10"
     ],
-    "weightLockStickers": [
-      "Sticker_57",
-      "Sticker_8",
-      "Sticker_0",
-      "Sticker_13",
-      "Sticker_55",
-      "Sticker_58",
-      "Sticker_70",
-      "Sticker_75",
-      "Sticker_78",
-      "Sticker_68",
-      "Sticker_12",
-      "Sticker_54"
-    ],
-    "weightLockObjects": [
-      "HoldableObject_6"
-    ],
+    "weightLockStickers": [],
+    "weightLockObjects": [],
     "stickerID": 0,
     "_id": ""
   },
