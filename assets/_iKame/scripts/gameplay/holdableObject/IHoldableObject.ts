@@ -9,6 +9,7 @@ export interface IHoldableObject {
 
     addListenerOnRemoved(listener: (sticker: IHoldableObject) => void): void;
     removeListenerOnRemoved(listener: (sticker: IHoldableObject) => void): void;
+    destroyObject(): void;
 }
 
 

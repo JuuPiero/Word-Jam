@@ -174,6 +174,10 @@ export class LevelController extends Component implements ILevelController
     {
         this.boxController.clear();
         this.cacheController.clear();
+        for (const [ k, v ] of this._holdableMap)
+        {
+            v.destroyObject();
+        }
         this._holdableMap.clear();
         this._stickerMap.clear();
         this._justCompletedBoxes.clear();

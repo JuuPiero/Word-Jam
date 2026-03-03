@@ -1,4 +1,4 @@
-import { Tween, Widget } from 'cc';
+import { easing, Tween, Widget } from 'cc';
 import { UIOpacity } from 'cc';
 import { _decorator, Component, Node, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
@@ -34,7 +34,7 @@ export class TweenMove extends Component {
             tween(this.node)
             .set( {position: this.initPosition})
             .delay(this.delay)
-            .to(this.duration, {position: this.moveTo} , {easing: "backOut"})
+            .to(this.duration, {position: this.moveTo} , {easing: easing.sineOut})
             .call(()=>{
                 // if(this.node.getComponent(Widget) != null){
                 //     this.node.getComponent(Widget).enabled = true;
@@ -45,7 +45,7 @@ export class TweenMove extends Component {
             tween(this.node)
             .set( {position: this.initPosition})
             .delay(this.delay)
-            .to(this.duration, {position: this.moveTo} , {easing: "backOut"})
+            .to(this.duration, {position: this.moveTo} , {easing: easing.sineOut})
             .union()
             .repeatForever()
             .start();
@@ -54,7 +54,7 @@ export class TweenMove extends Component {
                 tween(uiOpacity)
                 .set( {opacity : 255})
                 .delay(this.delay)
-                .to(this.duration, {opacity: 0} , {easing: "backOut"})
+                .to(this.duration, {opacity: 0} , {easing: easing.sineOut})
                 .union()
                 .repeatForever()
                 .start();

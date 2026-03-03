@@ -8,6 +8,9 @@ import { STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
 const { ccclass, property } = _decorator;
 
+const SHAKE_INTENSITY = 0.08;
+const SHAKE_DURATION = 0.4;
+
 @ccclass('Sticker')
 export class Sticker extends Component implements ISticker
 {
@@ -35,6 +38,13 @@ export class Sticker extends Component implements ISticker
     private tweenPeelObj: { value: number } = { value: 0 };
 
     private meshRenderer: MeshRenderer | null = null;
+
+    private ogPosition: Vec3 = new Vec3();
+
+    protected start(): void
+    {
+        this.ogPosition.set(this.node.getPosition());
+    }
 
     public setup(levelController: ILevelController,
         blockingStickers: ISticker[],
@@ -161,12 +171,18 @@ export class Sticker extends Component implements ISticker
             this._tweebPeel.stop();
             this._tweebPeel = null;
         }
+        if (this._tweenShaking) {
+            this._tweenShaking.stop();
+            this._tweenShaking = null;
+        }
         this.onStickerRemoved = [];
     }
 
     private _tweebPeel: Tween<any> | null = null;
     private _tweenBlinking: Tween<any> | null = null;
     private _blinkingObj: { value: number } = { value: 0 };
+    private _tweenShaking: Tween<any> | null = null;
+    private _shakeOffset: Vec3 = new Vec3();
 
     public async playPeelAnimation(): Promise<void> 
     {
@@ -256,12 +272,53 @@ export class Sticker extends Component implements ISticker
 
     public giveHintBlinking(): void
     {
+        this.blinking();
+        this.shaking();
+
         this._data.WeightLockStickers.forEach(s => {
             s.blinking();
+            s.shaking();
         });
         this._data.BlockingStickers.forEach(s => {
             s.blinking();
+            s.shaking();
         });
+    }
+
+    public shaking(): void
+    {
+        if (this._tweenShaking) {
+            this._tweenShaking.stop();
+            this._tweenShaking = null;
+        }
+        
+        this._shakeOffset.set(0, 0, 0);
+        const basePos = this.ogPosition.clone();
+        const dummy = { t: 0 };
+        
+        this._tweenShaking = tween(dummy)
+            .to(SHAKE_DURATION, { t: 1 }, {
+                easing: easing.linear,
+                onUpdate: (target: any, ratio: number) => {
+                    const damp = 1 - ratio;
+                    this._shakeOffset.set(
+                        (Math.random() * 2 - 1) * SHAKE_INTENSITY * damp,
+                        (Math.random() * 2 - 1) * SHAKE_INTENSITY * damp,
+                        (Math.random() * 2 - 1) * SHAKE_INTENSITY * damp
+                    );
+                    this.node.setPosition(
+                        basePos.x + this._shakeOffset.x,
+                        basePos.y + this._shakeOffset.y,
+                        basePos.z + this._shakeOffset.z
+                    );
+                }
+            })
+            .call(() => {
+                this.node.setPosition(basePos);
+                this._shakeOffset.set(0, 0, 0);
+                this._tweenShaking = null;
+            })
+            .start();
     }
 
     public getData(): StickerData
@@ -269,5 +326,3 @@ export class Sticker extends Component implements ISticker
         return this._data;
     }
 }
-
-

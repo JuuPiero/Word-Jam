@@ -21,7 +21,13 @@
         "name": "Free"
       }
     ],
-    "fixedTimeStep": 0.02
+    "fixedTimeStep": 0.02,
+    "defaultMaterial": "aec657f2-e34a-4307-98db-00d3d9769c1b",
+    "allowSleep": true,
+    "maxSubSteps": 1,
+    "gravity": {
+      "y": -12
+    }
   },
   "general": {
     "designResolution": {

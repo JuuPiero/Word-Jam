@@ -84,6 +84,13 @@ export class LevelStickerSetup extends Component {
             hixBox.mesh = meshRenderer.mesh;
             hixBox.material = this.physicMaterial;
             holdableObject.rigidBody = rb;
+            holdableObject.meshCollider = hixBox;
+            holdableObject.freeCollider = holdNode.addComponent(MeshCollider);
+            holdableObject.freeCollider.mesh = meshRenderer.mesh;
+            holdableObject.freeCollider.material = this.physicMaterial;
+            holdableObject.freeCollider.convex = true;
+            holdableObject.freeCollider.enabled = false;
+            holdableObject.mainMeshRender = meshRenderer;
         }
 
         const stickerNodes: Node[] = [];

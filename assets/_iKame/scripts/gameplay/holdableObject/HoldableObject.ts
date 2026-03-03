@@ -7,12 +7,20 @@ import { EDITOR, PREVIEW } from 'cc/env';
 import { PHYSIC_GROUP } from '../../GameConstants';
 const { ccclass, property } = _decorator;
 
+const FORCE: Vec3 = new Vec3(0,0, 32);
+
+
 @ccclass('HoldableObject')
 export class HoldableObject extends Component implements IHoldableObject
 {
     private _data: HodlablleData;
     private _levelController: ILevelController;
+    @property(RigidBody)
     public rigidBody: RigidBody;
+    @property(MeshCollider)
+    public meshCollider: MeshCollider;
+    @property({ type: MeshCollider })
+    public freeCollider: MeshCollider;
 
     @property([ CCString ]) public stickers: string[] = [];
     
@@ -20,9 +28,12 @@ export class HoldableObject extends Component implements IHoldableObject
 
     private _isCanUpdate: boolean = false;
     
-    private mainMeshRender: MeshRenderer | null = null;
+    @property({ type: MeshRenderer })
+    public mainMeshRender: MeshRenderer | null = null;
 
     private originalMaterials: Material[] | null = null;
+
+
 
     private ensureRenderer(): MeshRenderer | null
     {
@@ -84,7 +95,6 @@ export class HoldableObject extends Component implements IHoldableObject
         }
     }
 
-    private force : Vec3 = new Vec3(0, 0.2, 0);
     
     freeObject(): void
     {
@@ -92,15 +102,17 @@ export class HoldableObject extends Component implements IHoldableObject
         {
             listener(this);
         }
-        this.rigidBody = this.node.getComponent(RigidBody)!;
-        // this.rigidBody.group = PHYSIC_GROUP.FREE;
-        this.rigidBody.isDynamic = true;
-        const col = this.node.getComponent(MeshCollider);
-        col.convex = true;
-        this.rigidBody.linearDamping = 0.01;
-        this.rigidBody.angularDamping = 0.01;
-        this.rigidBody.applyForce(this.force);
+        
+        // this.meshCollider.enabled = false;
         this.node.setParent(this._levelController.getNode(), true);
+        
+        this.rigidBody.isDynamic = true;
+        // this.scheduleOnce(() =>
+        // {
+        //     this.freeCollider.enabled = true;
+        // }, 0);
+        
+        this.rigidBody.applyForce(FORCE);
         this.scheduleOnce(() =>
         {
             this.node.active = false;
@@ -162,6 +174,11 @@ export class HoldableObject extends Component implements IHoldableObject
         {
             renderer.setSharedMaterial(this.originalMaterials[k], k);
         }
+    }
+
+    public destroyObject(): void
+    {
+        this.node.destroy();
     }
 
 }

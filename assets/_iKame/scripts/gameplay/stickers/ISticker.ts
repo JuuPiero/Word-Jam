@@ -12,6 +12,7 @@ export interface ISticker {
     getStickerID(): number;
 
     blinking(): void;
+    shaking(): void;
 }
 
 

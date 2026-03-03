@@ -273,7 +273,7 @@
         }
       },
       "physics-builtin": {
-        "_value": false
+        "_value": "physics-builtin"
       },
       "physics-2d": {
         "_value": false,
