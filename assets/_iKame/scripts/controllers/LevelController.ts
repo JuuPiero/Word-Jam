@@ -1,4 +1,4 @@
-import { _decorator, AudioClip, CCInteger, Component, easing, game, instantiate, Material, math, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, CCInteger, Component, easing, game, instantiate, Label, Material, math, Node, Prefab, Quat, Tween, tween, Vec3 } from 'cc';
 import { ILevelController } from './ILevelController';
 import { LevelDataSO } from '../configData/LevelDataSO';
 import { GameData } from '../gameplay/data/GameData';
@@ -40,6 +40,8 @@ export class LevelController extends Component implements ILevelController
     @property({ type: AudioClip, group: "Audio" }) public stickerPeelSound: AudioClip = null;
     @property({ type: AudioClip, group: "Audio" }) public stickerPlaceInBoxSound: AudioClip = null;
     @property({ type: AudioClip, group: "Audio" }) public stickerFlySound: AudioClip = null;
+    @property({ type: AudioClip, group: "Audio" }) public errorClickSound: AudioClip = null;
+
 
     private _gameData: GameData;
 
@@ -58,6 +60,8 @@ export class LevelController extends Component implements ILevelController
     private _is25Complete: boolean = false;
     private _is50Complete: boolean = false;
     private _is75Complete: boolean = false;
+
+    @property(Label) private stickerCountLabel: Label;
 
     protected onLoad(): void
     {
@@ -168,6 +172,8 @@ export class LevelController extends Component implements ILevelController
         this._is25Complete = false;
         this._is50Complete = false;
         this._is75Complete = false;
+
+        this.stickerCountLabel.string = `00/${this.totalStickerCount}`;
     }
 
     clearLevel(): void
@@ -227,6 +233,7 @@ export class LevelController extends Component implements ILevelController
         if (!sticker.canPeelOff())
         {
             sticker.giveHintBlinking();
+            EventDispatcher.dispatch(EventName.PlaySFX, this.errorClickSound);
             return;
         }
         this._stickerMap.delete(sticker.getName());
@@ -511,7 +518,6 @@ export class LevelController extends Component implements ILevelController
 
     private endLevel(isWin: boolean): void
     {
-        Tween.stopAll();
         PromiseDelay.CancelAllPromises();
         this.levelIndex += isWin ? 1 : 0;
         const isLastLevel = this.levelIndex >= this.levelsData.length;
@@ -544,6 +550,8 @@ export class LevelController extends Component implements ILevelController
     public trackingLevelProgress(): void 
     {
         const progress = 1 - this._stickerMap.size / this.totalStickerCount;
+        const score = this.totalStickerCount - this._stickerMap.size
+        this.stickerCountLabel.string = (score < 10) ?  `0${score}/${this.totalStickerCount}` : `${score}/${this.totalStickerCount}`;
         if (!this._is25Complete && progress >= 0.25)
         {
             TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_PASS_25);

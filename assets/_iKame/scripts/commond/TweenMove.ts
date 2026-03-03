@@ -34,7 +34,7 @@ export class TweenMove extends Component {
             tween(this.node)
             .set( {position: this.initPosition})
             .delay(this.delay)
-            .to(this.duration, {position: this.moveTo} , {easing: easing.sineOut})
+            .to(this.duration, {position: this.moveTo} , {easing: easing.backOut})
             .call(()=>{
                 // if(this.node.getComponent(Widget) != null){
                 //     this.node.getComponent(Widget).enabled = true;
@@ -45,7 +45,7 @@ export class TweenMove extends Component {
             tween(this.node)
             .set( {position: this.initPosition})
             .delay(this.delay)
-            .to(this.duration, {position: this.moveTo} , {easing: easing.sineOut})
+            .to(this.duration, {position: this.moveTo} , {easing: easing.backOut})
             .union()
             .repeatForever()
             .start();
@@ -54,7 +54,7 @@ export class TweenMove extends Component {
                 tween(uiOpacity)
                 .set( {opacity : 255})
                 .delay(this.delay)
-                .to(this.duration, {opacity: 0} , {easing: easing.sineOut})
+                .to(this.duration, {opacity: 0} , {easing: easing.backOut})
                 .union()
                 .repeatForever()
                 .start();

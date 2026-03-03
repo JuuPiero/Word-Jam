@@ -8,7 +8,7 @@ export const PHYSIC_GROUP = {
 }
 
 export const STICKER = {
-    PEEL_DURATION: .3,
+    PEEL_DURATION: .23,
     PEEL_END_PROGRESS: 0.4,
 
     AFTER_PEEL_START_SCALE: new Vec3(0.7, 0.7, 0.7),
@@ -20,7 +20,7 @@ export const STICKER = {
     IN_CACHE_SCALE: new Vec3(0.314, 0.314, 0.314),
     IN_BOX_ROTATION: new Vec3(0, 180, 0),
 
-    TRANSFER_DURATION: 0.5,
+    TRANSFER_DURATION: 0.45,
     TRANSFER_DURATION_FROM_CACHE: 0.35,
 
 }
