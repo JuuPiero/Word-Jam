@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_carrot",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 3,
+  "stickerTexture": {
+    "__uuid__": "aa5a3aa8-cd10-4d68-a845-c844e2916554@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "70674bb3-e05f-441d-88e9-ba8da30cd2c2@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "767ddc4f-ff62-42a4-ac12-3c1fff5ec774",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "9f8eb5cd-c06b-442f-b58e-b101e383e694",
+    "__expectedType__": "cc.Material"
+  }
+}

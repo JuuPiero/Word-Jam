@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_banana",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 1,
+  "stickerTexture": {
+    "__uuid__": "cbfe0c56-9644-42d8-96e0-09c940fa1dde@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "e782bca2-7d50-47cf-9d5f-4b96554ea1b0@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "05bd465e-9717-4203-86eb-8fd0ab2fe97a",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "feed1ecd-2d35-478e-a81b-fdec4e71cf08",
+    "__expectedType__": "cc.Material"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_grape",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 5,
+  "stickerTexture": {
+    "__uuid__": "7cd14049-255c-47c5-b873-2d0d2442e707@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "fee01274-1dc7-434c-952c-24a591ec663a@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "990a7b5a-3a8d-4cab-a707-61799d639885",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "c9092af2-f740-499c-98b7-dbd9d1de81bc",
+    "__expectedType__": "cc.Material"
+  }
+}

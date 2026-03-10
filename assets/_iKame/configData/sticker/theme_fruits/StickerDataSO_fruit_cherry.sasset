@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_cherry",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 4,
+  "stickerTexture": {
+    "__uuid__": "09985c9e-d0e1-41af-b326-04dde6405d51@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "2c6ab00b-657a-4fe0-b278-50091d2fcdc9@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "5569602c-70ca-402f-9f50-3aa21bd87d01",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "2e4183c3-b0a0-44d2-9515-73a13886d647",
+    "__expectedType__": "cc.Material"
+  }
+}

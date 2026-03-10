@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_blueberry",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 2,
+  "stickerTexture": {
+    "__uuid__": "e99c1beb-8c47-4ac9-a803-aa8c52e76d65@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "3c727eea-43c5-418e-b21b-28b1cf54d607@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "15817975-5726-44b3-b5fd-81e78a42ff98",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "2d28a26f-de2f-4dbb-b151-996f167b08a4",
+    "__expectedType__": "cc.Material"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_apple",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 0,
+  "stickerTexture": {
+    "__uuid__": "7948dac0-6b46-4ce9-8e00-3dce07af7369@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "65f16e4b-68e6-4ca3-80f0-8a05d15a1c23@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "523e16d5-c894-46d1-b31e-c8b8c46d2153",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "b4f06037-68a9-4129-a0dd-d0388647f6ea",
+    "__expectedType__": "cc.Material"
+  }
+}

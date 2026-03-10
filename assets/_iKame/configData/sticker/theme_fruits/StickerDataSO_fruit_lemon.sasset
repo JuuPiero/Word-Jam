@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_lemon",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 6,
+  "stickerTexture": {
+    "__uuid__": "cd889a73-5d3d-4b70-b7a4-57013667479c@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "420c51d2-37fd-4ea3-86df-e676aafc7bb7@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "337d8123-c44c-49fb-9c94-284ea55047bb",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "ba283264-c3ba-4f10-911a-7950824fccda",
+    "__expectedType__": "cc.Material"
+  }
+}

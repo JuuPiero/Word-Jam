@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_fruit_melon",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 7,
+  "stickerTexture": {
+    "__uuid__": "15311b3d-47ef-4af4-b924-493b2fe1f2e5@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "659d325a-08c5-4b3a-b92e-f66e11df78b3@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "2c24671a-b534-40b2-871e-4029ff6934e6",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "df8338bf-c640-485e-9342-d72d3781df43",
+    "__expectedType__": "cc.Material"
+  }
+}
