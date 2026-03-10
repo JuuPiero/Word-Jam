@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_5_cat_gardener",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 4,
+  "stickerTexture": {
+    "__uuid__": "6f1445d6-25ab-4333-82a5-b771b2143010@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "8057d080-3f02-4261-8164-b52bf1cd5b01@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "3d9e7a3d-68a3-4692-a9cd-213299e0127a",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "7d147920-6cd2-42dc-95ae-edb3f40d5773",
+    "__expectedType__": "cc.Material"
+  }
+}

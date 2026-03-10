@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_4_cat_firefighter",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 3,
+  "stickerTexture": {
+    "__uuid__": "b753550b-134d-4fbd-91d8-59d198648f46@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "450d9c15-61c6-4dfc-ac73-60b967cbd9c7@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "c895aff9-0fd7-4fc0-80ae-31c1f42281bb",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "bd37d38f-90a2-4825-8b03-ad846849a258",
+    "__expectedType__": "cc.Material"
+  }
+}

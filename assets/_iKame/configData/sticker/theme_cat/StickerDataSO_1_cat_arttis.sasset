@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_1_cat_arttis",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 0,
+  "stickerTexture": {
+    "__uuid__": "986eadc9-73d0-43eb-9541-48f38559d6cb@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "1e759828-074b-41ee-b866-1627fea6d85b@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "89cf67b1-b34a-417c-b680-d3f5195e0282",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "077010fa-0347-48f3-83b3-95c2a5c056a6",
+    "__expectedType__": "cc.Material"
+  }
+}

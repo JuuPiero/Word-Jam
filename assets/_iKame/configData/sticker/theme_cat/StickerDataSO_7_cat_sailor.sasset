@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_7_cat_sailor",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 6,
+  "stickerTexture": {
+    "__uuid__": "433d3167-17e9-4cda-b1f2-1bacb17f1ea4@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "dd18a51a-40ef-4ce6-889c-e98adaad6dc5@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "36b49367-8e0e-410b-a678-d22e279aa8e3",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "8220fb4e-d138-4ff4-a103-5398a764124d",
+    "__expectedType__": "cc.Material"
+  }
+}

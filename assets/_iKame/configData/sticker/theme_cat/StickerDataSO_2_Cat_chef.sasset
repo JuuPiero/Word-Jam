@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_2_Cat_chef",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 1,
+  "stickerTexture": {
+    "__uuid__": "8157f3ef-d473-4cf7-85a9-621b2fd5b7a2@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "e1d816f8-8a6a-4af2-919a-bfe9a28bdeb4@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "d9688d64-5cab-485d-b565-e3954ac94e1e",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "47d5f56c-3db2-42d8-9639-bc66ae1649f4",
+    "__expectedType__": "cc.Material"
+  }
+}

@@ -36,17 +36,17 @@
   },
   {
     "__type__": "ColorDistribution",
+    "color": 1,
+    "weight": 10
+  },
+  {
+    "__type__": "ColorDistribution",
     "color": 2,
     "weight": 10
   },
   {
     "__type__": "ColorDistribution",
-    "color": 8,
-    "weight": 10
-  },
-  {
-    "__type__": "ColorDistribution",
-    "color": 9,
+    "color": 3,
     "weight": 10
   },
   {
