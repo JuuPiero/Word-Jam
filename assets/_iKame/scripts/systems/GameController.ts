@@ -39,8 +39,6 @@ export class GameController extends Component implements IStateHolder<EGameState
     
     protected onLoad(): void
     {
-        TrackingManager.TrackEvent(ETrackingEvent.LOADED);
-
         EventDispatcher.addListener(EventName.EndGame, this.onEndGame, this);
         EventDispatcher.addListener(EventName.ReplayGame, this.onReplayGame, this);
         EventDispatcher.addListener(EventName.ChangeGameState, this.changeState, this);
