@@ -6,31 +6,47 @@
   "_native": "",
   "stickerDatas": [
     {
-      "__uuid__": "8ce54e5b-f613-4357-a58a-9c2ae5977132",
+      "__uuid__": "b8e35a3a-9aa0-4903-9054-7ea09409fc90",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "68495667-c34a-44af-be50-7afdb0071260",
+      "__uuid__": "047ab4cc-7ee6-416d-b933-787a9f7d5837",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "abdf2c38-2f5b-4605-bec7-9854bfa66973",
+      "__uuid__": "dd9557f3-c1b4-49c3-a1b8-c39eaa4907b7",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "fb91dd7e-9aa5-471d-87e0-f58cc8154719",
+      "__uuid__": "d785eece-2412-4e98-9754-ea4dba8b186b",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "4b1397f9-1955-4bfb-9902-b209150e0edb",
+      "__uuid__": "993e2f0a-bb04-4bf9-9368-19b6e66e969f",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "5c306263-afff-44a6-8c0b-6cb9de6fee0d",
+      "__uuid__": "30bf574c-9a11-4b53-b649-9e1a963928d5",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     },
     {
-      "__uuid__": "131eb4ef-7d9d-4534-8a75-4a39cb7969ed",
+      "__uuid__": "0c6d8f0e-3e02-4745-b459-0c9e0cbc03c2",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "fa9fd21b-1ff0-45fe-9b18-c7adb6be2c80",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "e8e66d0c-d4d0-4875-854b-f854f15bc42e",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "5543059c-ca55-432f-8438-c012dea7d9be",
+      "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
+    },
+    {
+      "__uuid__": "7c6e4012-1a63-4a20-8dbd-ae9a2a1411e4",
       "__expectedType__": "efea6N4dBFA9LE0OJlil57O"
     }
   ],

@@ -6,7 +6,7 @@ export class GameAlgorithmHelper {
     /**
      * Khoảng tolerance cho điểm, object có điểm không được vượt quá target point + POINT_TOLERANCE
      */
-    private static readonly POINT_TOLERANCE: number = 1;
+    private static readonly POINT_TOLERANCE: number = 9;
 
     /**
      * Trọng số cho các object có điểm bằng nhau khi random

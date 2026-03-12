@@ -9,15 +9,15 @@
       "__uuid__": "2122af6d-035b-4c1a-a07d-24ae6858d78a",
       "__expectedType__": "cc.Prefab"
     },
-    "maxBox": 3,
+    "maxBox": 2,
     "maxCache": 5,
-    "curveScale": 5,
+    "curveScale": 5.67,
     "diffCurve": {
       "__id__": 1
     },
     "stickerTutName": "Sticker_78",
     "colorDistributionConfig": {
-      "__uuid__": "12ad739d-1f95-430f-8cbc-335b1f15eb83",
+      "__uuid__": "270f5e80-984f-471a-9ba2-525ea0ef4c2a",
       "__expectedType__": "44712Z9EmNLsrKgUak4V8vO"
     }
   },
@@ -25,11 +25,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.3,
-      0.3070310803433863,
-      0.5926829268292683,
-      0.7658536585365854,
-      0.9926829268292683
+      0.6560975609756098,
+      0.7804878048780488,
+      0.8560975609756097,
+      0.9975609756097561
     ],
     "_values": [
       {
@@ -38,7 +37,7 @@
         "tangentWeightMode": 0,
         "value": 0,
         "rightTangent": 0,
-        "rightTangentWeight": 0.09999999999999999,
+        "rightTangentWeight": 0.22984521800307173,
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
@@ -48,11 +47,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0,
-        "rightTangent": 0,
-        "rightTangentWeight": 0.0023436934477954288,
-        "leftTangent": 0,
-        "leftTangentWeight": 0.09999999999999999,
+        "value": 0.21212121212121213,
+        "rightTangent": 0.4778554778554779,
+        "rightTangentWeight": 0.045954219833698434,
+        "leftTangent": 0.4778554778554779,
+        "leftTangentWeight": 0.24238598304440942,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -60,11 +59,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0.10251264600171561,
-        "rightTangent": 0.067523056653491,
-        "rightTangentWeight": 0.08810036559221648,
-        "leftTangent": 0.067523056653491,
-        "leftTangentWeight": 0.0023490302464179934,
+        "value": 0.45454545454545453,
+        "rightTangent": 3.9113355780022485,
+        "rightTangentWeight": 0.10174920244419763,
+        "leftTangent": 3.9113355780022485,
+        "leftTangentWeight": 0.1575471521716609,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -72,11 +71,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0.18181818181818182,
-        "rightTangent": -0.1553030303030305,
-        "rightTangentWeight": 0.056770039663778187,
-        "leftTangent": -0.1553030303030305,
-        "leftTangentWeight": 0.09635871490672968,
+        "value": 0.75,
+        "rightTangent": 2.070707070707071,
+        "rightTangentWeight": 0.10843301482482576,
+        "leftTangent": 2.070707070707071,
+        "leftTangentWeight": 0.05795557688913097,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -84,23 +83,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0.29545454545454547,
-        "rightTangent": 0,
-        "rightTangentWeight": 0.07560975609756096,
-        "leftTangent": 0,
-        "leftTangentWeight": 0.05772357723577237,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0.7803030303030303,
+        "value": 0.9621212121212122,
         "rightTangent": -0.08262423720230072,
         "rightTangentWeight": 1,
         "leftTangent": -0.08262423720230072,
-        "leftTangentWeight": 0.07749895916040202,
+        "leftTangentWeight": 0.047315154013719135,
         "easingMethod": 0,
         "__editorExtras__": null
       }
