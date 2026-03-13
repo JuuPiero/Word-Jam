@@ -43169,7 +43169,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 741.9752807617188,
+      "width": 754.9995727539062,
       "height": 85.932
     },
     "_anchorPoint": {
@@ -43199,7 +43199,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "It's Harder Than It Looks!",
+    "_string": "Only IQ 180 can solve this",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 68.2,
@@ -43311,9 +43311,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 2,
-      "g": 90,
-      "b": 5,
+      "r": 193,
+      "g": 3,
+      "b": 90,
       "a": 255
     },
     "_spriteFrame": {
