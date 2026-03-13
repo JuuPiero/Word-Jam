@@ -11,7 +11,7 @@
     },
     "maxBox": 2,
     "maxCache": 5,
-    "curveScale": 4,
+    "curveScale": 2,
     "diffCurve": {
       "__id__": 1
     },
@@ -25,7 +25,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.6560975609756098,
+      0.7024390243902439,
       0.7804878048780488,
       0.8560975609756097,
       0.9975609756097561
@@ -37,7 +37,7 @@
         "tangentWeightMode": 0,
         "value": 0,
         "rightTangent": 0,
-        "rightTangentWeight": 0.22984521800307173,
+        "rightTangentWeight": 0.23643647217414596,
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
@@ -47,11 +47,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0.21212121212121213,
+        "value": 0.09848484848484848,
         "rightTangent": 0.4778554778554779,
-        "rightTangentWeight": 0.045954219833698434,
+        "rightTangentWeight": 0.02883402028781081,
         "leftTangent": 0.4778554778554779,
-        "leftTangentWeight": 0.24238598304440942,
+        "leftTangentWeight": 0.25950618259029706,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -63,7 +63,7 @@
         "rightTangent": 3.9113355780022485,
         "rightTangentWeight": 0.10174920244419763,
         "leftTangent": 3.9113355780022485,
-        "leftTangentWeight": 0.1575471521716609,
+        "leftTangentWeight": 0.16739384918238975,
         "easingMethod": 0,
         "__editorExtras__": null
       },

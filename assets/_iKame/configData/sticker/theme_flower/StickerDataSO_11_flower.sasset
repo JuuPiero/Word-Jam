@@ -1,0 +1,24 @@
+{
+  "__type__": "efea6N4dBFA9LE0OJlil57O",
+  "_name": "StickerDataSO_11_flower",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "stickerID": 10,
+  "stickerTexture": {
+    "__uuid__": "05e4a7d6-f690-4a70-8ca6-93bb43fe5bee@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerOutlineTexture": {
+    "__uuid__": "25664115-48bf-4396-8523-81c0f52ec841@f9941",
+    "__expectedType__": "cc.SpriteFrame"
+  },
+  "stickerMaterial": {
+    "__uuid__": "17130500-8c90-482c-a8bb-7fb22328f521",
+    "__expectedType__": "cc.Material"
+  },
+  "boxMaterial": {
+    "__uuid__": "8cce93b2-3cc7-40e3-854c-1e63853b667e",
+    "__expectedType__": "cc.Material"
+  }
+}
