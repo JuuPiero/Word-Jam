@@ -5,10 +5,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
-    "levelPrefab": {
-      "__uuid__": "3cf8ced3-1331-4a1e-a52f-15c3fe15ed72",
-      "__expectedType__": "cc.Prefab"
-    },
+    "levelPrefab": null,
     "maxBox": 2,
     "maxCache": 5,
     "curveScale": 2,

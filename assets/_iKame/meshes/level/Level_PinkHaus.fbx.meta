@@ -3018,6 +3018,23 @@
       "scenes": [
         "6434eb9d-790e-434d-8cf7-69aaa7dca64f@182f3"
       ]
+    },
+    "meshCompress": {
+      "compress": true
+    },
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "addVertexColor": false,
+    "generateLightmapUVNode": false,
+    "meshOptimizer": {
+      "enable": false,
+      "algorithm": "simplify",
+      "simplifyOptions": {
+        "targetRatio": 1,
+        "enableSmartLink": true,
+        "agressiveness": 7,
+        "maxIterationCount": 100
+      }
     }
   }
 }
