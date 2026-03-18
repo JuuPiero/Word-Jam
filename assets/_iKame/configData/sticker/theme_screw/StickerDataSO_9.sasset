@@ -6,11 +6,11 @@
   "_native": "",
   "stickerID": 8,
   "stickerTexture": {
-    "__uuid__": "63ac07b9-2940-4137-9d92-e4580d051622@f9941",
+    "__uuid__": "76ccc241-3fd5-4c49-b477-54dc89ff668b@f9941",
     "__expectedType__": "cc.SpriteFrame"
   },
   "stickerOutlineTexture": {
-    "__uuid__": "76ccc241-3fd5-4c49-b477-54dc89ff668b@f9941",
+    "__uuid__": "63ac07b9-2940-4137-9d92-e4580d051622@f9941",
     "__expectedType__": "cc.SpriteFrame"
   },
   "stickerMaterial": {
