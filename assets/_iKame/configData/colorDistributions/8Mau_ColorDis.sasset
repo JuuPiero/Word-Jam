@@ -44,12 +44,12 @@
   },
   {
     "__type__": "ColorDistribution",
-    "color": 9,
+    "color": 2,
     "weight": 10
   },
   {
     "__type__": "ColorDistribution",
-    "color": 10,
+    "color": 3,
     "weight": 10
   },
   {
