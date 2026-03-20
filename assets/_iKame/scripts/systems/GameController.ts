@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, Node, Slider } from 'cc';
+import { _decorator, Camera, Component, EventKeyboard, Input, input, KeyCode, Node, Slider, sys } from 'cc';
 import { EGameState } from './gameStates/EGameState';
 import { GameStateMachine } from './gameStates/GameStateMachine';
 import { GameInitializingState } from './gameStates/GameInitializingState';
@@ -42,6 +42,11 @@ export class GameController extends Component implements IStateHolder<EGameState
         EventDispatcher.addListener(EventName.EndGame, this.onEndGame, this);
         EventDispatcher.addListener(EventName.ReplayGame, this.onReplayGame, this);
         EventDispatcher.addListener(EventName.ChangeGameState, this.changeState, this);
+
+        if (sys.os == sys.OS.WINDOWS)
+        {
+            input.on(Input.EventType.KEY_DOWN, this.onPressButton, this);
+        }
     }
 
     start()
@@ -100,6 +105,11 @@ export class GameController extends Component implements IStateHolder<EGameState
         EventDispatcher.removeListener(EventName.EndGame, this.onEndGame, this);
         EventDispatcher.removeListener(EventName.ReplayGame, this.onReplayGame, this);
         EventDispatcher.removeListener(EventName.ChangeGameState, this.changeState, this);
+
+        if (sys.os == sys.OS.WINDOWS)
+        {
+            input.off(Input.EventType.KEY_DOWN, this.onPressButton, this);
+        }
     }
 
     protected update(dt: number): void
@@ -120,6 +130,14 @@ export class GameController extends Component implements IStateHolder<EGameState
     public changeState(stateName: EGameState): void
     {
         this.stateMachine.changeState(stateName);
+    }
+
+    private onPressButton(eventKeyboard: EventKeyboard)
+    {
+        if (eventKeyboard.keyCode == KeyCode.F12)
+        {
+            EventDispatcher.dispatch(EventName.ToggleVideo);
+        }
     }
 }
 

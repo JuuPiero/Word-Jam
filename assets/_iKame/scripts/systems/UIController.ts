@@ -1,4 +1,4 @@
-import { _decorator, Component, game, Node, ResolutionPolicy, UITransform, view } from 'cc';
+import { _decorator, Camera, Component, game, Node, ResolutionPolicy, UITransform, view } from 'cc';
 import { IdleScreen } from './ui/screens/IdleScreen';
 import { GameplayScreen } from './ui/screens/GameplayScreen';
 import { EndGameScreen } from './ui/screens/EndGameScreen';
@@ -52,19 +52,19 @@ export class UIController extends Component {
     protected onLoad(): void {
         EventDispatcher.addListener(EventName.ShowScreen, this.onShowScreen, this);
         EventDispatcher.addListener(EventName.BackScreen, this.onBackScreen, this);
+        EventDispatcher.addListener(EventName.ToggleVideo, this.onToggleVideo, this);
+    }
 
-        // this.idleScreen = this.node.getComponentInChildren(IdleScreen);
-        // this.gameplayScreen = this.node.getComponentInChildren(GameplayScreen);
-        // this.endGame = this.node.getComponentInChildren(EndGameScreen);
-        // this.winGameScreen = this.node.getComponentInChildren(WinGameScreen);
-        // this.emptyScreen = this.node.getComponentInChildren(EmptyScreen);
-        // this.transitionScreen = this.node.getComponentInChildren(TransitionScreen);
-        // this.introScreen = this.node.getComponentInChildren(IntroScreen);
+    private onToggleVideo()
+    {
+        const uiCamera = this.node.getComponentInChildren(Camera);
+        uiCamera.enabled = !uiCamera.enabled;
     }
 
     protected onDestroy(): void {
         EventDispatcher.removeListener(EventName.ShowScreen, this.onShowScreen, this);
         EventDispatcher.removeListener(EventName.BackScreen, this.onBackScreen, this);
+        EventDispatcher.removeListener(EventName.ToggleVideo, this.onToggleVideo, this);
 
         window.removeEventListener('resize', this.onResize.bind(this))
         window.removeEventListener('orientationchange', this.onResize.bind(this))
