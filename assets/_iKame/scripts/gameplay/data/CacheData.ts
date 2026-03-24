@@ -1,17 +1,19 @@
+import { EMPTY_LETTER } from "../../GameConstants";
+
 export class CacheData {
 
-    private _inCachesIDs: number[] = [];
+    private _inCachesLetters: string[] = [];
     
     constructor(slotCount: number)
     {
         for (let i = 0; i < slotCount; i++) {
-            this._inCachesIDs.push(-1);
+            this._inCachesLetters.push(EMPTY_LETTER);
         }
     }
 
     public isCachedFull(): boolean {
-        for (const id of this._inCachesIDs) {
-            if (id === -1) {
+        for (const id of this._inCachesLetters) {
+            if (id === EMPTY_LETTER) {
                 return false;
             }
         }
@@ -19,29 +21,29 @@ export class CacheData {
     }
 
     public isCacheTakenAt(index: number): boolean {
-        return this._inCachesIDs[index] !== -1;
+        return this._inCachesLetters[index] !== EMPTY_LETTER;
     }
 
-    public setCacheAt(index: number, id: number): void {
-        this._inCachesIDs[index] = id;
+    public setCacheAt(index: number, id: string): void {
+        this._inCachesLetters[index] = id;
     }
 
     public clearCacheAt(index: number): void {
-        this._inCachesIDs[index] = -1;
+        this._inCachesLetters[index] = EMPTY_LETTER;
     }
 
-    public getCacheAt(index: number): number {
-        return this._inCachesIDs[index];
+    public getCacheAt(index: number): string {
+        return this._inCachesLetters[index];
     }
 
-    public getAllCachedIDs(): number[] {
-        return this._inCachesIDs.filter(id => id !== -1);
+    public getAllCachedIDs(): string[] {
+        return this._inCachesLetters.filter(id => id !== EMPTY_LETTER);
     }
 
     public getEmptyCacheCount(): number {
         let count = 0;
-        for (const id of this._inCachesIDs) {
-            if (id === -1) {
+        for (const id of this._inCachesLetters) {
+            if (id === EMPTY_LETTER) {
                 count++;
             }
         }

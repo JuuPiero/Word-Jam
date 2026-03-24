@@ -66,14 +66,14 @@ export class BoxController extends Component implements IBoxController
         return this._boxDataList;
     }
 
-    public findSuitableBox(stickerID: number): Box
+    public findSuitableBox(letter: string): Box
     {
         for (let i = 0; i < this._activeBoxes.length; i++)
         {
             const box = this._activeBoxes[ i ];
             if (!box.isReady) continue;
             const boxData = box.getBoxData();
-            if (boxData.stickerID === stickerID && !boxData.isFull())
+            if (!boxData.isFull() && boxData.word.includes(letter))
             {
                 return box;
             }
@@ -150,15 +150,17 @@ export class BoxController extends Component implements IBoxController
         return true;
     }
 
-    public getAllIDsInBoxes(): Set<number>
+    public getAllLettersInBoxes(): Set<string>
     {
-        const ids: Set<number> = new Set<number>();
+        const letters: Set<string> = new Set<string>();
         for (let i = 0; i < this._activeBoxes.length; i++)
         {
             const boxData = this._activeBoxes[i].getBoxData();
-            ids.add(boxData.stickerID);
+            for (const letter of boxData.word) {
+                letters.add(letter);
+            }
         }
-        return ids;
+        return letters;
     }
 }
 

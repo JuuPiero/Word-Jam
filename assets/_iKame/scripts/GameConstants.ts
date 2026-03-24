@@ -48,3 +48,5 @@ export const LEVEL =
     MIN_SCALE: 0.8,
     MAX_SCALE: 1.6
 }
+
+export const EMPTY_LETTER = '_';

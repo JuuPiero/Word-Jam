@@ -9,7 +9,7 @@ export interface ISticker {
     destroySticker(): void;
 
     getBlockingPoint(): number;
-    getStickerID(): number;
+    getLetter(): string;
 
     blinking(): void;
     shaking(): void;

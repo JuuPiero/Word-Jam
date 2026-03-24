@@ -26,8 +26,8 @@ export class Sticker extends Component implements ISticker
     @property({ type: [ CCString ] })
     public weightLockObjects: string[] = [];
 
-    @property({ type: CCInteger })
-    public stickerID: number = 0;
+    @property({ type: CCString })
+    public letter: string = '';
 
     private _data: StickerData;
     private _levelController: ILevelController;
@@ -51,26 +51,24 @@ export class Sticker extends Component implements ISticker
         holdingObjects: IHoldableObject[],
         weightLockStickers: ISticker[],
         weightLockObjects: IHoldableObject[],
-        colorID: number
+        letter: string
     ): StickerData
     {
-        if (colorID >= 0) 
-        {
-            this.stickerID = colorID;
-        }
+        this.letter = letter;
         this.meshRenderer = this.getComponent(MeshRenderer);
 
         this._levelController = levelController;
         this._data = new StickerData(
-            this.stickerID,
+            this.letter,
             holdingObjects,
             blockingStickers,
             weightLockStickers,
             weightLockObjects
         );
 
-        const mat = this._levelController.getStickerMaterialByID(this.stickerID);
-        this.meshRenderer.setMaterialInstance(mat, 0);
+        //TODO: set material based on stickerID
+        // const mat = this._levelController.getStickerMaterialByID(this.stickerID);
+        // this.meshRenderer.setMaterialInstance(mat, 0);
 
         for (const sticker of blockingStickers)
         {
@@ -245,9 +243,9 @@ export class Sticker extends Component implements ISticker
         return this._data.getBlockingPoint();
     }
 
-    public getStickerID(): number
+    public getLetter(): string
     {
-        return this.stickerID;
+        return this.letter;
     }
 
     public blinking(): void

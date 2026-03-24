@@ -43,7 +43,7 @@ export class Box extends Component {
         this.lidNode.active = false;
         this._boxesController = boxesController;
         this._boxData = boxData;
-        this.updateData(this._boxData.stickerID, this._boxData.filledStickerCount);
+        this.updateData(this._boxData.word);
         this._isReady = true;
         for (const s of this._stickers) {
             s.destroySticker();
@@ -65,58 +65,54 @@ export class Box extends Component {
 
     public updateVisual(): void 
     {
-        this.updateData(this._boxData.stickerID, this._boxData.filledStickerCount);
+        this.updateData(this._boxData.word);
     }
 
-    public updateData(id: number, prefillCount: number = 0): void
+    public updateData(word: string): void
     {
         this.lidNode.active = false;
         for (const s of this._stickers) {
             s.destroySticker();
         }
         this._stickers = [];
-        this._boxData.reset(id, prefillCount);
-        const stickerData = this.stickerConfigs.getStickerDataByID(this._boxData.stickerID);
-        if (stickerData)
+        this._boxData.reset(word);
+        const stickerDatas = this.stickerConfigs.getLetterDatas(word);
+        if (stickerDatas.length)
         {
-            this.outLineSprites.forEach((spr) => {
-                spr.spriteFrame = stickerData.stickerOutlineTexture;
-            });
-            this.iconSprite.spriteFrame = stickerData.stickerTexture;
-            const mat = stickerData.boxMaterial;
-            if (mat)
-                this.meshVisual.setSharedMaterial(mat, 0);
+            //TODO: Set the box target word's icon here
         }
-        if (prefillCount > 0) {
-            this.createPreSpawnStickerNode();
-        }
+        //TODO: You may need to implement this incase the remaining letter aren't enough to form a word
+        // if (prefillCount > 0) {
+        //     this.createPreSpawnStickerNode();
+        // }
     }
 
-    public resetData(id : number, filledStickerCount: number): void
+    public resetData(word : string): void
     {
-        this._boxData.reset(id, filledStickerCount);
+        this._boxData.reset(word);
     }
 
     public createPreSpawnStickerNode(): void 
     {
-        const pos = new Vec3(0, 0, .07);
-        for (let i = 0; i < this._boxData.filledStickerCount; i++)
-        {
-            const stickerNode = new Node('StickerInBox');
-            stickerNode.setParent(this.slotNodes[i], false);
-            stickerNode.setRotationFromEuler(0, 180, 0);
-            stickerNode.setWorldScale(STICKER.IN_BOX_SCALE);
-            stickerNode.setPosition(pos);
-            const renderMesh = stickerNode.addComponent(MeshRenderer);
-            renderMesh.mesh = this.stickerConfigs.stickerNormalMesh;
-            const stickerData = this.stickerConfigs.getStickerDataByID(this._boxData.stickerID);
-            renderMesh.setSharedMaterial(stickerData.stickerMaterial, 0);
-        }
+        //TODO if you want to show the pre-filled stickers in the box, you can implement it here. You can use the sticker mesh & material from stickerConfigs to create the sticker node and set it as child of the slot node. You can refer to Sticker.ts for how to create the sticker node.
+        // const pos = new Vec3(0, 0, .07);
+        // for (let i = 0; i < this._boxData.filledStickerCount; i++)
+        // {
+        //     const stickerNode = new Node('StickerInBox');
+        //     stickerNode.setParent(this.slotNodes[i], false);
+        //     stickerNode.setRotationFromEuler(0, 180, 0);
+        //     stickerNode.setWorldScale(STICKER.IN_BOX_SCALE);
+        //     stickerNode.setPosition(pos);
+        //     const renderMesh = stickerNode.addComponent(MeshRenderer);
+        //     renderMesh.mesh = this.stickerConfigs.stickerNormalMesh;
+        //     const stickerData = this.stickerConfigs.getStickerDataByID(this._boxData.word);
+        //     renderMesh.setSharedMaterial(stickerData.stickerMaterial, 0);
+        // }
     }
 
-    public getEmptySlotNode(): Node 
+    public getEmptySlotNode(letter: string): Node 
     {
-        const index = this._boxData.filledStickerCount;
+        const index = this._boxData.getFittingLetterSlot(letter);
         if (index < this.slotNodes.length) {
             return this.slotNodes[index];
         }
@@ -187,7 +183,7 @@ export class Box extends Component {
     public async replaceBox(data: BoxData): Promise<void>
     {
         this._isReady = false;
-        this.resetData(data.stickerID, data.filledStickerCount);
+        this.resetData(data.word);
         await this.closeLidAnimation();
         await this.moveUpAnimation();
         this.updateVisual();

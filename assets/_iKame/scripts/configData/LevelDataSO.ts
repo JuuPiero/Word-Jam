@@ -17,6 +17,9 @@ export class LevelDataSO extends bh.ScriptableAsset {
     public evaluateDifficulty(t: number): number {
         return this.diffCurve.evaluate(t) * this.curveScale;
     }
+
+    @property([CCString])
+    public targetWords: string[] = [];
 }
 
 

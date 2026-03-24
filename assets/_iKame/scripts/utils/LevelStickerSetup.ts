@@ -118,7 +118,7 @@ export class LevelStickerSetup extends Component {
             sticker.holdingObjects = stickerData.holdingObjects;
             sticker.weightLockStickers = stickerData.weightLockStickers;
             sticker.weightLockObjects = stickerData.weightLockObjects;
-            sticker.stickerID = stickerData.stickerID;
+            sticker.letter = stickerData.stickerID;
 
             const meshRenderer = sticker.node.getComponent(MeshRenderer)
             const stickerMat = this.stickerConfig.getStickerDataByID(stickerData.stickerID).stickerMaterial;

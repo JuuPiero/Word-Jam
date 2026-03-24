@@ -4,7 +4,7 @@ import { ISticker } from "../stickers/ISticker";
 
 export class StickerData
 {
-    readonly id : number;
+    readonly letter : string;
     
     private readonly holdingObjects: Set<IHoldableObject> = new Set<IHoldableObject>();
     private readonly blockingStickers: Set<ISticker> = new Set<ISticker>();
@@ -12,8 +12,8 @@ export class StickerData
     private readonly weightLockStickers: Set<ISticker> = new Set<ISticker>();
     private readonly weightLockObjects: Set<IHoldableObject> = new Set<IHoldableObject>();
 
-    constructor(id : number, holdingObjects: IHoldableObject[], blockingStickers: ISticker[], weightLockStickers: ISticker[], weightLockObjects: IHoldableObject[]) {
-        this.id = id;
+    constructor(letter : string, holdingObjects: IHoldableObject[], blockingStickers: ISticker[], weightLockStickers: ISticker[], weightLockObjects: IHoldableObject[]) {
+        this.letter = letter;
         holdingObjects.forEach((obj: IHoldableObject) => {
             this.holdingObjects.add(obj);
         });
@@ -90,8 +90,8 @@ export class StickerData
     public getBlockingPoint(): number
     {
         let totalPoints = 0;
-        const filterdBlockingStickers = Array.from(this.blockingStickers).filter(s => s.getStickerID() !== this.id).length;
-        const weightLockStickerCount = Array.from(this.weightLockStickers).filter(s => s.getStickerID() !== this.id).length;
+        const filterdBlockingStickers = Array.from(this.blockingStickers).filter(s => s.getLetter() !== this.letter).length;
+        const weightLockStickerCount = Array.from(this.weightLockStickers).filter(s => s.getLetter() !== this.letter).length;
         totalPoints += filterdBlockingStickers + weightLockStickerCount;
         return totalPoints;
     }

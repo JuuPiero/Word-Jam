@@ -74,9 +74,9 @@ export class CacheController extends Component
         return -1;
     }
 
-    public setCache(index: number, id: number, sticker: Sticker): void
+    public setCache(index: number, letter: string, sticker: Sticker): void
     {
-        this._data.setCacheAt(index, id);
+        this._data.setCacheAt(index, letter);
         this._stickes[ index ] = sticker;
         
         if (this.getFilledCacheCount() >= this._activeCaches.length - 1)
@@ -107,7 +107,7 @@ export class CacheController extends Component
         this.isStickerInPlace[index] = inPlace;
     }
 
-    public getCachedId(indexSlot: number): number
+    public getCachedLetter(indexSlot: number): string
     {
         return this._data.getCacheAt(indexSlot);
     }
@@ -122,11 +122,11 @@ export class CacheController extends Component
         return this.isStickerInPlace[index];
     }
 
-    public findFirstStickerWithID(id: number): {slotIndex: number, sticker: Sticker} | null
+    public findFirstStickerWithLetter(letter: string): {slotIndex: number, sticker: Sticker} | null
     {
         for (let i = 0; i < this._activeCaches.length; i++)
         {
-            if (this._data.getCacheAt(i) === id)
+            if (this._data.getCacheAt(i) === letter)
             {
                 return { slotIndex: i, sticker: this._stickes[i] };
             }
@@ -158,14 +158,14 @@ export class CacheController extends Component
         return true;
     }
 
-    public getAllIDs(): Set<number>
+    public getAllLetters(): Set<string>
     {
-        const ids: Set<number> = new Set<number>();
+        const letters: Set<string> = new Set<string>();
         for (let i = 0; i < this._activeCaches.length; i++)
         {
-            ids.add(this._data.getCacheAt(i));
+            letters.add(this._data.getCacheAt(i));
         }
-        return ids;
+        return letters;
     }
 
     public warningStart(): void

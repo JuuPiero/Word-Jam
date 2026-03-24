@@ -15,7 +15,7 @@ import { StickerData } from '../gameplay/data/StickerData';
 import { Box } from '../gameplay/boxes/Box';
 import { PromiseDelay } from '../utils/PromiseDelay';
 import { StickerConfigs } from '../configData/StickerConfigs';
-import { LEVEL, STICKER } from '../GameConstants';
+import { EMPTY_LETTER, LEVEL, STICKER } from '../GameConstants';
 import { BoxData } from '../gameplay/data/BoxData';
 import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { EventName } from '../systems/EventName';
@@ -105,11 +105,12 @@ export class LevelController extends Component implements ILevelController
             }
             holdableDatas.push(holdableObject.setup(this, stickersForObject));
         }
-        let colors: number[];
-        if (levelData.colorDistributionConfig)
-        {
-            colors = levelData.colorDistributionConfig.getColors(stickers.length, math.randomRangeInt(0, 1000));
-        }
+        let letters: string[];
+        //TODO: Jumpble the letters for more challenge
+        // if (levelData.colorDistributionConfig)
+        // {
+        //     colors = levelData.colorDistributionConfig.getColors(stickers.length, math.randomRangeInt(0, 1000));
+        // }
         const stickerDatas: StickerData[] = [];
         for (const sticker of stickers)
         {
@@ -149,8 +150,8 @@ export class LevelController extends Component implements ILevelController
                     weightLockObjects.push(holdableObject);
                 }
             }
-            const colorID = colors ? colors[stickerDatas.length] : -1;
-            const stickerData = sticker.setup(this, blockingStickers, holdingObjects, weightLockStickers, weightLockObjects, colorID);
+            const letter = letters ? letters[stickerDatas.length] : '';
+            const stickerData = sticker.setup(this, blockingStickers, holdingObjects, weightLockStickers, weightLockObjects, letter);
             stickerDatas.push(stickerData);
         }
 
@@ -241,7 +242,7 @@ export class LevelController extends Component implements ILevelController
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPeelSound);
         this.trackingLevelProgress();
         await sticker.peelOff();
-        const targetBox = this.boxController.findSuitableBox(sticker.stickerID);
+        const targetBox = this.boxController.findSuitableBox(sticker.letter);
         if (targetBox)
         {
             this.transferStickerToBox(sticker, targetBox);
@@ -258,7 +259,7 @@ export class LevelController extends Component implements ILevelController
 
     public async transferStickerToBox(sticker: Sticker, box: Box): Promise<void>
     {
-        const targetNode : Node = box.getEmptySlotNode();
+        const targetNode : Node = box.getEmptySlotNode(sticker.letter);
         if (!targetNode) return;
         const isBoxFull = box.addSticker(sticker);
         sticker.node.setParent(this.node, true);
@@ -306,7 +307,7 @@ export class LevelController extends Component implements ILevelController
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;
-        box.resetData(-1, 0);
+        box.resetData(EMPTY_LETTER);
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
         {
@@ -320,7 +321,7 @@ export class LevelController extends Component implements ILevelController
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
     {
-        this.cacheController.setCache(cacheIndex, sticker.stickerID, sticker);
+        this.cacheController.setCache(cacheIndex, sticker.letter, sticker);
         sticker.node.setParent(this.node, true);
         sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         const startPos = sticker.node.getWorldPosition();
@@ -377,10 +378,10 @@ export class LevelController extends Component implements ILevelController
 
     private async transferStickerFromCacheToBox(sticker : Sticker, cacheIndex: number, box: Box): Promise<void>
     {
-        const targetNode : Node = box.getEmptySlotNode();
+        const targetNode : Node = box.getEmptySlotNode(sticker.letter);
 
         // Clear cache
-        this.cacheController.setCache(cacheIndex, -1, null);
+        this.cacheController.setCache(cacheIndex, EMPTY_LETTER, null);
         this.cacheController.setStickerInPlace(cacheIndex, false);
 
         const isBoxFull = box.addSticker(sticker);
@@ -426,7 +427,7 @@ export class LevelController extends Component implements ILevelController
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;
-        box.resetData(-1, 0);
+        box.resetData(EMPTY_LETTER);
         const nextBoxData = this.getNextBoxData();
         if (!nextBoxData)
         {
@@ -449,7 +450,7 @@ export class LevelController extends Component implements ILevelController
             let emptySlotCount = box.getBoxData().getEmptySlotCount();
             while (emptySlotCount > 0)
             {
-                const res = this.cacheController.findFirstStickerWithID(stickerID);
+                const res = this.cacheController.findFirstStickerWithLetter(stickerID);
                 if (!res || !res.sticker) break;
                 this.transferStickerFromCacheToBox(res.sticker, res.slotIndex, box);
                 --emptySlotCount;
@@ -465,7 +466,7 @@ export class LevelController extends Component implements ILevelController
         {
             const slotIndex = this._justCachedSlots.values().next().value;
             this._justCachedSlots.delete(slotIndex);
-            const box = this.boxController.findSuitableBox(this.cacheController.getCachedId(slotIndex));
+            const box = this.boxController.findSuitableBox(this.cacheController.getCachedLetter(slotIndex));
             if (!box) continue;
             const sticker = this.cacheController.getStickerAt(slotIndex);
             if (!sticker) continue;
@@ -486,8 +487,8 @@ export class LevelController extends Component implements ILevelController
         if (!this.cacheController.isAllTaken()) return false;
         if (!this.boxController.isAllBoxesReady()) return false;
         
-        const idInBoxes = this.boxController.getAllIDsInBoxes();
-        const idInCache = this.cacheController.getAllIDs();
+        const idInBoxes = this.boxController.getAllLettersInBoxes();
+        const idInCache = this.cacheController.getAllLetters();
         for (const id of idInCache)
         {
             if (idInBoxes.has(id)) return false;
