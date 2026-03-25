@@ -1,0 +1,13 @@
+{
+  "__type__": "e305fSm3YJHA4Y1h8giDVIm",
+  "_name": "Letter_U",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "letter": "U",
+  "mesh": {
+    "__uuid__": "d7af3213-de6d-41a9-9740-209952547d8d@6e487",
+    "__expectedType__": "cc.Mesh"
+  },
+  "concaveMaterial": null
+}

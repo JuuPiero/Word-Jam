@@ -37,7 +37,8 @@ export class Sticker extends Component implements ISticker
 
     private tweenPeelObj: { value: number } = { value: 0 };
 
-    private meshRenderer: MeshRenderer | null = null;
+    @property(MeshRenderer)
+    public meshRenderer: MeshRenderer | null = null;
 
     private ogPosition: Vec3 = new Vec3();
 

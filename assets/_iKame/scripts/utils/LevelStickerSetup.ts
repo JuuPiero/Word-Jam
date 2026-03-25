@@ -75,6 +75,10 @@ export class LevelStickerSetup extends Component {
         {
             const holdableObject = holdNode.addComponent(HoldableObject);
             const meshRenderer = holdableObject.getComponent(MeshRenderer)
+            if (!meshRenderer)
+            {
+                console.warn(`Holdable object ${holdNode.name} does not have a MeshRenderer component.`);
+            }
             meshRenderer.setSharedMaterial(this.holdingMaterial, 0);
             this._holdingMapData.set(holdNode.name, holdableObject);
             const rb = holdNode.addComponent(RigidBody);
@@ -91,6 +95,8 @@ export class LevelStickerSetup extends Component {
             holdableObject.freeCollider.convex = true;
             holdableObject.freeCollider.enabled = false;
             holdableObject.mainMeshRender = meshRenderer;
+
+            holdableObject.node.setParent(this.levelRoot, true);
         }
 
         const stickerNodes: Node[] = [];
@@ -98,12 +104,16 @@ export class LevelStickerSetup extends Component {
         for (const stickerNode of stickerNodes)
         {
             const sticker = stickerNode.addComponent(Sticker);
-            sticker.getComponent(MeshRenderer).setSharedMaterial(this.stickerMaterial, 0);
+            const meshRenderer = sticker.addComponent(MeshRenderer);
+            if (!meshRenderer) {
+                console.warn(`Sticker ${stickerNode.name} does not have a MeshRenderer component.`);
+            }
+
+            meshRenderer.setSharedMaterial(this.stickerMaterial, 0);
+            sticker.meshRenderer = meshRenderer;
             this._stickerMapData.set(stickerNode.name, sticker);
             const rb = stickerNode.addComponent(RigidBody);
             rb.isStatic = true;
-            const hitBox = stickerNode.addComponent(MeshCollider);
-            hitBox.mesh = sticker.getComponent(MeshRenderer).mesh;
             rb.group = PHYSIC_GROUP.STICKER;
         }
         //#endregion
@@ -118,12 +128,14 @@ export class LevelStickerSetup extends Component {
             sticker.holdingObjects = stickerData.holdingObjects;
             sticker.weightLockStickers = stickerData.weightLockStickers;
             sticker.weightLockObjects = stickerData.weightLockObjects;
-            sticker.letter = stickerData.stickerID;
 
             const meshRenderer = sticker.node.getComponent(MeshRenderer)
-            const stickerMat = this.stickerConfig.getStickerDataByID(stickerData.stickerID).stickerMaterial;
-            meshRenderer.setSharedMaterial(stickerMat, 0);
+            const mesh = this.stickerConfig.getLetterDataByLetter("A").mesh;
+            meshRenderer.mesh = mesh;
+            const hitBox = sticker.node.addComponent(MeshCollider);
+            hitBox.mesh = mesh;
 
+            this.destroyAllChildNodeRecursive(sticker.node);
         }
         //#endregion
 
@@ -143,6 +155,15 @@ export class LevelStickerSetup extends Component {
             }
         }
         //#endregion
+    }
+
+    private destroyAllChildNodeRecursive(parentNode: Node): void
+    {
+        for (let childNode of parentNode.children)
+        {
+            this.destroyAllChildNodeRecursive(childNode);
+            childNode.destroy();
+        }
     }
 }
 
