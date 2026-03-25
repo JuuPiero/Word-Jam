@@ -75,12 +75,14 @@ export class LevelController extends Component implements ILevelController
 
     spawnLevel()
     {
-        // return;
         const levelData = this.levelsData[ this.levelIndex ];
         var levelNode = instantiate(levelData.levelPrefab);
         levelNode.setParent(this.rotationRoot, false);
         this.rotateController.allowAutoRotate = false;
         const holdableObjects = levelNode.getComponentsInChildren(HoldableObject);
+
+        const targetWords = levelData.getTargetWords();
+
         for (const holdableObject of holdableObjects)
         {
             this._holdableMap.set(holdableObject.getName(), holdableObject);

@@ -19,6 +19,10 @@
     "colorDistributionConfig": {
       "__uuid__": "f7ca346b-28ab-4d97-8846-24391792eafc",
       "__expectedType__": "44712Z9EmNLsrKgUak4V8vO"
+    },
+    "targetTextJson": {
+      "__uuid__": "1c58742f-a818-4f73-93c7-a2bd651e1c9f",
+      "__expectedType__": "cc.JsonAsset"
     }
   },
   {

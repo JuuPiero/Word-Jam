@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, CCString, Prefab, RealCurve } from 'cc';
+import { _decorator, CCFloat, CCInteger, CCString, JsonAsset, Prefab, RealCurve } from 'cc';
 import { bh } from 'db://scriptable-asset/scriptable_runtime';
 import { ColorDistributionConfig } from './ColorDistributionConfig';
 const { ccclass, property } = _decorator;
@@ -13,13 +13,22 @@ export class LevelDataSO extends bh.ScriptableAsset {
     @property(RealCurve) public diffCurve: RealCurve = new RealCurve();
     @property(CCString) public stickerTutName: string = "";
     @property(ColorDistributionConfig) public colorDistributionConfig: ColorDistributionConfig | null = null;
-
+    @property(JsonAsset) targetTextJson: JsonAsset | null = null;
     public evaluateDifficulty(t: number): number {
         return this.diffCurve.evaluate(t) * this.curveScale;
     }
 
-    @property([CCString])
-    public targetWords: string[] = [];
+    private _targetWords: string[] = [];
+
+    public getTargetWords(): string[]
+    {
+        if (this._targetWords.length === 0 && this.targetTextJson) {
+            this._targetWords = this.targetTextJson.json as string[];
+        }
+        console.log("Target Words:", this._targetWords);
+        return this._targetWords;
+
+    }
 }
 
 
