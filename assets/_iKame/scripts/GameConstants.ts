@@ -35,7 +35,10 @@ export const BOX =
     BOX_MOVE_UP_DURATION: 0.3,
     BOX_MOVE_UP_POS: new Vec3(0, 4, 0),
     BOX_START_DOWN_POS: new Vec3(0, -1.5, 0),
-    BOX_START_DOWN_ROT: new Vec3(0, -180, 0)
+    BOX_START_DOWN_ROT: new Vec3(0, -180, 0),
+
+    SLOT_BORDER_LENGHT: 1.34,
+    SLOT_ROTATION: new Vec3(90, 0, 180)
 }
 
 export const FORCE_STORE_ON_TRANSITION = false;

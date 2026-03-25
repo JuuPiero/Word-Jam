@@ -13,22 +13,16 @@ const { ccclass, property } = _decorator;
 export class Box extends Component {
     
     private _boxData: BoxData;
-    @property(MeshRenderer)
-    private meshVisual: MeshRenderer;
-    @property([ Node ])
     private slotNodes: Node[] = [];
     @property(StickerConfigs)
     private stickerConfigs: StickerConfigs;
     @property(Node) root: Node;
-    @property(Node) lidNode: Node;
-
-    @property([ SpriteRenderer ]) public outLineSprites: SpriteRenderer[] = [];
-    @property(SpriteRenderer) public iconSprite: SpriteRenderer;
-
-        
+    @property(Node) lidNode: Node;        
     @property(AudioClip) closeLidSound: AudioClip | null = null;
     @property(AudioClip) boxMoveUpSound: AudioClip | null = null;
     @property(AudioClip) boxRespawnSound: AudioClip | null = null;
+
+    @property(Node) slotHolder : Node;
 
     private _boxesController: IBoxController;
     private _stickers : ISticker[] = [];
@@ -37,6 +31,9 @@ export class Box extends Component {
     public get isReady(): boolean {
         return this._isReady;
     }
+
+    private static LEFT_SLOT_POS = new Vec3(-BOX.SLOT_BORDER_LENGHT, 0, 0);
+    private static RIGHT_SLOT_POS = new Vec3(BOX.SLOT_BORDER_LENGHT, 0, 0);
 
     public setup(boxesController: IBoxController, boxData: BoxData): BoxData
     {
@@ -80,6 +77,7 @@ export class Box extends Component {
         if (stickerDatas.length)
         {
             //TODO: Set the box target word's icon here
+            this.updateSlots();
         }
         //TODO: You may need to implement this incase the remaining letter aren't enough to form a word
         // if (prefillCount > 0) {
@@ -205,6 +203,40 @@ export class Box extends Component {
             .to(shakeDuration * 0.4, { position: pos2 }, {easing: easing.circOut})
             .to(shakeDuration * 0.6, { position: Vec3.ZERO })
             .start();
+    }
+
+    public updateSlots(): void
+    {
+        for (let i = 0; i < this.slotNodes.length; i++)
+        {
+            const slot = this.slotNodes[ i ];
+            slot.destroy();
+        }
+
+        this.slotNodes = [];
+        const slotCount = this._boxData.word.length;
+        if (slotCount <= 0) {
+            return;
+        }
+
+        const denom = Math.max(1, slotCount - 1);
+        for (let i = 0; i < slotCount; i++)
+        {
+            // Use i/(count-1) so the last slot reaches RIGHT_SLOT_POS.
+            // For a single slot, denom becomes 1 and we place it at the center (t=0.5).
+            const deltaT = slotCount === 1 ? 0.5 : (i / denom);
+            const pos = Vec3.lerp(new Vec3(), Box.LEFT_SLOT_POS, Box.RIGHT_SLOT_POS, deltaT);
+            const slotNode = new Node(`Slot${i}`);
+            slotNode.setParent(this.slotHolder, false);
+            slotNode.setPosition(pos);
+            slotNode.setRotationFromEuler(BOX.SLOT_ROTATION);
+            this.slotNodes.push(slotNode);
+
+            const letterDataSO = this.stickerConfigs.getLetterDataByLetter(this._boxData.word[ i ]);
+            const renderMesh = slotNode.addComponent(MeshRenderer);
+            renderMesh.mesh = letterDataSO.mesh;
+            renderMesh.setMaterialInstance(this.stickerConfigs.concaveMaterial, 0);
+        }
     }
 }
 

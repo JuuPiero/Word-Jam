@@ -19,6 +19,7 @@ export class StickerConfigs extends bh.ScriptableAsset {
     @property(Material) public objectTransparentMaterial: Material;
 
     @property([ LetterDataSO ]) public letterDatas: LetterDataSO[] = [];
+    @property(Material) public concaveMaterial: Material;
     
     private _mapLetterData: Map<string, LetterDataSO>;
 

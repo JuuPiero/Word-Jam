@@ -122,5 +122,9 @@
       "__uuid__": "40c0d1b9-021c-4b57-85eb-39890d7359b7",
       "__expectedType__": "e305fSm3YJHA4Y1h8giDVIm"
     }
-  ]
+  ],
+  "concaveMaterial": {
+    "__uuid__": "8d67ed86-0e72-41e0-9a75-d4509ed5145f",
+    "__expectedType__": "cc.Material"
+  }
 }

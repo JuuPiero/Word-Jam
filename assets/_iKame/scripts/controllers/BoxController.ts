@@ -5,7 +5,7 @@ import { Box } from '../gameplay/boxes/Box';
 import { ILevelController } from './ILevelController';
 const { ccclass, property } = _decorator;
 
-const BOX_SPACING = 2.2
+const BOX_SPACING = 4.2
 
 @ccclass('BoxController')
 export class BoxController extends Component implements IBoxController

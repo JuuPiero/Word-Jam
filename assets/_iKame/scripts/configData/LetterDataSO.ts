@@ -7,7 +7,6 @@ const { ccclass, property } = _decorator;
 export class LetterDataSO extends bh.ScriptableAsset {
     @property(CCString) public letter: string = "A";
     @property(Mesh) public mesh: Mesh;
-    @property(Material) public concaveMaterial: Material;
 }
 
 
