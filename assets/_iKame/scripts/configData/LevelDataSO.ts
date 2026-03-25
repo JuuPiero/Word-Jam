@@ -1,6 +1,7 @@
 import { _decorator, CCFloat, CCInteger, CCString, JsonAsset, Prefab, RealCurve } from 'cc';
 import { bh } from 'db://scriptable-asset/scriptable_runtime';
 import { ColorDistributionConfig } from './ColorDistributionConfig';
+import { shuffleArray } from '../utils/MathUtils';
 const { ccclass, property } = _decorator;
 
 @bh.createAssetMenu('LevelDataSO', 'ScriptableAsset/LevelDataSO')
@@ -24,10 +25,23 @@ export class LevelDataSO extends bh.ScriptableAsset {
     {
         if (this._targetWords.length === 0 && this.targetTextJson) {
             this._targetWords = this.targetTextJson.json as string[];
+            shuffleArray    (this._targetWords); // Shuffle the target words for more variety
         }
-        console.log("Target Words:", this._targetWords);
         return this._targetWords;
+    }
 
+    public getAllLetters(): string[]
+    {
+        const letters: string[] = [];
+        for (const word of this.getTargetWords())
+        {
+            for (const letter of word)
+            {
+                letters.push(letter);
+            }
+        }
+        shuffleArray(letters); // Shuffle the letters for more variety
+        return letters;
     }
 }
 

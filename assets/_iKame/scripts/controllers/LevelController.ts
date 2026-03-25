@@ -21,6 +21,7 @@ import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
 import { EventName } from '../systems/EventName';
 import { ETrackingEvent, TrackingManager } from '../systems/playable/base-script/PlayableAds/Tracking/TrackingManager';
 import { DragRotateController } from '../commond/DragRotateController';
+import { LetterDataSO } from '../configData/LetterDataSO';
 const { ccclass, property } = _decorator;
 
 const FRAME_SKIP = 5;
@@ -68,11 +69,6 @@ export class LevelController extends Component implements ILevelController
         this.blockPicker.levelController = this;
     }
 
-    // protected start(): void
-    // {
-    //     this.spawnLevel();
-    // }
-
     spawnLevel()
     {
         const levelData = this.levelsData[ this.levelIndex ];
@@ -107,12 +103,7 @@ export class LevelController extends Component implements ILevelController
             }
             holdableDatas.push(holdableObject.setup(this, stickersForObject));
         }
-        let letters: string[];
-        //TODO: Jumpble the letters for more challenge
-        // if (levelData.colorDistributionConfig)
-        // {
-        //     colors = levelData.colorDistributionConfig.getColors(stickers.length, math.randomRangeInt(0, 1000));
-        // }
+        let letters: string[] = levelData.getAllLetters();
         const stickerDatas: StickerData[] = [];
         for (const sticker of stickers)
         {
@@ -160,7 +151,7 @@ export class LevelController extends Component implements ILevelController
         this.boxController.setup(levelData.maxBox, this);
         const cacheData = this.cacheController.setup(levelData.maxCache);
         const boxDatas = this.boxController.getBoxesDataList();
-        this._gameData = new GameData(this.levelIndex, boxDatas, cacheData, stickerDatas, holdableDatas);
+        this._gameData = new GameData(this.levelIndex, boxDatas, cacheData, stickerDatas, holdableDatas, levelData.getTargetWords());
         this.boxController.setupFirstBoxes();
 
         this.totalStickerCount = stickerDatas.length;
@@ -575,6 +566,11 @@ export class LevelController extends Component implements ILevelController
     public getStickerMaterialByID(id: number): Material
     {
         return this.stickerConfigs.getStickerDataByID(id).stickerMaterial;
+    }
+
+    public getLetterData(letter: string): LetterDataSO
+    {
+        return this.stickerConfigs.getLetterDataByLetter(letter);
     }
 }
 

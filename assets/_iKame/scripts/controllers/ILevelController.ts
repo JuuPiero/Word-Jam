@@ -1,5 +1,6 @@
 import { Material, Node } from "cc";
 import { BoxData } from "../gameplay/data/BoxData";
+import { LetterDataSO } from "../configData/LetterDataSO";
 export interface ILevelController
 {
     spawnLevel(): void;
@@ -12,6 +13,7 @@ export interface ILevelController
     getNextBoxData(): BoxData;
     isLevelFinished(): boolean;
     getStickerMaterialByID(id: number): Material;
+    getLetterData(letter: string): LetterDataSO;
 }
 
 

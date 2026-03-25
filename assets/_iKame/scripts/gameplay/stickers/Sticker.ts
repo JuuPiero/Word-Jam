@@ -6,6 +6,7 @@ import { StickerData } from '../data/StickerData';
 import { EDITOR } from 'cc/env';
 import { STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
+import { LetterDataSO } from '../../configData/LetterDataSO';
 const { ccclass, property } = _decorator;
 
 const SHAKE_INTENSITY = 0.08;
@@ -42,6 +43,8 @@ export class Sticker extends Component implements ISticker
 
     private ogPosition: Vec3 = new Vec3();
 
+    private _letterData: LetterDataSO;
+
     protected start(): void
     {
         this.ogPosition.set(this.node.getPosition());
@@ -67,9 +70,8 @@ export class Sticker extends Component implements ISticker
             weightLockObjects
         );
 
-        //TODO: set material based on stickerID
-        // const mat = this._levelController.getStickerMaterialByID(this.stickerID);
-        // this.meshRenderer.setMaterialInstance(mat, 0);
+        this._letterData = this._levelController.getLetterData(this.letter);
+        this.meshRenderer.mesh = this._letterData.mesh;
 
         for (const sticker of blockingStickers)
         {
