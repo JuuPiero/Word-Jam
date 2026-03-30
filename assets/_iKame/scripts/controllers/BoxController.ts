@@ -73,7 +73,7 @@ export class BoxController extends Component implements IBoxController
             const box = this._activeBoxes[ i ];
             if (!box.isReady) continue;
             const boxData = box.getBoxData();
-            if (!boxData.isFull() && boxData.word.includes(letter))
+            if (!boxData.isFull() && boxData.hasEmptySlotForLetter(letter))
             {
                 return box;
             }

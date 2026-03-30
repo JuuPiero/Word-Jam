@@ -1,7 +1,7 @@
 import { _decorator, AudioClip, Component, easing, game, MeshRenderer, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
 import { BoxData } from '../data/BoxData';
 import { StickerConfigs } from '../../configData/StickerConfigs';
-import { BOX, STICKER } from '../../GameConstants';
+import { BOX, EMPTY_LETTER, STICKER } from '../../GameConstants';
 import { PromiseDelay } from '../../utils/PromiseDelay';
 import { IBoxController } from '../../controllers/IBoxController';
 import { ISticker } from '../stickers/ISticker';
@@ -52,7 +52,7 @@ export class Box extends Component {
     public addSticker(sticker : ISticker): boolean
     {
         this._stickers.push(sticker);
-        this._boxData.addFilledStickerCount(1);
+        this._boxData.addLetter(sticker.getLetter());
         return this._boxData.isFull();
     }
 
@@ -203,6 +203,16 @@ export class Box extends Component {
             .to(shakeDuration * 0.4, { position: pos2 }, {easing: easing.circOut})
             .to(shakeDuration * 0.6, { position: Vec3.ZERO })
             .start();
+    }
+
+    public updateVisibleSlot() 
+    {
+        for (let i = 0; i < this.slotNodes.length; i++)
+        {
+            const isFilled = this._boxData.filledLetters[ i ] !== EMPTY_LETTER;
+            const meshRenderer = this.slotNodes[ i ].getComponent(MeshRenderer);
+            meshRenderer.enabled = !isFilled;
+        }
     }
 
     public updateSlots(): void

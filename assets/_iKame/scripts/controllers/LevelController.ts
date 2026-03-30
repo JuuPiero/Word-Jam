@@ -222,21 +222,28 @@ export class LevelController extends Component implements ILevelController
 
     public async tryPeelSticker(sticker: Sticker): Promise<void>
     {
-        if (!sticker.canPeelOff())
+        if (!sticker.isNotBlocked())
         {
             sticker.giveHintBlinking();
             EventDispatcher.dispatch(EventName.PlaySFX, this.errorClickSound);
             return;
         }
+        const targetBox = this.boxController.findSuitableBox(sticker.letter);
+        const targetNode = targetBox ? targetBox.getEmptySlotNode(sticker.letter) : null;
+        // if (!targetBox || !targetNode)
+        // {
+        //     sticker.selfBlinking();
+        //     EventDispatcher.dispatch(EventName.PlaySFX, this.errorClickSound);
+        //     return;
+        // }
         this._stickerMap.delete(sticker.getName());
         this._gameData.removeStickerData(sticker.getData());
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPeelSound);
         this.trackingLevelProgress();
         await sticker.peelOff();
-        const targetBox = this.boxController.findSuitableBox(sticker.letter);
-        if (targetBox)
+        if (targetBox && targetNode)
         {
-            this.transferStickerToBox(sticker, targetBox);
+            this.transferStickerToBox(sticker, targetBox, targetNode);
             return;
         }
         const pos = new Vec3();
@@ -248,10 +255,8 @@ export class LevelController extends Component implements ILevelController
         }
     }
 
-    public async transferStickerToBox(sticker: Sticker, box: Box): Promise<void>
+    public async transferStickerToBox(sticker: Sticker, box: Box, targetNode: Node): Promise<void>
     {
-        const targetNode : Node = box.getEmptySlotNode(sticker.letter);
-        if (!targetNode) return;
         const isBoxFull = box.addSticker(sticker);
         sticker.node.setParent(this.node, true);
         //sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
@@ -291,7 +296,7 @@ export class LevelController extends Component implements ILevelController
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
         sticker.node.setRotationFromEuler(STICKER.IN_BOX_ROTATION);
-
+        box.updateVisibleSlot();
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;
@@ -316,7 +321,7 @@ export class LevelController extends Component implements ILevelController
         const tweenMoveProgress = {x : 0};
         const newPos = new Vec3();
         const rot1 = sticker.node.getWorldRotation();
-        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rot2 = Quat.fromEuler(new Quat(), -67.92, 180, 0);
         const rotLerp = new Quat();
 
         const scale1 = sticker.node.getScale();
@@ -406,6 +411,7 @@ export class LevelController extends Component implements ILevelController
         sticker.node.setParent(targetNode, true);
         sticker.node.setPosition(Vec3.ZERO);
         sticker.node.setRotationFromEuler(STICKER.IN_BOX_ROTATION);
+        box.updateVisibleSlot();
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
 
         if (!isBoxFull) return;

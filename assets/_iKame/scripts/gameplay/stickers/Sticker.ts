@@ -106,7 +106,7 @@ export class Sticker extends Component implements ISticker
         this.weightLockObjects = this._data.getAllWeightLockObjectNames();
     }
 
-    public canPeelOff(): boolean
+    public isNotBlocked(): boolean
     {
         return this._data.getWeightLockObjectCount() === 0 &&
                this._data.getWeightLockStickerCount() === 0 &&
@@ -115,7 +115,7 @@ export class Sticker extends Component implements ISticker
 
     public tryPeelOff(): Promise<void> | undefined
     {
-        if (!this.canPeelOff()) {
+        if (!this.isNotBlocked()) {
             return undefined;
         }
         console.log("Peeling off sticker: " + this.getName());
@@ -208,7 +208,7 @@ export class Sticker extends Component implements ISticker
     
         this._tweebPeel = tween(this.tweenPeelObj)
             .to(STICKER.PEEL_DURATION, { value: STICKER.PEEL_END_PROGRESS }, {
-                easing: easing.circInOut,
+                easing: easing.circOut,
                 onUpdate: (target: any, ratio: number) =>
                 {
                     Vec3.lerp(pos, startPos, endPos, ratio);
@@ -237,22 +237,28 @@ export class Sticker extends Component implements ISticker
 
     public blinking(): void
     {
-        if (this._tweenBlinking) {
-            this._tweenBlinking.stop();
-        }
-        this._tweenBlinking = tween(this._blinkingObj)
-            .to(0.2, { value: 1 }, { easing: easing.circInOut,
-                onUpdate: (target: any, ratio: number) => {
-                    const mat = this.meshRenderer.getMaterialInstance(0);
-                    mat.setProperty('highlight', target.value);
-                }
-            })
-            .to(0.2, { value: 0 }, { easing: easing.cubicIn,
-                onUpdate: (target: any, ratio: number) => {
-                    const mat = this.meshRenderer.getMaterialInstance(0);
-                    mat.setProperty('highlight', target.value);
-                }
-            }).start();
+        // if (this._tweenBlinking) {
+        //     this._tweenBlinking.stop();
+        // }
+        // this._tweenBlinking = tween(this._blinkingObj)
+        //     .to(0.2, { value: 1 }, { easing: easing.circInOut,
+        //         onUpdate: (target: any, ratio: number) => {
+        //             const mat = this.meshRenderer.getMaterialInstance(0);
+        //             mat.setProperty('highlight', target.value);
+        //         }
+        //     })
+        //     .to(0.2, { value: 0 }, { easing: easing.cubicIn,
+        //         onUpdate: (target: any, ratio: number) => {
+        //             const mat = this.meshRenderer.getMaterialInstance(0);
+        //             mat.setProperty('highlight', target.value);
+        //         }
+        //     }).start();
+    }
+
+    public selfBlinking(): void
+    {
+        this.blinking();
+        this.shaking();
     }
 
     public giveHintBlinking(): void

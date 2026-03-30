@@ -33,9 +33,6 @@ export class BoxData {
         }
     }
 
-    public addFilledStickerCount(count: number): void {
-    }
-
     public reset(word : string): void 
     {
         this.word = word;
@@ -56,6 +53,10 @@ export class BoxData {
             }
         }
         return -1;
+    }
+
+    public hasEmptySlotForLetter(letter: string): boolean {
+        return this.getFittingLetterSlot(letter) !== -1;
     }
 }
 
