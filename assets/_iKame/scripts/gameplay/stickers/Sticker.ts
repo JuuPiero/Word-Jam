@@ -45,6 +45,11 @@ export class Sticker extends Component implements ISticker
 
     private _letterData: LetterDataSO;
 
+    private _offset: Vec3 = new Vec3();
+    private _posWorld = new Vec3();
+    private _boundCenter = new Vec3();
+    private _deltaWorld = new Vec3();
+
     protected start(): void
     {
         this.ogPosition.set(this.node.getPosition());
@@ -94,6 +99,8 @@ export class Sticker extends Component implements ISticker
         }
 
         this._isCanUpdate = true;
+
+
         return this._data;
     }
 
@@ -315,5 +322,39 @@ export class Sticker extends Component implements ISticker
     public getData(): StickerData
     {
         return this._data;
+    }
+
+    /** Gets the current MeshRenderer world-bounds center (world space). Returns false if unavailable. */
+    public tryGetWorldBoundsCenter(out: Vec3): boolean
+    {
+        const model = this.meshRenderer?.model;
+        if (!model?.worldBounds) return false;
+        // Ensure bounds reflect latest transform changes.
+        model.updateWorldBound?.();
+        const center = model.worldBounds.center;
+        out.set(center.x, center.y, center.z);
+        return true;
+    }
+
+    /** Moves this node so the MeshRenderer world-bounds center ends up at `targetWorldCenter`. */
+    public setWorldBoundsCenter(targetWorldCenter: Vec3): void
+    {
+        if (!this.tryGetWorldBoundsCenter(this._boundCenter)) return;
+
+        this.node.getWorldPosition(this._posWorld);
+        Vec3.subtract(this._deltaWorld, targetWorldCenter, this._boundCenter);
+        Vec3.add(this._posWorld, this._posWorld, this._deltaWorld);
+        this.node.setWorldPosition(this._posWorld);
+    }
+
+    public offset(): void
+    {
+        if (!this.meshRenderer?.model?.worldBounds) return;
+        const aabb = this.meshRenderer.model.worldBounds;
+        this._boundCenter.set(aabb.center.x, aabb.center.y, aabb.center.z);
+        this.node.getWorldPosition(this._posWorld);
+        Vec3.subtract(this._offset, this._boundCenter, this._posWorld);
+        this._posWorld.subtract(this._offset);
+        this.node.setWorldPosition(this._posWorld);
     }
 }

@@ -246,6 +246,15 @@ export class Box extends Component {
             const renderMesh = slotNode.addComponent(MeshRenderer);
             renderMesh.mesh = letterDataSO.mesh;
             renderMesh.setMaterialInstance(this.stickerConfigs.concaveMaterial, 0);
+
+            const offset = new Vec3();
+            const aabb = renderMesh.model.worldBounds;
+            const boundCenter = new Vec3(aabb.center.x, aabb.center.y, aabb.center.z);
+            const posWorld = new Vec3();
+            slotNode.getWorldPosition(posWorld);
+            Vec3.subtract(offset, boundCenter, posWorld);
+            posWorld.subtract(offset);
+            slotNode.setWorldPosition(posWorld);
         }
     }
 }

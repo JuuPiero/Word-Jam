@@ -317,37 +317,41 @@ export class LevelController extends Component implements ILevelController
         this.cacheController.setCache(cacheIndex, sticker.letter, sticker);
         sticker.node.setParent(this.node, true);
         //sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
-        const startPos = sticker.node.getWorldPosition();
+        const startCenter = new Vec3();
+        if (!sticker.tryGetWorldBoundsCenter(startCenter)) {
+            sticker.node.getWorldPosition(startCenter);
+        }
         const tweenMoveProgress = {x : 0};
-        const newPos = new Vec3();
+        const targetCenter = new Vec3();
         const rot1 = sticker.node.getWorldRotation();
         const rot2 = Quat.fromEuler(new Quat(), -67.92, 180, 0);
         const rotLerp = new Quat();
 
         const scale1 = sticker.node.getScale();
         const scale = new Vec3();
-
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerFlySound , .34);
-
         const t = tween(tweenMoveProgress)
             .to(STICKER.TRANSFER_DURATION, { x: 1 }, {
                 easing: 'cubicInOut',
                 onUpdate: (target: { x: number }, ratio: number) =>
                 {
-                    Vec3.lerp(newPos, startPos, cachePosition, target.x);
-                    // Thêm chuyển động vòng cung theo hướng z
-                    const arcOffset = Math.sin(target.x * Math.PI) * 2;
-                    newPos.z += arcOffset;
-                    sticker.node.setWorldPosition(newPos);
                     Quat.slerp(rotLerp, rot1, rot2, target.x);
                     sticker.node.setWorldRotation(rotLerp);
 
                     Vec3.lerp(scale, scale1, STICKER.IN_CACHE_SCALE, target.x);
                     sticker.node.setScale(scale);
+
+                    // Move by *visual center* (renderer bounds center), not by node pivot.
+                    Vec3.lerp(targetCenter, startCenter, cachePosition, target.x);
+                    const arcOffset = Math.sin(target.x * Math.PI) * 2;
+                    targetCenter.z += arcOffset;
+                    sticker.setWorldBoundsCenter(targetCenter);
                 } })
             .start();
         await PromiseDelay.Wait(STICKER.TRANSFER_DURATION + game.deltaTime);
         t.stop();
+        // Final snap: ensure the center is exactly at the cache position.
+        sticker.setWorldBoundsCenter(cachePosition);
         this.cacheController.setStickerInPlace(cacheIndex, true);
         // EventDispatcher.dispatch(EventName.PlaySFX, this.stickerPlaceInBoxSound, .34);
         this._justCachedSlots.add(cacheIndex);
