@@ -122,13 +122,11 @@ export class Box extends Component {
         EventDispatcher.dispatch(EventName.PlaySFX, this.closeLidSound);
         this.lidNode.active = true;
         Tween.stopAllByTarget(this.lidNode);
-        this.lidNode.setRotationFromEuler(BOX.LID_OPEN_ROT);
         this.lidNode.setPosition(BOX.LID_OPEN_POS);
         tween(this.lidNode)
         .to(BOX.LID_CLOSE_DURATION,
             {
                 position: BOX.LID_CLOSE_POS,
-                eulerAngles: Vec3.ZERO
             },
             {
                 easing: 'sineInOut',
@@ -160,18 +158,14 @@ export class Box extends Component {
     {
         EventDispatcher.dispatch(EventName.PlaySFX, this.boxRespawnSound);
         Tween.stopAllByTarget(this.root);
-        this.root.setPosition(BOX.BOX_START_DOWN_POS);
-        this.root.setRotationFromEuler(BOX.BOX_START_DOWN_ROT);
-        this.root.setScale(Vec3.ZERO);
+        this.root.setPosition(BOX.BOX_MOVE_UP_POS);
         tween(this.root)
             .to(BOX.BOX_MOVE_UP_DURATION,
                 {
                     position: Vec3.ZERO,
-                    eulerAngles: Vec3.ZERO,
-                    scale: Vec3.ONE
                 },
                 {
-                    easing: 'sineInOut',
+                    easing: easing.bounceIn
                 }
             )
             .start();

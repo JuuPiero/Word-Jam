@@ -436,16 +436,15 @@ export class LevelController extends Component implements ILevelController
         if (this._justCompletedBoxes.size === 0) return;
         while (this._justCompletedBoxes.size > 0)
         {
-            const box = this._justCompletedBoxes.values().next().value;
+            const box = this._justCompletedBoxes.values().next().value as Box;
             this._justCompletedBoxes.delete(box)
-            const stickerID = box.getBoxData().stickerID;
-            let emptySlotCount = box.getBoxData().getEmptySlotCount();
-            while (emptySlotCount > 0)
+            const letters = box.getBoxData().getRemainingLetters();
+            while (letters.length > 0)
             {
-                const res = this.cacheController.findFirstStickerWithLetter(stickerID);
-                if (!res || !res.sticker) break;
+                const letter = letters.shift();
+                const res = this.cacheController.findFirstStickerWithLetter(letter);
+                if (!res || !res.sticker) continue;
                 this.transferStickerFromCacheToBox(res.sticker, res.slotIndex, box);
-                --emptySlotCount;
             }
         }
     }
@@ -456,7 +455,7 @@ export class LevelController extends Component implements ILevelController
 
         while (this._justCachedSlots.size > 0)
         {
-            const slotIndex = this._justCachedSlots.values().next().value;
+            const slotIndex = this._justCachedSlots.values().next().value as number;
             this._justCachedSlots.delete(slotIndex);
             const box = this.boxController.findSuitableBox(this.cacheController.getCachedLetter(slotIndex));
             if (!box) continue;

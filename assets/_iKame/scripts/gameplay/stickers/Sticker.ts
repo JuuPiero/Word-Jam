@@ -99,7 +99,7 @@ export class Sticker extends Component implements ISticker
         }
 
         this._isCanUpdate = true;
-
+        this.offset();
 
         return this._data;
     }
@@ -192,8 +192,6 @@ export class Sticker extends Component implements ISticker
     }
 
     private _tweebPeel: Tween<any> | null = null;
-    private _tweenBlinking: Tween<any> | null = null;
-    private _blinkingObj: { value: number } = { value: 0 };
     private _tweenShaking: Tween<any> | null = null;
     private _shakeOffset: Vec3 = new Vec3();
 

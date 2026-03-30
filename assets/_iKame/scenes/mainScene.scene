@@ -41335,7 +41335,7 @@
       "__expectedType__": "fc8d8xFHF9L1LjjdJeaSJLZ"
     },
     "stickerPeelSound": {
-      "__uuid__": "fbdcf519-6d9c-49c2-ae4f-16bb735a1409",
+      "__uuid__": "05baaed5-e84e-4005-b9ee-4af15bd3c078",
       "__expectedType__": "cc.AudioClip"
     },
     "stickerPlaceInBoxSound": {
@@ -41414,8 +41414,8 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 3.894,
-      "z": 3.078
+      "y": 4.253,
+      "z": 2.947
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -42192,8 +42192,8 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 3.259,
-      "z": 3.367
+      "y": 3.831,
+      "z": 3.159
     },
     "_lrot": {
       "__type__": "cc.Quat",

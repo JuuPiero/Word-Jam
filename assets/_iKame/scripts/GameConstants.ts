@@ -16,7 +16,7 @@ export const STICKER = {
     AFTER_PEEL_DURATION: 0.2,
     AFTER_PEEL_WORLD_POSITION_OFFSET: new Vec3(-0.4, 1, 0),
 
-    IN_BOX_SCALE: new Vec3(0.29, 0.29, 0.29),
+    IN_BOX_SCALE: new Vec3(0.37, 0.37, 0.37),
     IN_CACHE_SCALE: new Vec3(0.6, 0.6, 0.6),
     IN_BOX_ROTATION: Vec3.ZERO,
 
@@ -27,8 +27,8 @@ export const STICKER = {
 
 export const BOX = 
 {
-    LID_OPEN_POS: new Vec3(0, 1.8, -6),
-    LID_CLOSE_POS: new Vec3(0, -0.2, -0.473),
+    LID_OPEN_POS: new Vec3(0, 5, -0.42),
+    LID_CLOSE_POS: new Vec3(0, -0.04, -0.42),
     LID_OPEN_ROT: new Vec3(60, 0, 0),
     LID_CLOSE_DURATION: 0.15,
 
