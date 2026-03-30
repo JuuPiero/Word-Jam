@@ -21,11 +21,18 @@ export class LevelDataSO extends bh.ScriptableAsset {
 
     private _targetWords: string[] = [];
 
+    public init(): void 
+    {
+        this._targetWords = [];
+        this._targetWords = this.getTargetWords(); // Initialize target words
+    }
+
     public getTargetWords(): string[]
     {
         if (this._targetWords.length === 0 && this.targetTextJson) {
-            this._targetWords = this.targetTextJson.json as string[];
-            shuffleArray    (this._targetWords); // Shuffle the target words for more variety
+            const words = this.targetTextJson.json as string[];
+            this._targetWords = words.concat(); // Create a copy of the words array
+            shuffleArray(this._targetWords); // Shuffle the target words for more variety
         }
         return this._targetWords;
     }

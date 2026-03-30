@@ -1,9 +1,8 @@
-import { _decorator, Material, Mesh } from 'cc';
+import { _decorator, Color, Material, Mesh } from 'cc';
 import { bh } from 'db://scriptable-asset/scriptable_runtime';
 import { StickerDataSO } from './StickerDataSO';
 import { LetterDataSO } from './LetterDataSO';
 const { ccclass, property } = _decorator;
-
 @bh.createAssetMenu('StickerConfigs', 'ScriptableAsset/StickerConfigs')
 @bh.scriptable('StickerConfigs')
 export class StickerConfigs extends bh.ScriptableAsset {
@@ -22,6 +21,27 @@ export class StickerConfigs extends bh.ScriptableAsset {
     @property(Material) public concaveMaterial: Material;
     
     private _mapLetterData: Map<string, LetterDataSO>;
+
+    @property([Material])
+    public textColors: Material[] = [];
+
+    private static readonly _TextColorHexes =
+    [
+        "#5affff", // Cyan
+        "#ee399a", // Pink
+        "#ffe00f", // Yellow
+        "#ff7f00", // Orange
+        "#77f336", // Green
+        "#ffaefa", // Light Pink
+        "#0085eb", // Blue
+        "#ff3333"  // Red
+    ]
+    
+    public getLetterColor(letter: string): Material
+    {
+        const charIndex = letter.charCodeAt(0) - 'A'.charCodeAt(0);
+        return this.textColors[charIndex % this.textColors.length];
+    }
 
     public getLetterDataByLetter(letter: string): LetterDataSO | null 
     {

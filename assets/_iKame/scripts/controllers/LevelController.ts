@@ -72,13 +72,11 @@ export class LevelController extends Component implements ILevelController
     spawnLevel()
     {
         const levelData = this.levelsData[ this.levelIndex ];
+        levelData.init();
         var levelNode = instantiate(levelData.levelPrefab);
         levelNode.setParent(this.rotationRoot, false);
         this.rotateController.allowAutoRotate = false;
         const holdableObjects = levelNode.getComponentsInChildren(HoldableObject);
-
-        const targetWords = levelData.getTargetWords();
-
         for (const holdableObject of holdableObjects)
         {
             this._holdableMap.set(holdableObject.getName(), holdableObject);
@@ -256,14 +254,14 @@ export class LevelController extends Component implements ILevelController
         if (!targetNode) return;
         const isBoxFull = box.addSticker(sticker);
         sticker.node.setParent(this.node, true);
-        sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
+        //sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         EventDispatcher.dispatch(EventName.PlaySFX, this.stickerFlySound, .34);
         const startPos = sticker.node.getWorldPosition();
         const targetPos = new Vec3();
         const tweenMoveProgress = {x : 0};
         const newPos = new Vec3();
         const rot1 = sticker.node.getWorldRotation();
-        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rot2 = targetNode.getWorldRotation();
         const rotLerp = new Quat();
 
         const scale1 = sticker.node.getScale();
@@ -285,9 +283,6 @@ export class LevelController extends Component implements ILevelController
 
                     Vec3.lerp(scale, scale1, STICKER.IN_BOX_SCALE, target.x);
                     sticker.node.setScale(scale);
-
-                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
-                    sticker.setPeelProgress(peel);
                 } })
             .start();
         box.shake(STICKER.TRANSFER_DURATION * 0.96);
@@ -316,7 +311,7 @@ export class LevelController extends Component implements ILevelController
     {
         this.cacheController.setCache(cacheIndex, sticker.letter, sticker);
         sticker.node.setParent(this.node, true);
-        sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
+        //sticker.setNormalMesh(this.stickerConfigs.stickerNormalMesh);
         const startPos = sticker.node.getWorldPosition();
         const tweenMoveProgress = {x : 0};
         const newPos = new Vec3();
@@ -344,9 +339,6 @@ export class LevelController extends Component implements ILevelController
 
                     Vec3.lerp(scale, scale1, STICKER.IN_CACHE_SCALE, target.x);
                     sticker.node.setScale(scale);
-
-                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
-                    sticker.setPeelProgress(peel);
                 } })
             .start();
         await PromiseDelay.Wait(STICKER.TRANSFER_DURATION + game.deltaTime);
@@ -385,7 +377,7 @@ export class LevelController extends Component implements ILevelController
         const tweenMoveProgress = {x : 0};
         const newPos = new Vec3();
         const rot1 = sticker.node.getWorldRotation();
-        const rot2 = Quat.fromEuler(new Quat(), 20, 180, 0);
+        const rot2 = targetNode.getWorldRotation();
         const rotLerp = new Quat();
 
         const scale1 = sticker.node.getScale();
@@ -406,9 +398,6 @@ export class LevelController extends Component implements ILevelController
 
                     Vec3.lerp(scale, scale1, STICKER.IN_BOX_SCALE, target.x);
                     sticker.node.setScale(scale);
-
-                    const peel = Math.max (STICKER.PEEL_END_PROGRESS - target.x * 6, 0);
-                    sticker.setPeelProgress(peel);
                 } })
             .start();
         box.shake(STICKER.TRANSFER_DURATION_FROM_CACHE * 0.96);
@@ -563,9 +552,9 @@ export class LevelController extends Component implements ILevelController
         }
     }
 
-    public getStickerMaterialByID(id: number): Material
+    public getLetterMaterial(letter: string): Material
     {
-        return this.stickerConfigs.getStickerDataByID(id).stickerMaterial;
+        return this.stickerConfigs.getLetterColor(letter);
     }
 
     public getLetterData(letter: string): LetterDataSO

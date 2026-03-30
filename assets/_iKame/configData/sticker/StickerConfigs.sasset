@@ -5,6 +5,10 @@
   "__editorExtras__": {},
   "_native": "",
   "stickerDatas": [],
+  "letterMaterial": {
+    "__uuid__": "ac1e871c-b28f-4dbf-b1c8-43d00095bc57",
+    "__expectedType__": "cc.Material"
+  },
   "stickerNormalMesh": {
     "__uuid__": "5239483a-c404-41da-a410-71368e1e2d24@a62fe",
     "__expectedType__": "cc.Mesh"
@@ -126,5 +130,39 @@
   "concaveMaterial": {
     "__uuid__": "8d67ed86-0e72-41e0-9a75-d4509ed5145f",
     "__expectedType__": "cc.Material"
-  }
+  },
+  "textColors": [
+    {
+      "__uuid__": "ac1e871c-b28f-4dbf-b1c8-43d00095bc57",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "fc00571c-3092-4ee0-87e2-5298bd7386e6",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "8d64a606-f7bc-4a34-910a-2eb09106e610",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "d73e7292-0d69-4eca-a660-3fd546d1d050",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "ff69777e-02fb-450a-b784-7bf783dfeff5",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "113d3e03-ca07-4dbd-b940-cbfa4960acb4",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "2d3b4e72-421d-480c-92ca-55f6a247475d",
+      "__expectedType__": "cc.Material"
+    },
+    {
+      "__uuid__": "90f2b67b-85e4-4c83-b9f2-fec4e79f1731",
+      "__expectedType__": "cc.Material"
+    }
+  ]
 }

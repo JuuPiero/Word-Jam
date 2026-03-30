@@ -12,7 +12,7 @@ export interface ILevelController
     getNode(): Node;
     getNextBoxData(): BoxData;
     isLevelFinished(): boolean;
-    getStickerMaterialByID(id: number): Material;
+    getLetterMaterial(letter: string): Material;
     getLetterData(letter: string): LetterDataSO;
 }
 

@@ -71,7 +71,12 @@ export class Sticker extends Component implements ISticker
         );
 
         this._letterData = this._levelController.getLetterData(this.letter);
+        if (!this._letterData) {
+            console.error(`Letter data not found for letter: ${this.letter}`);
+            return this._data;
+        }
         this.meshRenderer.mesh = this._letterData.mesh;
+        this.meshRenderer.setSharedMaterial(this._levelController.getLetterMaterial(letter), 0);
 
         for (const sticker of blockingStickers)
         {
@@ -187,53 +192,32 @@ export class Sticker extends Component implements ISticker
 
     public async playPeelAnimation(): Promise<void> 
     {
-        const offsetForward = 0.1;
+        const offsetForward = 0.16;
         Tween.stopAllByTarget(this.tweenPeelObj);
         Tween.stopAllByTarget(this.node);
         this.tweenPeelObj.value = 0;
-        const mat = this.meshRenderer.getMaterialInstance(0);
 
         const startPos = this.node.getPosition();
         const upVec = new Vec3();
-        upVec.set(this.node.forward);
+        upVec.set(this.node.up);
         Vec3.multiplyScalar(upVec, upVec, offsetForward);
         const endPos = new Vec3();
         Vec3.add(endPos, startPos, upVec);
+
+        const pos = new Vec3();
     
         this._tweebPeel = tween(this.tweenPeelObj)
             .to(STICKER.PEEL_DURATION, { value: STICKER.PEEL_END_PROGRESS }, {
                 easing: easing.circInOut,
-                onUpdate: (target: any, ratio: number) => {
-                    mat.setProperty('peel', target.value);
+                onUpdate: (target: any, ratio: number) =>
+                {
+                    Vec3.lerp(pos, startPos, endPos, ratio);
+                    this.node.setPosition(pos);
                 }
             })
             .start();
         
         await PromiseDelay.Wait(STICKER.PEEL_DURATION + game.deltaTime);
-    }
-
-    public setNormalMesh (mesh : Mesh) : void 
-    {
-        if (this._tweebPeel) {
-            this._tweebPeel.stop();
-            this._tweebPeel = null;
-        }
-        const mat = this.meshRenderer.getMaterialInstance(0);
-        mat.setProperty('peel', 0);
-        this.meshRenderer.mesh = mesh;
-        const pos = this.node.getPosition();
-        Vec3.scaleAndAdd(pos, pos, this.node.forward, 0.1);
-        this.node.setPosition(pos);
-    }
-
-    public setPeelProgress(progress: number): void
-    {
-        if (this._tweebPeel) {
-            this._tweebPeel.stop();
-            this._tweebPeel = null;
-        }
-        const mat = this.meshRenderer.getMaterialInstance(0);
-        mat.setProperty('peel', progress);
     }
 
     public destroySticker(): void

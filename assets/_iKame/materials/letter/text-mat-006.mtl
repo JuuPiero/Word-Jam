@@ -33,24 +33,13 @@
       },
       "mainColor": {
         "__type__": "cc.Color",
-        "r": 255,
-        "g": 252,
-        "b": 252,
+        "r": 0,
+        "g": 133,
+        "b": 235,
         "a": 255
       },
-      "smoothness": 0.75,
-      "metallic": 0.26,
-      "useHDRI": 1,
-      "cubeMap": {
-        "__uuid__": "dea66bfd-99d2-47d3-92ec-64e8f7d70036@b47c0",
-        "__expectedType__": "cc.TextureCube"
-      },
-      "clayHDRI": 0.05,
-      "useAdvance": 1,
-      "matCapTexture": {
-        "__uuid__": "d1eff344-ec9e-45ee-aa8f-b69c7c2f01ae@6c48a",
-        "__expectedType__": "cc.Texture2D"
-      }
+      "smoothness": 0.55,
+      "clayHDRI": 0.05
     }
   ]
 }

@@ -38,26 +38,12 @@ export class FreeSticker extends Component {
         const targetNode = this.meshRenderer.node;
         Tween.stopAllByTarget(targetNode);
         this.tweenPeelObj.value = 0;
-        const mat = this.meshRenderer.getMaterialInstance(0);
-    
-        tween(this.tweenPeelObj)
-            .to(STICKER.PEEL_DURATION, { value: STICKER.PEEL_END_PROGRESS }, {
-                easing: easing.circInOut,
-                onUpdate: (target: any, ratio: number) => {
-                    mat.setProperty('peel', target.value);
-                }
-            })
-            .start();
-        
-        await PromiseDelay.Wait(STICKER.PEEL_DURATION + game.deltaTime);
-
         const p = targetNode.getWorldPosition();
         // Vec3.scaleAndAdd(p, p, Vec3.UP, STICKER.AFTER_PEEL_WORLD_POSITION_OFFSET);
         targetNode.setWorldPosition(p);
 
         targetNode.setScale(STICKER.AFTER_PEEL_START_SCALE);
         targetNode.setWorldRotationFromEuler(0, 180, 0);
-        mat.setProperty('peel', 0);
         Tween.stopAllByTarget(targetNode);
         tween(targetNode)
             .to(STICKER.AFTER_PEEL_DURATION, { scale: STICKER.AFTER_PEEL_END_SCALE }, { easing: easing.backOut })
