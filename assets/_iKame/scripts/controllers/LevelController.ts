@@ -479,7 +479,7 @@ export class LevelController extends Component implements ILevelController
         if (!this.cacheController.isAllTaken()) return false;
         if (!this.boxController.isAllBoxesReady()) return false;
         
-        const idInBoxes = this.boxController.getAllLettersInBoxes();
+        const idInBoxes = this.boxController.getAllEmptyLettersInBoxes();
         const idInCache = this.cacheController.getAllLetters();
         for (const id of idInCache)
         {

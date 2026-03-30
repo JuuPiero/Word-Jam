@@ -150,13 +150,15 @@ export class BoxController extends Component implements IBoxController
         return true;
     }
 
-    public getAllLettersInBoxes(): Set<string>
+    public getAllEmptyLettersInBoxes(): Set<string>
     {
         const letters: Set<string> = new Set<string>();
         for (let i = 0; i < this._activeBoxes.length; i++)
         {
-            const boxData = this._activeBoxes[i].getBoxData();
-            for (const letter of boxData.word) {
+            const boxData = this._activeBoxes[ i ].getBoxData();
+            const remainingLetters = boxData.getRemainingLetters();
+            for (const letter of remainingLetters)
+            {
                 letters.add(letter);
             }
         }

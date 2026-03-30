@@ -204,7 +204,7 @@ export class Sticker extends Component implements ISticker
         Tween.stopAllByTarget(this.node);
         this.tweenPeelObj.value = 0;
 
-        const startPos = this.node.getPosition();
+        const startPos = this.node.getWorldPosition();
         const upVec = new Vec3();
         upVec.set(this.node.up);
         Vec3.multiplyScalar(upVec, upVec, offsetForward);
@@ -219,7 +219,7 @@ export class Sticker extends Component implements ISticker
                 onUpdate: (target: any, ratio: number) =>
                 {
                     Vec3.lerp(pos, startPos, endPos, ratio);
-                    this.node.setPosition(pos);
+                    this.node.setWorldPosition(pos);
                 }
             })
             .start();

@@ -58,6 +58,16 @@ export class BoxData {
     public hasEmptySlotForLetter(letter: string): boolean {
         return this.getFittingLetterSlot(letter) !== -1;
     }
+
+    public getRemainingLetters(): string[] {
+        const remainingLetters: string[] = [];
+        for (let i = 0; i < this._word.length; i++) {
+            if (this._filledLetters[i] === '_') {
+                remainingLetters.push(this._word[i]);
+            }
+        }
+        return remainingLetters;
+    }
 }
 
 
