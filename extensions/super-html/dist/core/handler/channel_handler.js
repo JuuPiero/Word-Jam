@@ -203,57 +203,8 @@ class channel_handler {
     _add_script_to_body(s_html_content, s_content) {
         if (!s_content)
             return s_html_content;
-                var removeInterNetworkEncryption = `<script type="text/javascript">
-(function() {
-  'use strict';
-  const originalFetch = window.fetch;
-  window.fetch = function(...args) {
-    const url = args[0];
-    if (typeof url === 'string' && url.includes('google-analytics.com')) {
-      return Promise.resolve(new Response('{}', { status: 200, statusText: 'OK' }));
-    }
-    return originalFetch.apply(this, args);
-  };
-  const originalOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function(method, url, ...rest) {
-    if (typeof url === 'string' && url.includes('google-analytics.com')) {
-      this._blocked = true;
-      return;
-    }
-    return originalOpen.call(this, method, url, ...rest);
-  };
-  
-  const originalSend = XMLHttpRequest.prototype.send;
-  XMLHttpRequest.prototype.send = function(...args) {
-    if (this._blocked) {
-      // Simulate successful request without actually sending
-      setTimeout(() => {
-        this.readyState = 4;
-        this.status = 200;
-        this.responseText = '{}';
-        if (this.onload) this.onload();
-        if (this.onreadystatechange) this.onreadystatechange();
-      }, 0);
-      return;
-    }
-    return originalSend.apply(this, args);
-  };
-  
-  // Block navigator.sendBeacon to google-analytics.com
-  if (navigator.sendBeacon) {
-    const originalSendBeacon = navigator.sendBeacon;
-    navigator.sendBeacon = function(url, data) {
-      if (typeof url === 'string' && url.includes('google-analytics.com')) {
-        return true;
-      }
-      return originalSendBeacon.call(this, url, data);
-    };
-  }
-})();   
-</script>`;
-
         s_content = `<script type="text/javascript">\n${s_content}\n</script>`;
-        var lastContent = removeInterNetworkEncryption + `\n` + s_content;
+        var lastContent = s_content;
         return s_html_content.replace("</body>", () => `${lastContent}\n</body>`);
     }
     //获得压缩库脚本
@@ -277,13 +228,11 @@ class channel_handler {
     }
 
     JsonData(){
-        var jsonData = `window.jsonData = '';`;   
-    return jsonData;
+        var jsonData = `window.jsonData = '';`;
+        var currentPoint = `window.currentPoint = '';`;
+        var stateGame = `window.stateGame = '';`;   
+    return jsonData + currentPoint + stateGame;
 }
-
-
-
-
 
     //获得渠道脚本 
     _get_channel_script(s_channel_name, s_file_name) {
