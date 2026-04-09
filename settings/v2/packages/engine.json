@@ -1,5 +1,5 @@
 {
-  "__version__": "1.0.9",
+  "__version__": "1.0.12",
   "modules": {
     "configs": {
       "defaultConfig": {
@@ -12,7 +12,7 @@
             "_value": true
           },
           "gfx-webgl2": {
-            "_value": false
+            "_value": true
           },
           "gfx-webgpu": {
             "_value": false
@@ -51,14 +51,14 @@
             "_value": false
           },
           "ui": {
-            "_value": false
+            "_value": true
           },
           "particle": {
             "_value": false
           },
           "physics": {
             "_value": true,
-            "_option": "physics-physx"
+            "_option": "physics-ammo"
           },
           "physics-ammo": {
             "_value": true,
@@ -188,7 +188,7 @@
           }
         },
         "flags": {
-          "LOAD_PHYSX_MANUALLY": false
+          "LOAD_BULLET_MANUALLY": false
         },
         "includeModules": [
           "2d",
@@ -197,9 +197,11 @@
           "base",
           "custom-pipeline",
           "gfx-webgl",
-          "physics-physx",
+          "gfx-webgl2",
+          "physics-ammo",
           "rich-text",
-          "tween"
+          "tween",
+          "ui"
         ],
         "noDeprecatedFeatures": {
           "value": false,
@@ -355,9 +357,6 @@
       "procedural-animation": {
         "_value": false
       },
-      "custom-pipeline": {
-        "_value": true
-      },
       "gfx-webgpu": {
         "_value": false
       },
@@ -376,7 +375,6 @@
         "_value": false
       },
       "render-pipeline": {
-        "_value": true,
         "_option": "legacy-pipeline"
       },
       "legacy-pipeline": {
@@ -395,7 +393,8 @@
       "primitive",
       "tween",
       "ui",
-      "webview"
+      "webview",
+      "legacy-pipeline"
     ],
     "noDeprecatedFeatures": {
       "value": false,

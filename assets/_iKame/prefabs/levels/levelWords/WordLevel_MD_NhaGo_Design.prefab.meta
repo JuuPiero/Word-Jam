@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "8ffb7a0d-b489-4003-975a-15a301f06568",
+  "uuid": "7f2fd23e-20b8-4fb3-b545-b2c331ead24b",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "WordLevel_MD_NhaGo_Design-001"
+    "syncNodeName": "WordLevel_MD_NhaGo_Design"
   }
 }

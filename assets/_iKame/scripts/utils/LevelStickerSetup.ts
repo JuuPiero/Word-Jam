@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, Component, JsonAsset, Material, MeshCollider, MeshRenderer, Node, PhysicMaterial, PhysicsGroup, RigidBody } from 'cc';
+import { _decorator, BoxCollider, CCBoolean, Component, JsonAsset, Material, MeshCollider, MeshRenderer, Node, PhysicMaterial, PhysicsGroup, RigidBody, Vec3 } from 'cc';
 import { StickerConfigs } from '../configData/StickerConfigs';
 import { Sticker } from '../gameplay/stickers/Sticker';
 import { HoldableObject } from '../gameplay/holdableObject/HoldableObject';
@@ -120,6 +120,8 @@ export class LevelStickerSetup extends Component {
 
         //#region Setup stickers data from json
         const levelSetupData: PLA_LevelData = this.jsonSetupData.json as PLA_LevelData;
+        const boxColCenter = new Vec3(0, 0.04, 0);
+        const boxColSize = new Vec3(0.35, 0.15, 0.5);
         for (let i = 0; i < levelSetupData.stickers.length; i++)
         {
             const stickerData = levelSetupData.stickers[i];
@@ -132,8 +134,9 @@ export class LevelStickerSetup extends Component {
             const meshRenderer = sticker.node.getComponent(MeshRenderer)
             const mesh = this.stickerConfig.getLetterDataByLetter("A").mesh;
             meshRenderer.mesh = mesh;
-            const hitBox = sticker.node.addComponent(MeshCollider);
-            hitBox.mesh = mesh;
+            const hitBox = sticker.node.addComponent(BoxCollider);
+            hitBox.center = boxColCenter;
+            hitBox.size = boxColSize;
 
             this.destroyAllChildNodeRecursive(sticker.node);
         }
