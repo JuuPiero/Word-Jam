@@ -11,10 +11,10 @@ export class CacheController extends Component
 {
     private _data: CacheData;
 
-    @property([SpriteRenderer])
-    private cacheSlots: SpriteRenderer[] = [];
+    @property([Node])
+    private cacheSlots: Node[] = [];
 
-    private _activeCaches: SpriteRenderer[] = [];
+    private _activeCaches: Node[] = [];
 
     private isStickerInPlace: boolean[] = [];
 
@@ -36,7 +36,7 @@ export class CacheController extends Component
             const box = this.cacheSlots[i];
             if (i >= count)
             {
-                box.node.active = false;
+                box.active = false;
                 continue;
             }
             this._activeCaches.push(box);
@@ -52,8 +52,8 @@ export class CacheController extends Component
         const offsetX = centerX / this._activeCaches.length;
         for (let i = 0; i < this._activeCaches.length; i++)
         {
-            this._activeCaches[i].node.active = true;
-            this._activeCaches[ i ].node.setPosition(i * CACHE_SPACING - offsetX, 0, 0);
+            this._activeCaches[i].active = true;
+            this._activeCaches[ i ].setPosition(i * CACHE_SPACING - offsetX, 0, 0);
         }
         this.updateMaterialWarning(0);
         return this._data;
@@ -65,8 +65,8 @@ export class CacheController extends Component
         {
             if (!this._data.isCacheTakenAt(i))
             {
-                const pos = this._activeCaches[ i ].node.getWorldPosition();
-                Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].node.forward, -0.03);
+                const pos = this._activeCaches[ i ].getWorldPosition();
+                Vec3.scaleAndAdd(pos, pos, this._activeCaches[ i ].forward, -0.03);
                 Vec3.copy(outPosition, pos);
                 return i;
             }

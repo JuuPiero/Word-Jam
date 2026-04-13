@@ -38,14 +38,14 @@
         "b": 252,
         "a": 255
       },
-      "smoothness": 0.75,
-      "metallic": 0.26,
+      "smoothness": 0.73,
+      "metallic": 0.33,
       "useHDRI": 1,
       "cubeMap": {
         "__uuid__": "dea66bfd-99d2-47d3-92ec-64e8f7d70036@b47c0",
         "__expectedType__": "cc.TextureCube"
       },
-      "clayHDRI": 0.05,
+      "clayHDRI": 0,
       "useAdvance": 1,
       "matCapTexture": {
         "__uuid__": "d1eff344-ec9e-45ee-aa8f-b69c7c2f01ae@6c48a",

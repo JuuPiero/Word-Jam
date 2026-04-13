@@ -94,7 +94,7 @@ CCProgram master-fs %{
     vec3 lightDir = normalize(vec3(0.5, 0.8, 0.8));
     vec3 normal = normalize(v_worldNorm);
     float lighting = dot(lightDir, normal);
-    lighting = smoothstep(-0.2, 0.8, lighting);
+    lighting = smoothstep(-0.4, 0.76, lighting);
     
     // Specular
     // Unity's UNITY_MATRIX_V[2].xyz is the camera forward direction (view direction)
@@ -103,14 +103,14 @@ CCProgram master-fs %{
     float spec = clamp(dot(reflectDir, viewDir), 0.0, 1.0);
     
     // Calculate base lighting
-    col.rgb = mix(pow(col.rgb, vec3(2.0)) * 0.85, col.rgb, lighting);
+    col.rgb = mix(pow(col.rgb, vec3(1.74)) * 0.5, col.rgb, lighting);
     
     if (useAdvance > 0.5) {
       // Advance mode
       if (v_uv.y < 0.671875) {
         // Fresnel
         float fres = pow(1.0 - clamp(dot(normal, viewDir), 0.0, 1.0), 2.0 + smoothness * 2.0) * smoothness * 2.0;
-        col.rgb = mix(col.rgb, clamp((originCol + 0.1) * 1.5, 0.0, 1.0), pow(spec, 0.5 + smoothness * 5.0) * smoothness + fres * 0.3);
+        col.rgb = mix(col.rgb, clamp((originCol + 0.1) * 1.5, 0.0, 1.0), pow(spec, 0.5 + smoothness * 5.0) * smoothness * 0.5 + fres * 0.2);
         
         if (v_uv.y < 0.34375) {
           // MatCap
@@ -132,7 +132,7 @@ CCProgram master-fs %{
       // Normal mode
       // Smoothness
       float fres = pow(1.0 - clamp(dot(normal, viewDir), 0.0, 1.0), 2.0 + smoothness * 2.0) * smoothness * 2.0;
-      col.rgb = mix(col.rgb, clamp((originCol + 0.1) * 2.0, 0.0, 1.0), pow(spec, 0.5 + smoothness * 5.0) * smoothness + fres * 0.3);
+      col.rgb = mix(col.rgb, clamp((originCol + 0.1) * 2.0, 0.0, 1.0), pow(spec, 0.5 + smoothness * 5.0) * smoothness * 0.5 + fres * 0.2);
       
       // Metallic
       mat3 viewMat3 = mat3(cc_matView);
