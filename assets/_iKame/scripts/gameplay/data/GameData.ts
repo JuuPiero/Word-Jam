@@ -73,6 +73,10 @@ export class GameData
             return boxData;
         }
 
+
+        console.log("Get new box");
+        
+        // TODO: Implement curve here
         const index = math.randomRangeInt(0, this._wordPool.length);
         const word = this._wordPool[ index ];
         this._wordPool.splice(index, 1);

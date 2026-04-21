@@ -3,6 +3,7 @@ import { IBoxController } from './IBoxController';
 import { BoxData } from '../gameplay/data/BoxData';
 import { Box } from '../gameplay/boxes/Box';
 import { ILevelController } from './ILevelController';
+import { LevelController } from './LevelController';
 const { ccclass, property } = _decorator;
 
 const BOX_SPACING = 4.2
@@ -91,12 +92,19 @@ export class BoxController extends Component implements IBoxController
         const index = this._activeBoxes.indexOf(box);
         if (index >= 0)
         {
+            console.log("remove box completed");
+            
             this._activeBoxes.splice(index, 1);
             this._boxDataList.splice(index, 1);
             await box.closeLidAnimation();
             await box.moveUpAnimation();
             box.node.active = false;
             this.realignBoxes();
+
+            
+            const level = this._levelController as LevelController
+            console.log(level.getStickersLeft().length);
+            
         }
     }
 

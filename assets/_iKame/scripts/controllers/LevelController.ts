@@ -167,6 +167,9 @@ export class LevelController extends Component implements ILevelController
 
         this.stickerCountLabel.string = `00/${this.totalStickerCount}`;
     }
+    public getStickersLeft() {
+        return this._stickerMap.values
+    }
 
     clearLevel(): void
     {
@@ -310,6 +313,10 @@ export class LevelController extends Component implements ILevelController
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
+    
+           
+        console.log(this.getStickersLeft().length);
+    
     }
 
     public async transferStickerToCache(sticker: Sticker, cachePosition: Vec3, cacheIndex: number): Promise<void>
@@ -429,6 +436,9 @@ export class LevelController extends Component implements ILevelController
         }
         await box.replaceBox(nextBoxData);
         this._justCompletedBoxes.add(box);
+
+        console.log(this.getStickersLeft().length);
+
     }
 
     private tryTransferStickerFromJustCompletedBoxes(): void

@@ -181,6 +181,10 @@ export class Box extends Component {
         this.updateVisual();
         await this.respawnAnimation();
         this._isReady = true;
+        console.log("replaceBox");
+
+        
+
     }
 
     public getEmptySlotCount(): number
