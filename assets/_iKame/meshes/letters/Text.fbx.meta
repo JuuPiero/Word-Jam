@@ -247,7 +247,7 @@
       "name": "M.mesh",
       "userData": {
         "gltfIndex": 12,
-        "triangleCount": 1708
+        "triangleCount": 1712
       },
       "ver": "1.1.1",
       "imported": true,
@@ -265,7 +265,7 @@
       "name": "N.mesh",
       "userData": {
         "gltfIndex": 13,
-        "triangleCount": 1612
+        "triangleCount": 1616
       },
       "ver": "1.1.1",
       "imported": true,
@@ -391,7 +391,7 @@
       "name": "V.mesh",
       "userData": {
         "gltfIndex": 21,
-        "triangleCount": 1374
+        "triangleCount": 1376
       },
       "ver": "1.1.1",
       "imported": true,
@@ -409,7 +409,7 @@
       "name": "W.mesh",
       "userData": {
         "gltfIndex": 22,
-        "triangleCount": 1786
+        "triangleCount": 1792
       },
       "ver": "1.1.1",
       "imported": true,
