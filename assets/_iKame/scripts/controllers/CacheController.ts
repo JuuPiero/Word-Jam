@@ -1,6 +1,8 @@
-import { _decorator, Color, Component, easing, game, Material, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, Color, Component, easing, game, Material, Node, SpriteRenderer, tween, Tween, Vec3 } from 'cc';
 import { CacheData } from '../gameplay/data/CacheData';
 import { Sticker } from '../gameplay/stickers/Sticker';
+import { EventDispatcher } from '../designPatterns/observer/EventDispatcher';
+import { EventName } from '../systems/EventName';
 const { ccclass, property } = _decorator;
 
 const CACHE_SPACING = .56
@@ -26,6 +28,10 @@ export class CacheController extends Component
     private _tweenObjectWarning = {value : 0};
     private _tweenWarning: Tween<any> = null;
     private _tweenColor : Color = new Color();
+
+
+    @property(AudioClip)
+    public warnSfx: AudioClip = null
 
     setup(count: number): CacheData
     {
@@ -176,11 +182,13 @@ export class CacheController extends Component
         const t = tween(this._tweenObjectWarning)
             .to(.23, { value: 1 }, { easing: easing.sineInOut, onUpdate: (target: any) => {
                 this.updateMaterialWarning(target.value);
+
             }})
             .to(.5, { value: 0 }, { easing: easing.sineOut, onUpdate: (target: any) => {
                 this.updateMaterialWarning(target.value);
+                EventDispatcher.dispatch(EventName.PlaySFX, this.warnSfx, 0.4)
             }});
-        
+
         // t.start();
         tween(this._tweenObjectWarning)
             .repeat(4, t)
@@ -199,6 +207,8 @@ export class CacheController extends Component
         Tween.stopAllByTarget(this._tweenObjectWarning);
         this._tweenObjectWarning.value = 0;
         this.updateMaterialWarning(0);
+        console.log("stop warn");
+        
     }
 
     public clear(): void 

@@ -47411,7 +47411,7 @@
     "__prefab": null,
     "levelsData": [
       {
-        "__uuid__": "28209102-634d-4d7d-8f1c-b1b0f8c94be1",
+        "__uuid__": "4a117e8a-438b-4011-a6fc-eebb630a8b41",
         "__expectedType__": "729987E0qtPtY23L/NU0SMi"
       }
     ],
@@ -50124,6 +50124,10 @@
     "cacheSlotMaterial": {
       "__uuid__": "efe4bd11-a04a-45ed-93b8-5b53371dbbc0",
       "__expectedType__": "cc.Material"
+    },
+    "warnSfx": {
+      "__uuid__": "ee2db859-152b-4146-a8b6-5d3e22be2523",
+      "__expectedType__": "cc.AudioClip"
     },
     "_id": "8diWObMehOHqA0pEZYW3rV"
   },

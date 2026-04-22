@@ -516,6 +516,7 @@ export class LevelController extends Component implements ILevelController
             TrackingManager.TrackEvent(ETrackingEvent.CHALLENGE_FAILED);
             this._isLevelFinished = true;
             this.endLevel(false);
+            this.cacheController.warningStop()
             return;
         }
     }
