@@ -372,6 +372,8 @@ export class LevelController extends Component implements ILevelController
 
     getNextBoxData(): BoxData
     {
+        console.log("stickers left: " + this._stickerMap.size);
+        
         const progress = 1 - (this._stickerMap.size / this.totalStickerCount);
         const difficulty = this.levelsData[this.levelIndex].evaluateDifficulty(progress);
         return this._gameData.getNewBoxData(difficulty);

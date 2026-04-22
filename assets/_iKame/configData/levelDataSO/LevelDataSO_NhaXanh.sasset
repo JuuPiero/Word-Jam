@@ -28,19 +28,18 @@
   {
     "__type__": "cc.RealCurve",
     "_times": [
-      0,
-      0.4024390243902439,
-      0.7341463414634146,
-      1
+      0.004878048780487805,
+      0.5365853658536586,
+      0.9853658536585366
     ],
     "_values": [
       {
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 0,
+        "value": -0.022727272727272728,
         "rightTangent": 0,
-        "rightTangentWeight": 0.13414634146341464,
+        "rightTangentWeight": 0.17980765458896678,
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
@@ -50,23 +49,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 2,
         "tangentWeightMode": 0,
-        "value": 0,
+        "value": 0.06818181818181818,
         "rightTangent": 0,
-        "rightTangentWeight": 0.10406504065040648,
+        "rightTangentWeight": 0.14959349593495933,
         "leftTangent": 0,
-        "leftTangentWeight": 0.13414634146341464,
-        "easingMethod": 0,
-        "__editorExtras__": null
-      },
-      {
-        "__type__": "cc.RealKeyframeValue",
-        "interpolationMode": 2,
-        "tangentWeightMode": 0,
-        "value": 0.1893939393939394,
-        "rightTangent": 1.397727272727273,
-        "rightTangentWeight": 0.1523001318582254,
-        "leftTangent": 1.397727272727273,
-        "leftTangentWeight": 0.1900258525937491,
+        "leftTangentWeight": 0.1772357723577236,
         "easingMethod": 0,
         "__editorExtras__": null
       },
@@ -74,11 +61,11 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 1,
-        "rightTangent": 3.0490686683347232,
+        "value": 0.4696969696969697,
+        "rightTangent": 0.8946805006587617,
         "rightTangentWeight": 1,
-        "leftTangent": 3.0490686683347232,
-        "leftTangentWeight": 0.2843629045288127,
+        "leftTangent": 0.8946805006587617,
+        "leftTangentWeight": 0.20072599984683911,
         "easingMethod": 0,
         "__editorExtras__": null
       }

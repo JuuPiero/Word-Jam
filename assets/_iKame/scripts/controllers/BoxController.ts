@@ -82,10 +82,10 @@ export class BoxController extends Component implements IBoxController
         return null;
     }
 
-    public getNextBoxData(): BoxData
-    {
-        return this._levelController.getNextBoxData();
-    }
+    // public getNextBoxData(): BoxData
+    // {
+    //     return this._levelController.getNextBoxData();
+    // }
 
     public async removeBox(box: Box)
     {

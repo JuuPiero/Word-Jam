@@ -42,7 +42,7 @@
             "_value": false
           },
           "graphics": {
-            "_value": false
+            "_value": true
           },
           "ui-skew": {
             "_value": false
@@ -168,10 +168,10 @@
             "_value": false
           },
           "marionette": {
-            "_value": false
+            "_value": true
           },
           "procedural-animation": {
-            "_value": false
+            "_value": true
           },
           "custom-pipeline-post-process": {
             "_value": false
@@ -198,7 +198,10 @@
           "custom-pipeline",
           "gfx-webgl",
           "gfx-webgl2",
+          "graphics",
+          "marionette",
           "physics-ammo",
+          "procedural-animation",
           "rich-text",
           "tween",
           "ui"

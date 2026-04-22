@@ -1,7 +1,3 @@
-import { math } from "cc";
-import { LevelController } from "../../controllers/LevelController";
-import { shuffleArray } from "../../utils/MathUtils";
-import { GameAlgorithmHelper, NextTargetParams } from "../difficulty/GameAlgorithmHelper";
 import { BoxData } from "./BoxData";
 import { CacheData } from "./CacheData";
 import { HodlablleData as HoldablleData } from "./HodlablleData";
@@ -73,15 +69,144 @@ export class GameData
             return boxData;
         }
 
+        const remainingWordLetters = this.getRemainingWordLetters();
+        const letterPointsMap = this.buildLetterPointMap(remainingWordLetters);
+        const candidates: { index: number; point: number }[] = [];
 
-        console.log("Get new box");
-        
-        // TODO: Implement curve here
-        const index = math.randomRangeInt(0, this._wordPool.length);
-        const word = this._wordPool[ index ];
-        this._wordPool.splice(index, 1);
-        const boxData = new BoxData(word);
-        return boxData;
+        for (let i = 0; i < this._wordPool.length; i++)
+        {
+            const word = this._wordPool[i];
+            const wordPoint = this.evaluateWordPoint(word, letterPointsMap);
+            if (wordPoint === null)
+            {
+                continue;
+            }
+
+            candidates.push({ index: i, point: wordPoint });
+        }
+
+        if (candidates.length === 0)
+        {
+            // Fallback if no candidate can be evaluated with current sticker state.
+            const fallbackIndex = Math.floor(Math.random() * this._wordPool.length);
+            const [fallbackWord] = this._wordPool.splice(fallbackIndex, 1);
+            this._lastPoint = 0;
+            return new BoxData(fallbackWord);
+        }
+
+        let minPoint = Number.POSITIVE_INFINITY;
+        let maxPoint = Number.NEGATIVE_INFINITY;
+        for (const candidate of candidates)
+        {
+            if (candidate.point < minPoint) minPoint = candidate.point;
+            if (candidate.point > maxPoint) maxPoint = candidate.point;
+        }
+
+        const targetPoint = this.getTargetPointFromDifficulty(difficulty, minPoint, maxPoint);
+
+        let bestWordIndex = candidates[0].index;
+        let bestWordPoint = candidates[0].point;
+        let bestDistance = Math.abs(candidates[0].point - targetPoint);
+
+        for (let i = 1; i < candidates.length; i++)
+        {
+            const candidate = candidates[i];
+            const distance = Math.abs(candidate.point - targetPoint);
+            const shouldReplace =
+                distance < bestDistance ||
+                (distance === bestDistance && Math.abs(candidate.point - this._lastPoint) < Math.abs(bestWordPoint - this._lastPoint));
+
+            if (shouldReplace)
+            {
+                bestDistance = distance;
+                bestWordIndex = candidate.index;
+                bestWordPoint = candidate.point;
+            }
+        }
+
+        const [word] = this._wordPool.splice(bestWordIndex, 1);
+        this._lastPoint = bestWordPoint;
+        return new BoxData(word);
+    }
+
+    private getRemainingWordLetters(): Set<string>
+    {
+        const letters = new Set<string>();
+        for (const word of this._wordPool)
+        {
+            for (const letter of word)
+            {
+                letters.add(letter);
+            }
+        }
+        return letters;
+    }
+
+    private buildLetterPointMap(allowedLetters: Set<string>): Map<string, number[]>
+    {
+        const letterPointsMap = new Map<string, number[]>();
+        for (const stickerData of this._stickerDatas)
+        {
+            const letter = stickerData.letter;
+            if (!allowedLetters.has(letter))
+            {
+                continue;
+            }
+            const point = stickerData.getBlockingPoint();
+            if (!letterPointsMap.has(letter))
+            {
+                letterPointsMap.set(letter, []);
+            }
+            letterPointsMap.get(letter).push(point);
+        }
+
+        for (const points of letterPointsMap.values())
+        {
+            points.sort((a, b) => a - b);
+        }
+
+        return letterPointsMap;
+    }
+
+    private getTargetPointFromDifficulty(difficulty: number, minPoint: number, maxPoint: number): number
+    {
+        if (!Number.isFinite(minPoint) || !Number.isFinite(maxPoint))
+        {
+            return 0;
+        }
+
+        if (difficulty >= 0 && difficulty <= 1)
+        {
+            return minPoint + (maxPoint - minPoint) * difficulty;
+        }
+
+        return Math.max(minPoint, Math.min(maxPoint, difficulty));
+    }
+
+    private evaluateWordPoint(word: string, letterPointsMap: Map<string, number[]>): number | null
+    {
+        const usedIndexByLetter = new Map<string, number>();
+        let totalPoint = 0;
+
+        for (const letter of word)
+        {
+            const points = letterPointsMap.get(letter);
+            if (!points || points.length === 0)
+            {
+                return null;
+            }
+
+            const usedCount = usedIndexByLetter.get(letter) || 0;
+            if (usedCount >= points.length)
+            {
+                return null;
+            }
+
+            totalPoint += points[usedCount];
+            usedIndexByLetter.set(letter, usedCount + 1);
+        }
+
+        return totalPoint / Math.max(1, word.length);
     }
 
     public removeStickerData(stickerData : StickerData): void
